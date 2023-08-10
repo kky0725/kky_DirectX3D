@@ -10,8 +10,13 @@
 #include <windows.h>
 
 #include <d3d11.h>
+#include <d3dcompiler.h>
+#include <DirectXMath.h>
 
 #pragma comment(lib, "d3d11.lib")
+#pragma comment(lib, "d3dcompiler.lib")
+
+using namespace DirectX;
 
 #define WIN_WIDTH 1280.0f
 #define WIN_HEIGHT 720.0f
