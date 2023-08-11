@@ -8,6 +8,10 @@
 #define WIN32_LEAN_AND_MEAN             // 거의 사용되지 않는 내용을 Windows 헤더에서 제외합니다.
 // Windows 헤더 파일
 #include <windows.h>
+#include <vector>
+#include <map>
+#include <string>
+#include <functional>
 
 #include <d3d11.h>
 #include <d3dcompiler.h>
@@ -16,6 +20,7 @@
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "d3dcompiler.lib")
 
+using namespace std;
 using namespace DirectX;
 
 #define WIN_WIDTH 1280.0f
