@@ -25,3 +25,14 @@ using namespace DirectX;
 
 #define WIN_WIDTH 1280.0f
 #define WIN_HEIGHT 720.0f
+
+#include "Utility/Singleton.h"
+
+#include "System/Device.h"
+
+#include "Scene/Scene.h"
+#include "Scene//TutorialScene.h"
+
+#include "MainGame.h"
+
+extern HWND hWnd;
