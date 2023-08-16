@@ -133,6 +133,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Render\Shader\PixelShader.h" />
+    <ClInclude Include="Render\Shader\Shader.h" />
     <ClInclude Include="System\Device.h" />
     <ClInclude Include="Framework.h" />
     <ClInclude Include="Main.h" />
@@ -140,10 +142,13 @@
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Scene\TutorialScene.h" />
     <ClInclude Include="Utility\Singleton.h" />
+    <ClInclude Include="Render\Shader\VertexShader.h" />
     <ClInclude Include="__Others\Resource.h" />
     <ClInclude Include="__Others\targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Render\Shader\PixelShader.cpp" />
+    <ClCompile Include="Render\Shader\Shader.cpp" />
     <ClCompile Include="System\Device.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Framework.cpp">
@@ -151,6 +156,7 @@
     </ClCompile>
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="Scene\TutorialScene.cpp" />
+    <ClCompile Include="Render\Shader\VertexShader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="__Others\Project.rc" />

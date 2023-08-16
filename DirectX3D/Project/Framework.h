@@ -10,6 +10,7 @@
 #include <windows.h>
 #include <vector>
 #include <map>
+#include <unordered_map>
 #include <string>
 #include <functional>
 
@@ -26,9 +27,16 @@ using namespace DirectX;
 #define WIN_WIDTH 1280.0f
 #define WIN_HEIGHT 720.0f
 
+#define DEVICE Device::GetInstance()->GetDevice()
+#define DC	   Device::GetInstance()->GetDC()
+
 #include "Utility/Singleton.h"
 
 #include "System/Device.h"
+
+#include "Render/Shader/Shader.h"
+#include "Render/Shader/VertexShader.h"
+#include "Render/Shader/PixelShader.h"
 
 #include "Scene/Scene.h"
 #include "Scene//TutorialScene.h"
