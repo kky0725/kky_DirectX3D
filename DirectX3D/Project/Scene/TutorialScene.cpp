@@ -3,17 +3,13 @@
 
 TutorialScene::TutorialScene()
 {
+	_vertexShader = Shader::GetVS(L"Tutorial");
+	 _pixelShader = Shader::GetPS(L"Tutorial");
+
+
+
 	/// ///////////////////
 
-	D3D11_VIEWPORT viewPort;
-	viewPort.TopLeftX = 0.0f;
-	viewPort.TopLeftY = 0.0f;
-	viewPort.Width = WIN_WIDTH;
-	viewPort.Height = WIN_HEIGHT;
-	viewPort.MinDepth = 0.0f;
-	viewPort.MaxDepth = 1.0f;
-
-	DC->RSSetViewports(1, &viewPort);
 
 
 	//VertexShader
@@ -37,22 +33,7 @@ TutorialScene::TutorialScene()
 	};
 
 	//VertexBuffer
-	{
-		D3D11_BUFFER_DESC bufferDesc = {};
-
-		bufferDesc.ByteWidth = sizeof(VertexColor) * vertices.size();
-		bufferDesc.Usage = D3D11_USAGE_DEFAULT;
-		bufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-		bufferDesc.CPUAccessFlags = 0;
-		bufferDesc.MiscFlags = 0;
-		bufferDesc.StructureByteStride = 0;
-
-		D3D11_SUBRESOURCE_DATA data;
-
-		data.pSysMem = vertices.data();
-
-		DEVICE->CreateBuffer(&bufferDesc, &data, &vertexBuffer);
-	}
+	_vertexBuffer = new VertexBuffer(vertices);
 
 	//IndexBuffer
 
@@ -84,52 +65,35 @@ TutorialScene::TutorialScene()
 
 	};
 
-	{
-		D3D11_BUFFER_DESC bufferDesc = {};
-
-		bufferDesc.ByteWidth = sizeof(UINT) * indices.size();
-		bufferDesc.Usage = D3D11_USAGE_DEFAULT;
-		bufferDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
-		bufferDesc.CPUAccessFlags = 0;
-		bufferDesc.MiscFlags = 0;
-		bufferDesc.StructureByteStride = 0;
-
-		D3D11_SUBRESOURCE_DATA data;
-
-		data.pSysMem = indices.data();
-
-		DEVICE->CreateBuffer(&bufferDesc, &data, &indexBuffer);
-	}
+	_indexBuffer = new IndexBuffer(indices);
 
 	//WVP
 
-	wvp.world = XMMatrixIdentity();
+	_worldBuffer = new MatrixBuffer();
+	_viewBuffer = new MatrixBuffer();
+	_projectionBuffer = new MatrixBuffer();
 
 	XMVECTOR eyePos = XMVectorSet(+3.0f, +3.0f, -3.0f, 1.0f);
 	XMVECTOR focusPos = XMVectorSet(+0.0f, +0.0f, +0.0f, 1.0f);
 	XMVECTOR upVector = XMVectorSet(+0.0f, +1.0f, +0.0f, 0.0f);
 
-	wvp.view = XMMatrixLookAtLH(eyePos, focusPos, upVector);
+	XMMATRIX view = XMMatrixLookAtLH(eyePos, focusPos, upVector);
 
-	wvp.projection = XMMatrixPerspectiveFovLH(XM_PIDIV4, WIN_WIDTH / WIN_HEIGHT, 0.1f, 1000.0f);
+	_viewBuffer->SetData(view);
 
-	{
-		D3D11_BUFFER_DESC bufferDesc = {};
+	XMMATRIX projection = XMMatrixPerspectiveFovLH(XM_PIDIV4, WIN_WIDTH / WIN_HEIGHT, 0.1f, 1000.0f);
 
-		bufferDesc.ByteWidth = sizeof(WVP);
-		bufferDesc.Usage = D3D11_USAGE_DEFAULT;
-		bufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-		bufferDesc.CPUAccessFlags = 0;
-		bufferDesc.MiscFlags = 0;
-		bufferDesc.StructureByteStride = 0;
-
-		DEVICE->CreateBuffer(&bufferDesc, nullptr, &constBuffer);
-	}
+	_projectionBuffer->SetData(projection);
 }
 
 TutorialScene::~TutorialScene()
 {
+	delete _vertexBuffer;
+	delete _indexBuffer;
 
+	delete _worldBuffer;
+	delete _viewBuffer;
+	delete _projectionBuffer;
 }
 
 void TutorialScene::Update()
@@ -143,33 +107,25 @@ void TutorialScene::PreRender()
 void TutorialScene::Render()
 {
 	//todo: Render
+	_vertexShader->SetShader();
+	_pixelShader->SetShader();
 
-	stride = sizeof(VertexColor);
-	offset = 0;
+	_vertexBuffer->IASetBuffer();
+	_indexBuffer->IASetBuffer();
 
-	DC->IASetVertexBuffers(0, 1, &vertexBuffer, &stride, &offset);
 
-	DC->IASetIndexBuffer(indexBuffer, DXGI_FORMAT_R32_UINT, 0);
-
-	DC->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
+	_worldBuffer->SetVSBuffer(0);
+	_viewBuffer->SetVSBuffer(1);
+	_projectionBuffer->SetVSBuffer(2);
 
 	DC->DrawIndexed(indices.size(), 0, 0);
 
 	//WVP
-	WVP data;
-
-	data.world = XMMatrixTranspose(wvp.world);
-	data.view = XMMatrixTranspose(wvp.view);
-	data.projection = XMMatrixTranspose(wvp.projection);
-
-	DC->UpdateSubresource(constBuffer, 0, nullptr, &data, 0, 0);
-	DC->VSSetConstantBuffers(0, 1, &constBuffer);
-
 	static float angle = 0.0f;
 	angle += 0.0001f;
 
-	wvp.world = XMMatrixRotationRollPitchYaw(angle, angle, 0.0f);
+	XMMATRIX world = XMMatrixRotationRollPitchYaw(angle, angle, 0.0f);
+	_worldBuffer->SetData(world);
 
 }
 

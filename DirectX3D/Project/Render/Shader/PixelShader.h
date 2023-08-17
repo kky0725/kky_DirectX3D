@@ -1,10 +1,11 @@
 #pragma once
 class PixelShader : public Shader
 {
-public:
+	friend class Shader;
 	PixelShader(wstring file);
 	~PixelShader();
 
+public:
 	virtual void SetShader() override;
 
 private:

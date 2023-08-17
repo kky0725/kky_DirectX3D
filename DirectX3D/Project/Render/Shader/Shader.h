@@ -2,7 +2,6 @@
 class Shader
 {
 protected:
-	Shader();
 	virtual ~Shader();
 
 public:
@@ -17,5 +16,5 @@ public:
 protected:
 	ID3DBlob* _blob;
 
-	static unordered_map<wstring, Shader*> _shaders;
+	static map<wstring, Shader*> _shaders;
 };

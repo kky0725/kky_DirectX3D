@@ -1,7 +1,15 @@
-cbuffer WVP : register(b0)
+cbuffer World : register(b0)
 {
     matrix world;
+};
+
+cbuffer View : register(b1)
+{
     matrix view;
+};
+
+cbuffer Projection : register(b2)
+{
     matrix projection;
 };
 

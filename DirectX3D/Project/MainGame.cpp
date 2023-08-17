@@ -36,10 +36,13 @@ void MainGame::Render()
 void MainGame::Initialize()
 {
 	Device::GetInstance();
+	Environment::GetInstance();
 }
 
 void MainGame::Release()
 {
 	Device::Delete();
+	Shader::Delete();
+	Environment::Delete();
 }
 

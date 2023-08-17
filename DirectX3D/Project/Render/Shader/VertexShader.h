@@ -1,10 +1,11 @@
 #pragma once
 class VertexShader : public Shader
 {
-public:
+	friend class Shader;
 	VertexShader(wstring file);
 	~VertexShader();
 
+public:
 	virtual void SetShader() override;
 
 private:

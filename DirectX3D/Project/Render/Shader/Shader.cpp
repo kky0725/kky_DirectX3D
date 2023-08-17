@@ -1,9 +1,7 @@
 #include "Framework.h"
 #include "Shader.h"
 
-Shader::Shader()
-{
-}
+map<wstring, Shader*> Shader::_shaders = {};
 
 Shader::~Shader()
 {
@@ -12,16 +10,32 @@ Shader::~Shader()
 
 VertexShader* Shader::GetVS(wstring file)
 {
+	file = L"_Shader/Vertex" + file + L".hlsl";
 
+	if (_shaders.count(file) > 0)
+		return (VertexShader*)_shaders[file];
 
-	return nullptr;
+	_shaders[file] = new VertexShader(file);
+
+	return (VertexShader*)_shaders[file];
 }
 
 PixelShader* Shader::GetPS(wstring file)
 {
-	return nullptr;
+	file = L"_Shader/Pixel" + file + L".hlsl";
+
+	if (_shaders.count(file) > 0)
+		return (PixelShader*)_shaders[file];
+
+	_shaders[file] = new PixelShader(file);
+
+	return (PixelShader*)_shaders[file];
 }
 
 void Shader::Delete()
 {
+	for (pair<wstring, Shader*> shader : _shaders)
+		delete shader.second;
+
+	_shaders.clear();
 }
