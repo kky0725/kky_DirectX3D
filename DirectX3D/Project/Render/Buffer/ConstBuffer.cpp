@@ -7,9 +7,9 @@ ConstBuffer::ConstBuffer(void* data, UINT dataSize)
 	D3D11_BUFFER_DESC bufferDesc = {};
 
 	bufferDesc.ByteWidth			= dataSize;
-	bufferDesc.Usage				= D3D11_USAGE_DEFAULT;
+	bufferDesc.Usage				= D3D11_USAGE_DYNAMIC;
 	bufferDesc.BindFlags			= D3D11_BIND_CONSTANT_BUFFER;
-	bufferDesc.CPUAccessFlags		= 0;
+	bufferDesc.CPUAccessFlags		= D3D11_CPU_ACCESS_WRITE;
 	bufferDesc.MiscFlags			= 0;
 	bufferDesc.StructureByteStride	= 0;
 
@@ -37,5 +37,11 @@ void ConstBuffer::SetPSBuffer(UINT slot)
 
 void ConstBuffer::UpdataeSubresource()
 {
-	DC->UpdateSubresource(_constBuffer, 0, nullptr, _data, 0, 0);
+	DC->Map(_constBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &_subResource);
+
+	memcpy(_subResource.pData, _data, _dataSize);
+
+	DC->Unmap(_constBuffer, 0);
+
+	//DC->UpdateSubresource(_constBuffer, 0, nullptr, _data, 0, 0);
 }

@@ -133,8 +133,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Object\Basic\Cube.h" />
     <ClInclude Include="Render\Buffer\ConstBuffer.h" />
     <ClInclude Include="Render\Buffer\IndexBuffer.h" />
+    <ClInclude Include="Render\Buffer\VertexLayout.h" />
     <ClInclude Include="System\Environment.h" />
     <ClInclude Include="Render\Shader\PixelShader.h" />
     <ClInclude Include="Render\Shader\Shader.h" />
@@ -152,6 +154,7 @@
     <ClInclude Include="__Others\targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Object\Basic\Cube.cpp" />
     <ClCompile Include="Render\Buffer\ConstBuffer.cpp" />
     <ClCompile Include="Render\Buffer\IndexBuffer.cpp" />
     <ClCompile Include="System\Environment.cpp" />

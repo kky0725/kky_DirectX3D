@@ -11,5 +11,6 @@ public:
 
 
 private:
-
+	MatrixBuffer* _viewBuffer;
+	MatrixBuffer* _projectionBuffer;
 };

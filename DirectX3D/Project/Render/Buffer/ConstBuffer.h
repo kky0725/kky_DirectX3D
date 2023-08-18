@@ -14,4 +14,6 @@ protected:
 	void* _data;
 	UINT _dataSize;
 	ID3D11Buffer* _constBuffer;
+
+	D3D11_MAPPED_SUBRESOURCE _subResource;
 };
