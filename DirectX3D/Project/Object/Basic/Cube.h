@@ -7,19 +7,30 @@ public:
 
 	void Update();
 	void Render();
+	
+	void CreateMesh();
 
+	void Debug();
 
 private:
 	MatrixBuffer* _worldBuffer;
 
-	vector<VertexColor>	vertices;
-	vector<UINT>		indices;
+	vector<VertexColor>	_vertices;
+	vector<UINT>		_indices;
 
-	//shader->Material
-	VertexShader* _vertexShader;
-	PixelShader*  _pixelShader;
+	Material* _material;
+	Mesh* _mesh;
 
-	//Vertex, Index -> Mesh
-	VertexBuffer* _vertexBuffer;
-	IndexBuffer*  _indexBuffer;
+	//SRT
+
+	XMFLOAT3 _scale			= {1.0f, 1.0f, 1.0f};
+	XMFLOAT3 _rotation		= {0.0f, 0.0f, 0.0f};
+	XMFLOAT3 _translation	= {0.0f, 0.0f, 0.0f};
+
+	XMMATRIX _S;
+	XMMATRIX _R;
+	XMMATRIX _T;
+
+	XMMATRIX _world;
+
 };

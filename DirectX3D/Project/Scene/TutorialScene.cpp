@@ -27,4 +27,5 @@ void TutorialScene::Render()
 
 void TutorialScene::PostRender()
 {
+	_cube->Debug();
 }

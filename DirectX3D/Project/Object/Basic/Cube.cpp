@@ -3,28 +3,60 @@
 
 Cube::Cube()
 {
-	_vertexShader = Shader::GetVS(L"Tutorial");
-	_pixelShader = Shader::GetPS(L"Tutorial");
+	_material = new Material(L"Tutorial");
 
-	vertices =
+	CreateMesh();
+
+	_worldBuffer = new MatrixBuffer();
+}
+
+Cube::~Cube()
+{
+	delete _mesh;
+	delete _material;
+
+	delete _worldBuffer;
+}
+
+void Cube::Update()
+{
+	_S = XMMatrixScaling(_scale.x, _scale.y, _scale.z);
+	_R = XMMatrixRotationRollPitchYaw(_rotation.x, _rotation.y, _rotation.z);
+	_T = XMMatrixTranslation(_translation.x, _translation.y, _translation.z);
+
+	_world = _S * _R * _T;
+
+	_worldBuffer->SetData(_world);
+}
+
+void Cube::Render()
+{
+	//todo: Render
+	_material->SetMaterial();
+	_mesh->SetMesh();
+
+	_worldBuffer->SetVSBuffer(0);
+
+	DC->DrawIndexed(_indices.size(), 0, 0);
+	
+}
+
+void Cube::CreateMesh()
+{
+	_vertices =
 	{
-		VertexColor({-1.0f, +1.0f, -1.0f}, {1.0f, 0.0f, 0.0f ,1.0f}),
-		VertexColor({+1.0f, +1.0f, -1.0f}, {0.0f, 1.0f, 0.0f ,1.0f}),
-		VertexColor({-1.0f, -1.0f, -1.0f}, {0.0f, 0.0f, 1.0f ,1.0f}),
-		VertexColor({+1.0f, -1.0f, -1.0f}, {1.0f, 1.0f, 0.0f ,1.0f}),
+		VertexColor({ -1.0f, +1.0f, -1.0f }, { 1.0f, 0.0f, 0.0f ,1.0f }),
+		VertexColor({ +1.0f, +1.0f, -1.0f }, { 0.0f, 1.0f, 0.0f ,1.0f }),
+		VertexColor({ -1.0f, -1.0f, -1.0f }, { 0.0f, 0.0f, 1.0f ,1.0f }),
+		VertexColor({ +1.0f, -1.0f, -1.0f }, { 1.0f, 1.0f, 0.0f ,1.0f }),
 
-		VertexColor({-1.0f, +1.0f, +1.0f}, {1.0f, 0.0f, 0.0f ,1.0f}),
-		VertexColor({+1.0f, +1.0f, +1.0f}, {0.0f, 1.0f, 0.0f ,1.0f}),
-		VertexColor({-1.0f, -1.0f, +1.0f}, {0.0f, 0.0f, 1.0f ,1.0f}),
-		VertexColor({+1.0f, -1.0f, +1.0f}, {1.0f, 1.0f, 0.0f ,1.0f})
+		VertexColor({ -1.0f, +1.0f, +1.0f }, { 1.0f, 0.0f, 0.0f ,1.0f }),
+		VertexColor({ +1.0f, +1.0f, +1.0f }, { 0.0f, 1.0f, 0.0f ,1.0f }),
+		VertexColor({ -1.0f, -1.0f, +1.0f }, { 0.0f, 0.0f, 1.0f ,1.0f }),
+		VertexColor({ +1.0f, -1.0f, +1.0f }, { 1.0f, 1.0f, 0.0f ,1.0f })
 	};
 
-	//VertexBuffer
-	_vertexBuffer = new VertexBuffer(vertices);
-
-	//IndexBuffer
-
-	indices =
+	_indices =
 	{
 		//Front
 		0, 1, 2,
@@ -52,42 +84,21 @@ Cube::Cube()
 
 	};
 
-	_indexBuffer = new IndexBuffer(indices);
-
-	//WVP
-
-	_worldBuffer = new MatrixBuffer();
+	_mesh = new Mesh(_vertices, _indices);
 }
 
-Cube::~Cube()
+void Cube::Debug()
 {
-	delete _vertexBuffer;
-	delete _indexBuffer;
+	if (ImGui::BeginMenu("Cube"))
+	{
+		ImGui::DragFloat3("Scale",		 (float*)&_scale,		0.01f, 0.01f, 100.0f);
+		//ImGui::DragFloat3("Rotation",	 (float*)&_rotation,	0.01f, -XM_2PI, +XM_2PI);
+		ImGui::SliderAngle("Rotationx", &_rotation.x);//270에서 짐벌락 현상 발생->쿼터니언 각도를 사용해서 해결 가능
+		ImGui::SliderAngle("Rotationy", &_rotation.y);
+		ImGui::SliderAngle("Rotationz", &_rotation.z);
+		ImGui::DragFloat3("Translation", (float*)&_translation, 0.01f, -WIN_WIDTH, WIN_WIDTH);
 
-	delete _worldBuffer;
-}
-
-void Cube::Update()
-{
-	static float angle = 0.0f;
-	angle += 0.0001f;
-
-	XMMATRIX world = XMMatrixRotationRollPitchYaw(angle, angle, 0.0f);
-	_worldBuffer->SetData(world);
-}
-
-void Cube::Render()
-{
-	//todo: Render
-	_vertexShader->SetShader();
-	_pixelShader->SetShader();
-
-	_vertexBuffer->IASetBuffer();
-	_indexBuffer->IASetBuffer();
-
-
-	_worldBuffer->SetVSBuffer(0);
-
-	DC->DrawIndexed(indices.size(), 0, 0);
+		ImGui::EndMenu();
+	}
 }
 
