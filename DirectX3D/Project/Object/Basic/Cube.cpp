@@ -1,13 +1,19 @@
 #include "Framework.h"
 #include "Cube.h"
 
-Cube::Cube()
+int Cube::_count = 0;
+
+Cube::Cube(Vector4 color)
 {
 	_material = new Material(L"Tutorial");
 
-	CreateMesh();
+	CreateMesh(color);
 
 	_worldBuffer = new MatrixBuffer();
+
+	_count++;
+
+	_label = "Cube" + to_string(_count);
 }
 
 Cube::~Cube()
@@ -20,11 +26,7 @@ Cube::~Cube()
 
 void Cube::Update()
 {
-	_S = XMMatrixScaling(_scale.x, _scale.y, _scale.z);
-	_R = XMMatrixRotationRollPitchYaw(_rotation.x, _rotation.y, _rotation.z);
-	_T = XMMatrixTranslation(_translation.x, _translation.y, _translation.z);
-
-	_world = _S * _R * _T;
+	Transform::Update();
 
 	_worldBuffer->SetData(_world);
 }
@@ -41,19 +43,19 @@ void Cube::Render()
 	
 }
 
-void Cube::CreateMesh()
+void Cube::CreateMesh(Vector4 color)
 {
 	_vertices =
 	{
-		VertexColor({ -1.0f, +1.0f, -1.0f }, { 1.0f, 0.0f, 0.0f ,1.0f }),
-		VertexColor({ +1.0f, +1.0f, -1.0f }, { 0.0f, 1.0f, 0.0f ,1.0f }),
-		VertexColor({ -1.0f, -1.0f, -1.0f }, { 0.0f, 0.0f, 1.0f ,1.0f }),
-		VertexColor({ +1.0f, -1.0f, -1.0f }, { 1.0f, 1.0f, 0.0f ,1.0f }),
+		VertexColor({ -1.0f, +1.0f, -1.0f }, color),
+		VertexColor({ +1.0f, +1.0f, -1.0f }, color),
+		VertexColor({ -1.0f, -1.0f, -1.0f }, color),
+		VertexColor({ +1.0f, -1.0f, -1.0f }, color),
 
-		VertexColor({ -1.0f, +1.0f, +1.0f }, { 1.0f, 0.0f, 0.0f ,1.0f }),
-		VertexColor({ +1.0f, +1.0f, +1.0f }, { 0.0f, 1.0f, 0.0f ,1.0f }),
-		VertexColor({ -1.0f, -1.0f, +1.0f }, { 0.0f, 0.0f, 1.0f ,1.0f }),
-		VertexColor({ +1.0f, -1.0f, +1.0f }, { 1.0f, 1.0f, 0.0f ,1.0f })
+		VertexColor({ -1.0f, +1.0f, +1.0f }, color),
+		VertexColor({ +1.0f, +1.0f, +1.0f }, color),
+		VertexColor({ -1.0f, -1.0f, +1.0f }, color),
+		VertexColor({ +1.0f, -1.0f, +1.0f }, color)
 	};
 
 	_indices =
@@ -89,7 +91,7 @@ void Cube::CreateMesh()
 
 void Cube::Debug()
 {
-	if (ImGui::BeginMenu("Cube"))
+	if (ImGui::BeginMenu(_label.c_str()))
 	{
 		ImGui::DragFloat3("Scale",		 (float*)&_scale,		0.01f, 0.01f, 100.0f);
 		//ImGui::DragFloat3("Rotation",	 (float*)&_rotation,	0.01f, -XM_2PI, +XM_2PI);

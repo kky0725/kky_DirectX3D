@@ -1,14 +1,14 @@
 #pragma once
-class Cube
+class Cube : public Transform
 {
 public:
-	Cube();
+	Cube(Vector4 color);
 	~Cube();
 
 	void Update();
 	void Render();
 	
-	void CreateMesh();
+	void CreateMesh(Vector4 color);
 
 	void Debug();
 
@@ -21,16 +21,6 @@ private:
 	Material* _material;
 	Mesh* _mesh;
 
-	//SRT
-
-	XMFLOAT3 _scale			= {1.0f, 1.0f, 1.0f};
-	XMFLOAT3 _rotation		= {0.0f, 0.0f, 0.0f};
-	XMFLOAT3 _translation	= {0.0f, 0.0f, 0.0f};
-
-	XMMATRIX _S;
-	XMMATRIX _R;
-	XMMATRIX _T;
-
-	XMMATRIX _world;
-
+	static int _count;
+	string _label = "";
 };
