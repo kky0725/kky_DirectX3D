@@ -12,6 +12,13 @@ public:
 
 	void SetParent(Transform* parent) { this->_parent = parent; }
 
+	Vector3	 Forward() { return _forward; }
+	Vector3 Backward() { return _forward * -1; }
+	Vector3     Left() { return _right * -1; }
+	Vector3     Right() { return _right; }
+	Vector3       Up() { return _up; }
+	Vector3     Down() { return _up * -1; }
+
 public:
 	Vector3 _scale			= { 1.0f, 1.0f, 1.0f };
 	Vector3 _rotation		= { 0.0f, 0.0f, 0.0f };
@@ -23,4 +30,10 @@ protected:
 	Vector3 _pivot = {};
 
 	Transform* _parent = nullptr;
+
+	Vector3 _globalScale;
+	Vector3 _globalRotation;
+	Vector3 _globalPosition;
+
+	Vector3 _right, _up, _forward;
 };

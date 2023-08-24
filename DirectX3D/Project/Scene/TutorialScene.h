@@ -14,6 +14,5 @@ public:
 private:
 	Cube* _cube1;
 	Cube* _cube2;
-
 };
 

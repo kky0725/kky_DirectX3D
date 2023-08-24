@@ -108,6 +108,12 @@
     <ClInclude Include="Object\Transform.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Utility\Time.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\Keyboard.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -159,6 +165,12 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Object\Transform.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility\Time.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility\Keyboard.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

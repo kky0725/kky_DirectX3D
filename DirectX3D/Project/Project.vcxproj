@@ -150,10 +150,12 @@
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Scene\TutorialScene.h" />
     <ClInclude Include="Object\Transform.h" />
+    <ClInclude Include="Utility\Keyboard.h" />
     <ClInclude Include="Utility\Singleton.h" />
     <ClInclude Include="Render\Shader\VertexShader.h" />
     <ClInclude Include="Render\Buffer\VertexBuffer.h" />
     <ClInclude Include="Render\Buffer\GlobalBuffer.h" />
+    <ClInclude Include="Utility\Time.h" />
     <ClInclude Include="Utility\Vector3.h" />
     <ClInclude Include="_Include\imconfig.h" />
     <ClInclude Include="_Include\imgui.h" />
@@ -185,6 +187,8 @@
     <ClCompile Include="Render\Shader\VertexShader.cpp" />
     <ClCompile Include="Render\Buffer\VertexBuffer.cpp" />
     <ClCompile Include="Object\Transform.cpp" />
+    <ClCompile Include="Utility\Keyboard.cpp" />
+    <ClCompile Include="Utility\Time.cpp" />
     <ClCompile Include="Utility\Vector3.cpp" />
   </ItemGroup>
   <ItemGroup>
