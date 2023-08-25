@@ -3,9 +3,9 @@ class Cube : public Transform
 {
 public:
 	Cube(Vector4 color);
-	~Cube();
+	virtual ~Cube();
 
-	void Update();
+	virtual void Update();
 	void Render();
 	
 	void CreateMesh(Vector4 color);

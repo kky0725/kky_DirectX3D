@@ -134,6 +134,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Object\Basic\Quad.h" />
     <ClInclude Include="Render\Mesh.h" />
     <ClInclude Include="Render\Material.h" />
     <ClInclude Include="Object\Basic\Cube.h" />
@@ -150,6 +151,7 @@
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Scene\TutorialScene.h" />
     <ClInclude Include="Object\Transform.h" />
+    <ClInclude Include="Scene\TextureScene.h" />
     <ClInclude Include="Utility\Keyboard.h" />
     <ClInclude Include="Utility\Singleton.h" />
     <ClInclude Include="Render\Shader\VertexShader.h" />
@@ -169,6 +171,7 @@
     <ClInclude Include="__Others\targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Object\Basic\Quad.cpp" />
     <ClCompile Include="Render\Mesh.cpp" />
     <ClCompile Include="Render\Material.cpp" />
     <ClCompile Include="Object\Basic\Cube.cpp" />
@@ -187,6 +190,7 @@
     <ClCompile Include="Render\Shader\VertexShader.cpp" />
     <ClCompile Include="Render\Buffer\VertexBuffer.cpp" />
     <ClCompile Include="Object\Transform.cpp" />
+    <ClCompile Include="Scene\TextureScene.cpp" />
     <ClCompile Include="Utility\Keyboard.cpp" />
     <ClCompile Include="Utility\Time.cpp" />
     <ClCompile Include="Utility\Vector3.cpp" />
@@ -195,15 +199,56 @@
     <ResourceCompile Include="__Others\Project.rc" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="_Texture\HeightMap\AlphaMap.png" />
+    <Image Include="_Texture\HeightMap\ColorMap256.png" />
+    <Image Include="_Texture\HeightMap\HeightMap.png" />
+    <Image Include="_Texture\HeightMap\HeightMap256.png" />
+    <Image Include="_Texture\HeightMap\Test.png" />
+    <Image Include="_Texture\HeightMap\TestQuadTree.png" />
+    <Image Include="_Texture\Landscape\Box.png" />
+    <Image Include="_Texture\Landscape\Bricks.png" />
+    <Image Include="_Texture\Landscape\Bricks_normal.png" />
+    <Image Include="_Texture\Landscape\Dirt.png" />
+    <Image Include="_Texture\Landscape\Dirt2.png" />
+    <Image Include="_Texture\Landscape\Dirt3.png" />
+    <Image Include="_Texture\Landscape\Fieldstone_DM.tga" />
+    <Image Include="_Texture\Landscape\fieldstone_NM.tga" />
+    <Image Include="_Texture\Landscape\fieldstone_SM.tga" />
+    <Image Include="_Texture\Landscape\Floor.png" />
+    <Image Include="_Texture\Landscape\Floor_normal.png" />
+    <Image Include="_Texture\Landscape\NightSky.png" />
+    <Image Include="_Texture\Landscape\Snow_ENV.dds" />
+    <Image Include="_Texture\Landscape\Space.dds" />
+    <Image Include="_Texture\Landscape\SpaceSky.dds" />
+    <Image Include="_Texture\Landscape\Stones.png" />
+    <Image Include="_Texture\Landscape\Stones_normal.png" />
+    <Image Include="_Texture\Landscape\Tree.png" />
+    <Image Include="_Texture\Landscape\Wall.png" />
+    <Image Include="_Texture\Landscape\Wall_normal.png" />
+    <Image Include="_Texture\Landscape\Wall_specular.png" />
+    <Image Include="_Texture\Landscape\Wave.dds" />
+    <Image Include="_Texture\Landscape\WaveNormal.png" />
     <Image Include="__Others\Project.ico" />
     <Image Include="__Others\small.ico" />
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="_Shader\PixelTexture.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
     <FxCompile Include="_Shader\PixelTutorial.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="_Shader\VertexTexture.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
     <FxCompile Include="_Shader\VertexTutorial.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>

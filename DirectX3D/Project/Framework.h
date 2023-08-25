@@ -20,6 +20,12 @@
 
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "d3dcompiler.lib")
+#pragma comment(lib, "dxguid.lib") 
+
+#include "DirectXTex.h"
+#include "DirectXTex.inl"
+
+#pragma comment(lib, "DirectXTex.lib")
 
 using namespace std;
 using namespace DirectX;
@@ -72,6 +78,7 @@ typedef XMFLOAT4 Vector4;
 
 #include "Scene/Scene.h"
 #include "Scene//TutorialScene.h"
+#include "Scene//TextureScene.h"
 
 #include "MainGame.h"
 

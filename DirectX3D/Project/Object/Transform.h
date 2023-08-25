@@ -5,7 +5,7 @@ public:
 	Transform();
 	virtual ~Transform();
 
-	void Update();
+	virtual void Update();
 	void UpdateWorld();
 
 	Matrix& GetWorld() { return _world; }
@@ -14,10 +14,10 @@ public:
 
 	Vector3	 Forward() { return _forward; }
 	Vector3 Backward() { return _forward * -1; }
-	Vector3     Left() { return _right * -1; }
-	Vector3     Right() { return _right; }
-	Vector3       Up() { return _up; }
-	Vector3     Down() { return _up * -1; }
+	Vector3	    Left() { return _right * -1; }
+	Vector3	   Right() { return _right; }
+	Vector3		  Up() { return _up; }
+	Vector3		Down() { return _up * -1; }
 
 public:
 	Vector3 _scale			= { 1.0f, 1.0f, 1.0f };
