@@ -8,7 +8,14 @@ TutorialScene::TutorialScene()
 
 	//_cube2->_translation.x = 3;
 
-	_cube2->SetParent(_cube1);
+	//_cube2->SetParent(_cube1);
+	_cube2->SetPivot(Vector3{ 2.0f, 2.0, 2.0f });
+
+	_cube1->_scale = Vector3{ 1.2f, 1.2, 1.2f };
+	_cube2->_scale = Vector3{ 1.2f, 1.2, 1.2f };
+
+	_cube1->_translation = Vector3{ 2.0f, 2.0, 2.0f };
+	_cube2->_translation = Vector3{ 2.0f, 2.0, 2.0f };
 }
 
 TutorialScene::~TutorialScene()

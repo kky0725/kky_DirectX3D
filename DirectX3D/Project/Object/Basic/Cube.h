@@ -9,6 +9,7 @@ public:
 	void Render();
 	
 	void CreateMesh(Vector4 color);
+	void SetPivot(Vector3 pos) { _pivot = pos; }
 
 	void Debug();
 

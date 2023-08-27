@@ -152,6 +152,7 @@
     <ClInclude Include="Scene\TutorialScene.h" />
     <ClInclude Include="Object\Transform.h" />
     <ClInclude Include="Scene\TextureScene.h" />
+    <ClInclude Include="Scene\TestScene.h" />
     <ClInclude Include="Utility\Keyboard.h" />
     <ClInclude Include="Utility\Singleton.h" />
     <ClInclude Include="Render\Shader\VertexShader.h" />
@@ -191,6 +192,7 @@
     <ClCompile Include="Render\Buffer\VertexBuffer.cpp" />
     <ClCompile Include="Object\Transform.cpp" />
     <ClCompile Include="Scene\TextureScene.cpp" />
+    <ClCompile Include="Scene\TestScene.cpp" />
     <ClCompile Include="Utility\Keyboard.cpp" />
     <ClCompile Include="Utility\Time.cpp" />
     <ClCompile Include="Utility\Vector3.cpp" />
