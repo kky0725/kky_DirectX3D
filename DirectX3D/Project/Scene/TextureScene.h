@@ -14,6 +14,6 @@ public:
 
 	virtual void PostRender() override;
 private:
-
+	Quad* _quad = nullptr;
 
 };

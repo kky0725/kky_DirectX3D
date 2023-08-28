@@ -48,6 +48,7 @@ using namespace DirectX;
 
 typedef XMMATRIX Matrix;
 typedef XMFLOAT4 Vector4;
+typedef XMFLOAT2 Vector2;
 
 #include "Utility/Singleton.h"
 #include "Utility/Vector3.h"
@@ -75,6 +76,7 @@ typedef XMFLOAT4 Vector4;
 #include "System/Environment.h"
 
 #include "Object/Basic/Cube.h"
+#include "Object/Basic/Quad.h"
 
 #include "Scene/Scene.h"
 #include "Scene/TutorialScene.h"
