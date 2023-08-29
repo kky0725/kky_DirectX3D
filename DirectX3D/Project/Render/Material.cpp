@@ -34,6 +34,14 @@ void Material::SetMaterial()
 {
 	_vertexShader->SetShader();
 	_pixelShader->SetShader();
+
+	if (_diffuseMap)
+		_diffuseMap->PSSetShaderResources(0);
+}
+
+void Material::SetDiffuseMap(wstring file)
+{
+	_diffuseMap = Texture::Get(file);
 }
 
 

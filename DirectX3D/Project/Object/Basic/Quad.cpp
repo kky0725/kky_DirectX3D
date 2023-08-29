@@ -26,36 +26,15 @@ Quad::Quad(Vector2 size)
 
 	_material = new Material();
 	_material->SetShader(L"Texture");
+	_material->SetDiffuseMap(L"Landscape/Box.png");
 
 	_worldBuffer = new MatrixBuffer();
-
-	//Texture
-
-	ScratchImage image;
-	LoadFromWICFile(L"_Texture/Landscape/Box.png", WIC_FLAGS_NONE, nullptr, image);
-
-	CreateShaderResourceView(DEVICE, image.GetImages(), image.GetImageCount(), image.GetMetadata(), &_srv);
-
-	D3D11_SAMPLER_DESC samplerDesc = {};
-
-	samplerDesc.Filter			= D3D11_FILTER_MIN_MAG_MIP_POINT;
-	samplerDesc.AddressU		= D3D11_TEXTURE_ADDRESS_WRAP;
-	samplerDesc.AddressV		= D3D11_TEXTURE_ADDRESS_WRAP;
-	samplerDesc.AddressW		= D3D11_TEXTURE_ADDRESS_WRAP;
-	samplerDesc.ComparisonFunc	= D3D11_COMPARISON_NEVER;
-	samplerDesc.MinLOD			= 0;
-	samplerDesc.MaxLOD			= D3D11_FLOAT32_MAX;
-
-	DEVICE->CreateSamplerState(&samplerDesc, &_samplerState);
 }
 
 Quad::~Quad()
 {
-	delete _mesh;
 	delete _worldBuffer;
-
-			 _srv->Release();
-	_samplerState->Release();
+	delete _mesh;
 }
 
 void Quad::Update()
@@ -70,10 +49,6 @@ void Quad::Render()
 	
 	_material->SetMaterial();
 	_mesh->SetMesh();
-
-
-	DC->PSSetShaderResources(0, 1, &_srv);
-	DC->PSSetSamplers(0, 1, &_samplerState);
 
 	DC->DrawIndexed(_indices.size(), 0, 0);
 }

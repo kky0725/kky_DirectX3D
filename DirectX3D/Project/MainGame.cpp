@@ -6,8 +6,8 @@ MainGame::MainGame()
 	Initialize();
 
 	//scene = new TutorialScene();
-	//scene = new TextureScene();
-	scene = new TestScene();
+	scene = new TextureScene();
+	//scene = new TestScene();
 }
 
 MainGame::~MainGame()
@@ -48,10 +48,11 @@ void MainGame::Render()
 
 void MainGame::Initialize()
 {
-	Device::GetInstance();
+	//Device::GetInstance();
 	Environment::GetInstance();
 	Keyboard::GetInstance();
 	Time::GetInstance();
+	StateManager::GetInstance();
 
 	// Setup Dear ImGui context
 	IMGUI_CHECKVERSION();
@@ -71,11 +72,12 @@ void MainGame::Initialize()
 
 void MainGame::Release()
 {
+	StateManager::Delete();
 	Time::Delete();
 	Keyboard::Delete();
-	Device::Delete();
 	Shader::Delete();
 	Environment::Delete();
+	Device::Delete();
 
 	ImGui_ImplDX11_Shutdown();
 	ImGui_ImplWin32_Shutdown();

@@ -13,7 +13,11 @@ public:
 
 	void SetMaterial();
 
+	void SetDiffuseMap(wstring file);
+
 private:
 	VertexShader* _vertexShader = nullptr;
 	PixelShader* _pixelShader = nullptr;
+
+	Texture* _diffuseMap = nullptr;
 };

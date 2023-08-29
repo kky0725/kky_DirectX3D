@@ -44,3 +44,18 @@ void Transform::UpdateWorld()
 	_globalPosition = outT;
 }
 
+void Transform::Debug()
+{
+	if (ImGui::BeginMenu(_label.c_str()))
+	{
+		ImGui::DragFloat3("Scale", (float*)&_scale, 0.01f, 0.01f, 100.0f);
+		//ImGui::DragFloat3("Rotation",	 (float*)&_rotation,	0.01f, -XM_2PI, +XM_2PI);
+		ImGui::SliderAngle("Rotationx", &_rotation.x);//270에서 짐벌락 현상 발생->쿼터니언 각도를 사용해서 해결 가능
+		ImGui::SliderAngle("Rotationy", &_rotation.y);
+		ImGui::SliderAngle("Rotationz", &_rotation.z);
+		ImGui::DragFloat3("Translation", (float*)&_translation, 0.01f, -WIN_WIDTH, WIN_WIDTH);
+
+		ImGui::EndMenu();
+	}
+}
+

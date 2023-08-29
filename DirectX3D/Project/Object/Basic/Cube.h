@@ -11,8 +11,6 @@ public:
 	void CreateMesh(Vector4 color);
 	void SetPivot(Vector3 pos) { _pivot = pos; }
 
-	void Debug();
-
 private:
 	MatrixBuffer* _worldBuffer;
 
@@ -23,5 +21,4 @@ private:
 	Mesh* _mesh;
 
 	static int _count;
-	string _label = "";
 };
