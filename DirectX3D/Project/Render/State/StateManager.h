@@ -6,10 +6,12 @@ class StateManager : public Singleton<StateManager>
 	~StateManager();
 
 	void CreateSamplerState();
+	void CreateRasterizerState();
 
 public:
 
 
 private:
 	SamplerState* _samplerStae = nullptr;
+	RasterizerState* _rasterizerState = nullptr;
 };
