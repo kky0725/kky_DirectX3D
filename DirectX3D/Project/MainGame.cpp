@@ -82,6 +82,7 @@ void MainGame::Release()
 	Environment::Delete();
 	Device::Delete();
 	Camera::Delete();
+	Texture::Delete();
 
 	ImGui_ImplDX11_Shutdown();
 	ImGui_ImplWin32_Shutdown();
