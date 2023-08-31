@@ -5,9 +5,11 @@ TerrainScene::TerrainScene()
 {
 	_material = new Material();
 	_material->SetShader(L"Texture");
-	_material->SetDiffuseMap(L"Landscape/Tree.png");
+	_material->SetDiffuseMap(L"Landscape/Dirt.png");
 
 	_worldBuffer = new MatrixBuffer();
+
+	_heightMap = Texture::Get(L"HeightMap/HeightMap.png");
 
 	CreateMesh();
 }
@@ -43,6 +45,11 @@ void TerrainScene::PostRender()
 
 void TerrainScene::CreateMesh()
 {
+	 _width = _heightMap->GetSize().x;
+	_height = _heightMap->GetSize().y;
+
+	vector<Vector4> colors = _heightMap->ReadPixels();
+
 	//Vertex
 	for (float z = 0; z < _height; z++)
 	{
@@ -51,10 +58,12 @@ void TerrainScene::CreateMesh()
 			VertexTexture vertex;
 			vertex.pos = Vector3(x, 0, z);
 
-			//vertex.pos.y = 2 * rand()%10;
-
 			vertex.uv.x =	  x / (_width  - 1);
 			vertex.uv.y = 1 - z / (_height - 1);
+
+			//HeightMap
+			UINT index = x + z * _width;
+			vertex.pos.y = colors[index].x * MAP_HEIGHT;
 
 			_vertices.push_back(vertex);
 		}

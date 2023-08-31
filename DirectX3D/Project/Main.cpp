@@ -8,6 +8,8 @@
 
 HWND hWnd;
 
+Vector3 mousePos;
+
 // 전역 변수:
 HINSTANCE hInst;                                // 현재 인스턴스입니다.
 WCHAR szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입니다.
@@ -186,6 +188,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		EndPaint(hWnd, &ps);
 	}
 	break;
+	case WM_MOUSEMOVE:
+		mousePos.x = LOWORD(lParam);
+		mousePos.y = HIWORD(lParam);
+		break;
 	case WM_DESTROY:
 		PostQuitMessage(0);
 		break;

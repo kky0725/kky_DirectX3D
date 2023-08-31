@@ -10,6 +10,10 @@ public:
 
 	void PSSetShaderResources(UINT slot);
 
+	vector<Vector4> ReadPixels();
+
+	Vector2 GetSize() { return Vector2(_image.GetMetadata().width, _image.GetMetadata().height); }
+
 private:
 	ID3D11ShaderResourceView* _srv = nullptr;
 

@@ -24,6 +24,7 @@ void MainGame::Update()
 
 	Time::GetInstance()->Update();
 	Keyboard::GetInstance()->Update();
+	Camera::GetInstance()->Update();
 }
 
 void MainGame::Render()
@@ -39,6 +40,7 @@ void MainGame::Render()
 	scene->Render();
 
 	scene->PostRender();
+	Camera::GetInstance()->PostRender();
 
 	ImGui::Render();
 
@@ -79,6 +81,7 @@ void MainGame::Release()
 	Shader::Delete();
 	Environment::Delete();
 	Device::Delete();
+	Camera::Delete();
 
 	ImGui_ImplDX11_Shutdown();
 	ImGui_ImplWin32_Shutdown();
