@@ -150,6 +150,12 @@
     <ClInclude Include="System\Camera.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Object\Landscape\Terrain.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Basic\Sphere.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -245,6 +251,12 @@
     <ClCompile Include="System\Camera.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Object\Landscape\Terrain.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Basic\Sphere.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="__Others\Project.rc">
@@ -337,10 +349,13 @@
     <FxCompile Include="_Shader\VertexTutorial.hlsl" />
     <FxCompile Include="_Shader\VertexTexture.hlsl" />
     <FxCompile Include="_Shader\PixelTexture.hlsl" />
+    <FxCompile Include="_Shader\VertexDiffuse.hlsl" />
+    <FxCompile Include="_Shader\PixelDiffuse.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="_Library\ImGui.idb" />
     <None Include="_Library\ImGui.pdb" />
+    <None Include="_Shader\Header.hlsli" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="_Library\ImGui.lib" />

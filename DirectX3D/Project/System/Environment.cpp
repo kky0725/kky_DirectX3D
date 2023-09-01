@@ -5,10 +5,13 @@ Environment::Environment()
 {
 	CreateViewport();
 	CreatePerspective();
+
+	_lightBuffer = new LightBuffer();
 }
 
 Environment::~Environment()
 {
+	delete _lightBuffer;
 	delete _projectionBuffer;
 }
 
@@ -34,5 +37,18 @@ void Environment::CreatePerspective()
 	_projectionBuffer->SetData(projection);
 
 	_projectionBuffer->SetVSBuffer(2);
+}
+
+void Environment::SetEnvironment()
+{
+	_lightBuffer->SetVSBuffer(3);
+
+	_lightBuffer->SetData(_lightDirection);
+}
+
+void Environment::PostRneder()
+{
+	ImGui::SliderFloat3("LightDirection", (float*)&_lightDirection, -1.0f, +1.0f);
+
 }
 

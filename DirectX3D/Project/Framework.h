@@ -80,12 +80,15 @@ typedef XMFLOAT2 Vector2;
 #include "Render/State/StateManager.h"
 
 #include "System/Environment.h"
-#include"System/Camera.h"
+#include "System/Camera.h"
 
 #include "Object/Basic/Cube.h"
 #include "Object/Basic/Quad.h"
 #include "Object/Basic/ImageCube.h"
 #include "Object/Basic/TextureCube.h"
+#include "Object/Basic/Sphere.h"
+
+#include "Object/Landscape/Terrain.h"
 
 #include "Scene/Scene.h"
 #include "Scene/TutorialScene.h"

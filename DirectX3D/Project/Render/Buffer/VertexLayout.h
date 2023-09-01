@@ -41,3 +41,13 @@ struct VertexTexture
 	XMFLOAT2 uv	 = {};
 };
 
+struct VertexTextureNormal
+{
+	VertexTextureNormal()
+	{
+	}
+
+	XMFLOAT3 pos = {};
+	XMFLOAT2 uv = {};
+	Vector3 normal = {};
+};

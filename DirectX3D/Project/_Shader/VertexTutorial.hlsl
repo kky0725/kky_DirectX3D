@@ -19,15 +19,15 @@ struct VertexInput
     float4 color : COLOR;
 };
 
-struct VertextOutPut
+struct VertexOutPut
 {
     float4 pos   : SV_POSITION;
     float4 color : COLOR;
 };
 
-VertextOutPut main( VertexInput input)
+VertexOutPut main( VertexInput input)
 {
-    VertextOutPut output;
+    VertexOutPut output;
     
     output.pos = mul(input.pos, world);
     output.pos = mul(output.pos, view);

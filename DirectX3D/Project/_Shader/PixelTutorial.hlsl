@@ -1,10 +1,10 @@
-struct VertextOutPut
+struct VertexOutPut
 {
     float4 pos   : SV_POSITION;
     float4 color : COLOR;
 };
 
-float4 main(VertextOutPut input) : SV_TARGET
+float4 main(VertexOutPut input) : SV_TARGET
 {
     return input.color;
 }

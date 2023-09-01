@@ -7,7 +7,8 @@ Camera::Camera()
 
 	_transform = new Transform();
 
-	_transform->_translation = { 0.0f, 20.0f, -15.0f };
+	_transform->_translation = { 120.0f, 100.0f, -20.0f };
+	_transform->_rotation.x = 0.65f;
 }
 
 Camera::~Camera()
@@ -24,6 +25,8 @@ void Camera::Update()
 
 void Camera::PostRender()
 {
+	ImGui::Text("Camera Pos x : %.2f, y : %.2f, z : %.2f", _transform->_translation.x, _transform->_translation.y, _transform->_translation.z);
+	ImGui::Text("Camera Rot x : %.2f, y : %.2f, z : %.2f", _transform->_rotation.x, _transform->_rotation.y, _transform->_rotation.z);
 }
 
 void Camera::FreeMode()
