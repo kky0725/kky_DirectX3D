@@ -9,13 +9,14 @@ public:
 	void Render();
 	
 	void CreateMesh(Vector4 color);
+	void CreateNormal();
 	void SetPivot(Vector3 pos) { _pivot = pos; }
 
 private:
 	MatrixBuffer* _worldBuffer;
 
-	vector<VertexColor>	_vertices;
-	vector<UINT>		_indices;
+	vector<VertexColorNormal>	_vertices;
+	vector<UINT>				_indices;
 
 	Material* _material;
 	Mesh* _mesh;

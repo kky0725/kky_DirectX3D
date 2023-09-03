@@ -11,5 +11,5 @@ public:
 	void PostRender() override;
 
 private:
-	ImageCube* _imageCube;
+	Sphere* _sphere;
 };

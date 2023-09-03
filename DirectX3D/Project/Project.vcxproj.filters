@@ -351,6 +351,8 @@
     <FxCompile Include="_Shader\PixelTexture.hlsl" />
     <FxCompile Include="_Shader\VertexDiffuse.hlsl" />
     <FxCompile Include="_Shader\PixelDiffuse.hlsl" />
+    <FxCompile Include="_Shader\VertexDiffuseColor.hlsl" />
+    <FxCompile Include="_Shader\PixelDiffuseColor.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="_Library\ImGui.idb" />
