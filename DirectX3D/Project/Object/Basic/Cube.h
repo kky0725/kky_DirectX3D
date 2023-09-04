@@ -1,6 +1,8 @@
 #pragma once
 class Cube : public Transform
 {
+	typedef VertexColorNormal VertexType;
+
 public:
 	Cube(Vector4 color);
 	virtual ~Cube();
@@ -15,7 +17,7 @@ public:
 private:
 	MatrixBuffer* _worldBuffer;
 
-	vector<VertexColorNormal>	_vertices;
+	vector<VertexType>	_vertices;
 	vector<UINT>				_indices;
 
 	Material* _material;

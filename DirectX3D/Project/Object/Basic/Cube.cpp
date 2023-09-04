@@ -5,7 +5,7 @@ int Cube::_count = 0;
 
 Cube::Cube(Vector4 color)
 {
-	_material = new Material(L"DiffuseColor");
+	_material = new Material(L"Color");
 
 	_worldBuffer = new MatrixBuffer();
 
@@ -49,15 +49,15 @@ void Cube::CreateMesh(Vector4 color)
 {
 	_vertices =
 	{
-		VertexColorNormal({ -1.0f, +1.0f, -1.0f }, color),
-		VertexColorNormal({ +1.0f, +1.0f, -1.0f }, color),
-		VertexColorNormal({ -1.0f, -1.0f, -1.0f }, color),
-		VertexColorNormal({ +1.0f, -1.0f, -1.0f }, color),
+		VertexType({ -0.5, +0.5f, -0.5f }, color, {0.0f, 0.0f, 0.0f}),
+		VertexType({ +0.5, +0.5f, -0.5f }, color, {0.0f, 0.0f, 0.0f}),
+		VertexType({ -0.5, -0.5f, -0.5f }, color, {0.0f, 0.0f, 0.0f}),
+		VertexType({ +0.5, -0.5f, -0.5f }, color, {0.0f, 0.0f, 0.0f}),
 
-		VertexColorNormal({ -1.0f, +1.0f, +1.0f }, color),
-		VertexColorNormal({ +1.0f, +1.0f, +1.0f }, color),
-		VertexColorNormal({ -1.0f, -1.0f, +1.0f }, color),
-		VertexColorNormal({ +1.0f, -1.0f, +1.0f }, color)
+		VertexType({ -0.5, +0.5f, +0.5f }, color, {0.0f, 0.0f, 0.0f}),
+		VertexType({ +0.5, +0.5f, +0.5f }, color, {0.0f, 0.0f, 0.0f}),
+		VertexType({ -0.5, -0.5f, +0.5f }, color, {0.0f, 0.0f, 0.0f}),
+		VertexType({ +0.5, -0.5f, +0.5f }, color, {0.0f, 0.0f, 0.0f})
 	};
 
 	_indices =

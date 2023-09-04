@@ -41,7 +41,7 @@ void Environment::CreatePerspective()
 
 void Environment::SetEnvironment()
 {
-	_lightBuffer->SetVSBuffer(3);
+	_lightBuffer->SetPSBuffer(3);
 
 	_lightBuffer->SetData(_lightDirection);
 }

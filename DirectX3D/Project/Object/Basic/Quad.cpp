@@ -10,10 +10,10 @@ Quad::Quad(Vector2 size)
 
 	_vertices =
 	{
-		{Vector3(left,	top,	0.0f), Vector2(0,0)},
-		{Vector3(right, top,	0.0f), Vector2(1,0)},
-		{Vector3(left,  bottom, 0.0f), Vector2(0,1)},
-		{Vector3(right, bottom, 0.0f), Vector2(1,1)}
+		{Vector3(left,	top,	0.0f), Vector2(0,0), Vector3(0.0f, 0.0f, -1.0f)},
+		{Vector3(right, top,	0.0f), Vector2(1,0), Vector3(0.0f, 0.0f, -1.0f)},
+		{Vector3(left,  bottom, 0.0f), Vector2(0,1), Vector3(0.0f, 0.0f, -1.0f)},
+		{Vector3(right, bottom, 0.0f), Vector2(1,1), Vector3(0.0f, 0.0f, -1.0f)}
 	};
 
 	_indices =
@@ -25,7 +25,7 @@ Quad::Quad(Vector2 size)
 	_mesh = new Mesh(_vertices, _indices);
 
 	_material = new Material();
-	_material->SetShader(L"Texture");
+	_material->SetShader(L"Diffuse");
 	_material->SetDiffuseMap(L"Landscape/Box.png");
 
 	_worldBuffer = new MatrixBuffer();

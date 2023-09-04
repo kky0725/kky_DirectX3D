@@ -37,8 +37,13 @@ struct VertexColorNormal
 	{
 	}
 
-	XMFLOAT3 pos = {};
-	XMFLOAT4 color = {};
+	VertexColorNormal(XMFLOAT3 pos, XMFLOAT4 color, Vector3 normal)
+		:pos(pos), color(color), normal(normal)
+	{
+	}
+
+	Vector3 pos = {};
+	Vector4 color = {};
 	Vector3 normal = {};
 };
 
@@ -59,6 +64,11 @@ struct VertexTexture
 struct VertexTextureNormal
 {
 	VertexTextureNormal()
+	{
+	}
+
+	VertexTextureNormal(XMFLOAT3 pos, XMFLOAT2 uv, Vector3 normal)
+		:pos(pos), uv(uv), normal(normal)
 	{
 	}
 

@@ -49,12 +49,12 @@ void Sphere::CreateMesh(Vector4 color)
 			float thetaJ = j * 2 * XM_PI / _longitudes;
 
 			vertex.pos.x = _radius * sin(thetaI) * cos(thetaJ);
-			vertex.pos.y = _radius * sin(thetaI) * sin(thetaJ);
-			vertex.pos.z = _radius * cos(thetaI);
+			vertex.pos.y = _radius * cos(thetaI);
+			vertex.pos.z = _radius * sin(thetaI) * sin(thetaJ);
 
 			vertex.normal.x = sin(thetaI) * cos(thetaJ);
-			vertex.normal.y = sin(thetaI) * sin(thetaJ);
-			vertex.normal.z = cos(thetaI);
+			vertex.normal.y = cos(thetaI);
+			vertex.normal.z = sin(thetaI) * sin(thetaJ);
 
 			vertex.color = color;
 

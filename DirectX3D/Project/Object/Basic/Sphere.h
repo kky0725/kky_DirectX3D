@@ -20,7 +20,7 @@ private:
 	Material* _material;
 	Mesh* _mesh;
 
-	UINT _latitudes = 25;//위도의 수
+	UINT  _latitudes = 25;//위도의 수
 	UINT _longitudes = 25;//경도의 수
 	float _radius;
 };

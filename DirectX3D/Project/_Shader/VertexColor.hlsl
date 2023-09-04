@@ -3,11 +3,11 @@
 struct VertexOutPut
 {
 	float4 pos : SV_POSITION;
-	float2 uv : UV;
+	float4 color : COLOR;
 	float3 normal : NORMAL;
 };
 
-VertexOutPut main(VertexTextureNormal input)
+VertexOutPut main(VertexColorNormal input)
 {
 	VertexOutPut output;
 
@@ -15,7 +15,8 @@ VertexOutPut main(VertexTextureNormal input)
 	output.pos = mul(output.pos, view);
 	output.pos = mul(output.pos, projection);
 
-	output.uv = input.uv;
+	output.color = input.color;
+	
 	output.normal = normalize(mul(input.normal, (float3x3) world));
 
 	return output;

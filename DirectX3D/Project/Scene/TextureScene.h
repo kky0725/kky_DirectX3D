@@ -15,5 +15,6 @@ public:
 	virtual void PostRender() override;
 private:
 	TextureCube* _textureCube = nullptr;
+	Cube* _cube = nullptr;
 
 };
