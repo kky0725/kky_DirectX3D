@@ -13,7 +13,7 @@ private:
 	Mesh*	  _mesh		= nullptr;
 
 	vector<VertexTextureNormal> _vertices;
-	vector<UINT>		   _indices;
+	vector<UINT>				_indices;
 
 	MatrixBuffer* _worldBuffer = nullptr;
 };

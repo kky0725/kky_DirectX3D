@@ -48,6 +48,8 @@ using namespace DirectX;
 
 #define CAMERA Camera::GetInstance()->GetTransform()
 
+#define RS StateManager::GetInstance()->GetRS()
+
 typedef XMMATRIX Matrix;
 typedef XMFLOAT4 Vector4;
 typedef XMFLOAT2 Vector2;

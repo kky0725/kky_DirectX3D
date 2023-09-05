@@ -17,4 +17,6 @@ private:
 	TextureCube* _textureCube = nullptr;
 	Cube* _cube = nullptr;
 
+	Sphere* _sphere;
+
 };

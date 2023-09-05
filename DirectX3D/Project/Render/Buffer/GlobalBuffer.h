@@ -43,3 +43,27 @@ private:
 		float padding;
 	} data;
 };
+
+class ViewBuffer : public ConstBuffer
+{
+public:
+	ViewBuffer()
+		:ConstBuffer(&data, sizeof(Data))
+	{
+		data.view = XMMatrixIdentity();;
+		data.invView = XMMatrixIdentity();
+	}
+
+	void SetData(XMMATRIX view, XMMATRIX invView)
+	{
+		data.view = XMMatrixTranspose(view);
+		data.invView = XMMatrixTranspose(invView);
+	}
+
+private:
+	struct Data
+	{
+		XMMATRIX view;
+		XMMATRIX invView;
+	} data;
+};

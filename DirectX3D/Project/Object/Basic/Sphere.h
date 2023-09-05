@@ -1,26 +1,26 @@
 #pragma once
 class Sphere : public Transform
 {
+	typedef VertexTextureNormal VertexType;
 public:
-	Sphere(Vector4 color, float radius);
+	Sphere(float radius = 1.0f, UINT latitudes = 10, UINT longitudes = 20);
 	virtual ~Sphere();
 
 	virtual void Update();
 	void Render();
 
-	void CreateMesh(Vector4 color);
-	void CreateNormal();
-
 private:
+	void CreateMesh();
+
 	MatrixBuffer* _worldBuffer;
 
-	vector<VertexColorNormal>	_vertices;
-	vector<UINT>				_indices;
+	vector<VertexType>	_vertices;
+	vector<UINT>		_indices;
 
 	Material* _material;
 	Mesh* _mesh;
 
-	UINT  _latitudes = 25;//위도의 수
-	UINT _longitudes = 25;//경도의 수
+	UINT  _latitudes;//위도의 수//stack
+	UINT _longitudes;//경도의 수//slice
 	float _radius;
 };

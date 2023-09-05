@@ -9,6 +9,7 @@ class StateManager : public Singleton<StateManager>
 	void CreateRasterizerState();
 
 public:
+	RasterizerState* GetRS() { return _rasterizerState; }
 
 
 private:
