@@ -9,6 +9,8 @@ public:
 	virtual void Update();
 	void Render();
 
+	Material* GetMaterial() { return _material; }
+
 private:
 	void CreateMesh();
 

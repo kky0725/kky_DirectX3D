@@ -16,6 +16,4 @@ private:
 	MatrixBuffer* _projectionBuffer;
 
 	LightBuffer* _lightBuffer;
-
-	Vector3 _lightDirection = V_DOWN;
 };

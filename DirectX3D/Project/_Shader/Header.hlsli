@@ -14,9 +14,24 @@ cbuffer Projection : register(b2)
 	matrix projection;
 };
 
-cbuffer LightDirection : register(b3)
+cbuffer LightDirection : register(b0)
 {
 	float3 lightDirection;
+	float padding;
+	float4 ambientLight;
+};
+
+cbuffer MaterialBuffer : register(b1)
+{
+	float4 mDiffuse;
+	float4 mSpecular;
+	float4 mAmbinet;
+	
+	int hasDiffuseMap;
+	int hasSpecularMap;
+	int hasNormalMap;
+	
+	float shininess;
 };
 
 struct VertexTexture
@@ -46,4 +61,5 @@ struct VertexColorNormal
 };
 
 Texture2D diffuseMap : register(t0);
+Texture2D specularMap : register(t1);
 SamplerState	samp : register(s0);

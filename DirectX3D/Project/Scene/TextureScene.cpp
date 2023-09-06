@@ -13,6 +13,9 @@ TextureScene::TextureScene()
 	_sphere = new Sphere();
 	_sphere->_translation.x = -2;
 
+	_sphere->GetMaterial()->SetDiffuseMap(L"Landscape/Fieldstone_DM.tga");
+	_sphere->GetMaterial()->SetSpecularMap(L"Landscape/Fieldstone_SM.tga");
+
 }
 
 TextureScene::~TextureScene()
@@ -45,11 +48,13 @@ void TextureScene::Render()
 
 	//RS->ChangeState(D3D11_FILL_WIREFRAME);
 	_sphere->Render();
-	RS->ChangeState(D3D11_FILL_SOLID);
+	//RS->ChangeState(D3D11_FILL_SOLID);
 }
 
 void TextureScene::PostRender()
 {
 	_textureCube->Debug();
+
+	_sphere->GetMaterial()->PostRender();
 }
 

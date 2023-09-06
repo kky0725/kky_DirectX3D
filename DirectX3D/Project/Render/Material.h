@@ -14,10 +14,18 @@ public:
 	void SetMaterial();
 
 	void SetDiffuseMap(wstring file);
+	void SetSpecularMap(wstring file);
+
+	MaterialBuffer* GetBuffer() { return _buffer; }
+
+	void PostRender();
 
 private:
 	VertexShader* _vertexShader = nullptr;
 	PixelShader* _pixelShader = nullptr;
 
 	Texture* _diffuseMap = nullptr;
+	Texture* _specularMap = nullptr;
+
+	MaterialBuffer* _buffer = nullptr;
 };

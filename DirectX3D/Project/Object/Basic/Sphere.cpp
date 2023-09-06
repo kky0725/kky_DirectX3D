@@ -7,7 +7,6 @@ Sphere::Sphere(float radius, UINT latitudes, UINT longitudes)
 	CreateMesh();
 	_mesh = new Mesh(_vertices, _indices);
 	_material = new Material(L"Specular");
-	_material->SetDiffuseMap(L"Landscape/Bricks.png");
 
 	_worldBuffer = new MatrixBuffer();
 }

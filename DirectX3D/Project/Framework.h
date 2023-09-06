@@ -58,6 +58,9 @@ typedef XMFLOAT2 Vector2;
 #include "Utility/Vector3.h"
 #include "Utility/Keyboard.h"
 #include "Utility/Time.h"
+#include "Utility/Utility.h"
+
+using namespace Utility;
 
 #include "Object/Transform.h"
 
@@ -67,10 +70,6 @@ typedef XMFLOAT2 Vector2;
 #include "Render/Shader/VertexShader.h"
 #include "Render/Shader/PixelShader.h"
 
-#include "Render/Texture/Texture.h"
-
-#include "Render/Material.h"
-
 #include "Render/Buffer/VertexLayout.h"
 #include "Render/Buffer/VertexBuffer.h"
 #include "Render/Buffer/IndexBuffer.h"
@@ -78,6 +77,8 @@ typedef XMFLOAT2 Vector2;
 #include "Render/Buffer/GlobalBuffer.h"
 
 #include "Render/Mesh.h"
+#include "Render/Material.h"
+#include "Render/Texture/Texture.h"
 
 #include "Render/State/SamplerState.h"
 #include "Render/State/RasterizerState.h"

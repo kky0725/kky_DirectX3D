@@ -4,7 +4,7 @@ class MatrixBuffer : public ConstBuffer
 {
 public:
 	MatrixBuffer()
-		:ConstBuffer(&data, sizeof(data))
+		:ConstBuffer(&data, sizeof(Data))
 	{
 		data.matrix = XMMatrixIdentity();
 	}
@@ -25,23 +25,22 @@ class LightBuffer : public ConstBuffer
 {
 public:
 	LightBuffer()
-		:ConstBuffer(&data, sizeof(data))
+		:ConstBuffer(&data, sizeof(Data))
 	{
 		data.direction = V_DOWN;
+		data.padding = 0.0f;
+		data.ambientLight = Vector4(0.1f, 0.1f, 0.1f, 1.0f);
 	}
 
-	void SetData(Vector3 direction)
-	{
-		data.direction = direction;
-	}
-
-private:
 	struct Data
 	{
 		Vector3 direction;
 
 		float padding;
+
+		Vector4 ambientLight;
 	} data;
+private:
 };
 
 class ViewBuffer : public ConstBuffer
@@ -66,4 +65,28 @@ private:
 		XMMATRIX view;
 		XMMATRIX invView;
 	} data;
+};
+
+class MaterialBuffer : public ConstBuffer
+{
+public:
+	MaterialBuffer()
+		:ConstBuffer(&data, sizeof(Data))
+	{
+
+	}
+
+	struct Data
+	{
+		Vector4 diffuse = Vector4(1, 1, 1, 1);
+		Vector4 specular= Vector4(1, 1, 1, 1);
+		Vector4 ambinet = Vector4(1, 1, 1, 1);
+
+		int hasDiffuseMap = 0;
+		int hasSpecularMap = 0;
+		int hasNormalMap = 0;
+
+		float shininess = 24.0f;
+	} data;
+private:
 };

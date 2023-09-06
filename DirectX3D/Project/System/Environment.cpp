@@ -41,14 +41,13 @@ void Environment::CreatePerspective()
 
 void Environment::SetEnvironment()
 {
-	_lightBuffer->SetPSBuffer(3);
-
-	_lightBuffer->SetData(_lightDirection);
+	_lightBuffer->SetPSBuffer(0);
 }
 
 void Environment::PostRneder()
 {
-	ImGui::SliderFloat3("LightDirection", (float*)&_lightDirection, -1.0f, +1.0f);
+	ImGui::SliderFloat3("LightDirection", (float*)&_lightBuffer->data.direction, -1.0f, +1.0f);
+	ImGui::ColorEdit4("AmbientLight", (float*)&_lightBuffer->data.ambientLight);
 
 }
 
