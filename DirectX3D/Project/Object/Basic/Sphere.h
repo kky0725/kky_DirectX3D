@@ -1,7 +1,7 @@
 #pragma once
 class Sphere : public Transform
 {
-	typedef VertexTextureNormal VertexType;
+	typedef VertexTextureNormalTangent VertexType;
 public:
 	Sphere(float radius = 1.0f, UINT latitudes = 10, UINT longitudes = 20);
 	virtual ~Sphere();
@@ -13,6 +13,7 @@ public:
 
 private:
 	void CreateMesh();
+	void CreateTangent();
 
 	MatrixBuffer* _worldBuffer;
 

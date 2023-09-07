@@ -15,6 +15,7 @@ TextureScene::TextureScene()
 
 	_sphere->GetMaterial()->SetDiffuseMap(L"Landscape/Fieldstone_DM.tga");
 	_sphere->GetMaterial()->SetSpecularMap(L"Landscape/Fieldstone_SM.tga");
+	_sphere->GetMaterial()->SetNormalMap(L"Landscape/Fieldstone_NM.tga");
 
 }
 

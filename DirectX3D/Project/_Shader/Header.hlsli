@@ -14,7 +14,7 @@ cbuffer Projection : register(b2)
 	matrix projection;
 };
 
-cbuffer LightDirection : register(b0)
+cbuffer LightDirection : register(b3)
 {
 	float3 lightDirection;
 	float padding;
@@ -60,6 +60,17 @@ struct VertexColorNormal
 	float3 normal : NORMAL;
 };
 
+struct VertexTextureNormalTangent
+{
+	float4 pos : POSITION;
+	float2 uv : UV;
+	float3 normal : NORMAL;
+	float3 tangent : TANGENT;
+};
+
 Texture2D diffuseMap : register(t0);
 Texture2D specularMap : register(t1);
+Texture2D normalMap : register(t2);
+
+
 SamplerState	samp : register(s0);

@@ -76,9 +76,9 @@ using namespace Utility;
 #include "Render/Buffer/ConstBuffer.h"
 #include "Render/Buffer/GlobalBuffer.h"
 
+#include "Render/Texture/Texture.h"
 #include "Render/Mesh.h"
 #include "Render/Material.h"
-#include "Render/Texture/Texture.h"
 
 #include "Render/State/SamplerState.h"
 #include "Render/State/RasterizerState.h"

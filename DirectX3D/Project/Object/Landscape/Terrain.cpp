@@ -4,8 +4,12 @@
 Terrain::Terrain(wstring diffuseFile, wstring heightFile)
 {
 	_material = new Material();
-	_material->SetShader(L"Diffuse");
-	_material->SetDiffuseMap(diffuseFile);
+	//_material->SetShader(L"Diffuse");
+	_material->SetShader(L"Specular");
+	//_material->SetDiffuseMap(diffuseFile);
+
+	_material->SetDiffuseMap(L"Landscape/Wall.png");
+	_material->SetSpecularMap(L"Landscape/Wall_specular.png");
 
 	_worldBuffer = new MatrixBuffer();
 
@@ -31,6 +35,8 @@ void Terrain::Render()
 	_material->SetMaterial();
 
 	DC->DrawIndexed(_indices.size(), 0, 0);
+
+	_material->PostRender();
 }
 
 void Terrain::CreateMesh()

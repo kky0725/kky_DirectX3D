@@ -76,3 +76,20 @@ struct VertexTextureNormal
 	XMFLOAT2 uv = {};
 	Vector3 normal = {};
 };
+
+struct VertexTextureNormalTangent
+{
+	VertexTextureNormalTangent()
+	{
+	}
+
+	VertexTextureNormalTangent(XMFLOAT3 pos, XMFLOAT2 uv, Vector3 normal, Vector3 tangent)
+		:pos(pos), uv(uv), normal(normal), tangent(tangent)
+	{
+	}
+
+	Vector3 pos = {};
+	Vector2 uv = {};
+	Vector3 normal = {};
+	Vector3 tangent = {};
+};

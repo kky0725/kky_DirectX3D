@@ -41,7 +41,7 @@ void Environment::CreatePerspective()
 
 void Environment::SetEnvironment()
 {
-	_lightBuffer->SetPSBuffer(0);
+	_lightBuffer->SetPSBuffer(3);//header.hlsl 문제 해결하면 0으로 변경
 }
 
 void Environment::PostRneder()
