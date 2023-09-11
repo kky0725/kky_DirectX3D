@@ -32,9 +32,9 @@ void Environment::CreatePerspective()
 {
 	_projectionBuffer = new MatrixBuffer();
 
-	XMMATRIX projection = XMMatrixPerspectiveFovLH(XM_PIDIV2, WIN_WIDTH / WIN_HEIGHT, 0.1f, 1000.0f);
+	_projectionMatrix = XMMatrixPerspectiveFovLH(XM_PIDIV2, WIN_WIDTH / WIN_HEIGHT, 0.1f, 1000.0f);
 
-	_projectionBuffer->SetData(projection);
+	_projectionBuffer->SetData(_projectionMatrix);
 
 	_projectionBuffer->SetVSBuffer(2);
 }

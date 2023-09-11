@@ -12,8 +12,11 @@ public:
 
 	void PostRneder();
 
+	Matrix GetProjMatirx() { return _projectionMatrix; }
+
 private:
 	MatrixBuffer* _projectionBuffer;
+	Matrix		  _projectionMatrix;
 
 	LightBuffer* _lightBuffer;
 };

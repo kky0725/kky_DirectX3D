@@ -8,7 +8,8 @@ MainGame::MainGame()
 	//scene = new TutorialScene();
 	//scene = new TextureScene();
 	//scene = new TestScene();
-	scene = new TerrainScene();
+	//scene = new TerrainScene();
+	scene = new TerrainEditorScene();
 }
 
 MainGame::~MainGame()

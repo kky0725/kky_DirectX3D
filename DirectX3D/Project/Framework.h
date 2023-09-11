@@ -17,6 +17,7 @@
 #include <d3d11.h>
 #include <d3dcompiler.h>
 #include <DirectXMath.h>
+#include <DirectXCollision.h>
 
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "d3dcompiler.lib")
@@ -94,12 +95,14 @@ using namespace Utility;
 #include "Object/Basic/Sphere.h"
 
 #include "Object/Landscape/Terrain.h"
+#include "Object/Landscape/TerrainEditor.h"
 
 #include "Scene/Scene.h"
 #include "Scene/TutorialScene.h"
 #include "Scene/TextureScene.h"
 #include "Scene/TestScene.h"
 #include "Scene/TerrainScene.h"
+#include "Scene/TerrainEditorScene.h"
 
 #include "MainGame.h"
 

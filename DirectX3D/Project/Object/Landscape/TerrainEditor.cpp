@@ -1,40 +1,33 @@
 #include "Framework.h"
-#include "Terrain.h"
+#include "TerrainEditor.h"
 
-Terrain::Terrain(wstring diffuseFile, wstring heightFile)
+TerrainEditor::TerrainEditor(UINT height, UINT width)
+	: _height(height), _width(width)
 {
 	_material = new Material();
-	//_material->SetShader(L"Diffuse");
-	//_material->SetShader(L"Specular");
 	_material->SetShader(L"NormalMapping");
-	//_material->SetDiffuseMap(diffuseFile);
-
-	//_material->SetDiffuseMap(L"Landscape/Wall.png");
-	//_material->SetSpecularMap(L"Landscape/Wall_specular.png");
-	//_material->SetNormalMap(L"Landscape/Wall_normal.png");
-
-	_material->SetDiffuseMap(L"Landscape/Fieldstone_DM.tga");
-	_material->SetSpecularMap(L"Landscape/Fieldstone_SM.tga");
-	_material->SetNormalMap(L"Landscape/Fieldstone_NM.tga");
 
 	_worldBuffer = new MatrixBuffer();
-
-	_heightMap = Texture::Get(heightFile);
 
 	CreateMesh();
 	CreateNormal();
 	CreateTangent();
+
 	_mesh = new Mesh(_vertices, _indices);
 }
 
-Terrain::~Terrain()
+TerrainEditor::~TerrainEditor()
 {
 	delete _mesh;
 	delete _worldBuffer;
 	delete _material;
 }
 
-void Terrain::Render()
+void TerrainEditor::Update()
+{
+}
+
+void TerrainEditor::Render()
 {
 	_worldBuffer->SetData(_world);
 	_worldBuffer->SetVSBuffer(0);
@@ -47,13 +40,51 @@ void Terrain::Render()
 	_material->PostRender();
 }
 
-void Terrain::CreateMesh()
+void TerrainEditor::Debug()
 {
-	 _width = _heightMap->GetSize().x;
-	_height = _heightMap->GetSize().y;
+}
 
-	vector<Vector4> colors = _heightMap->ReadPixels();
+bool TerrainEditor::Picking(OUT Vector3* position)
+{
+	Ray ray = Camera::GetInstance()->ScreenPointToRay(mousePos);
 
+	for (UINT z = 0; z < _height - 1; z++)
+	{
+		for (UINT x = 0; x < _width - 1; x++)
+		{
+			UINT index[4];
+			index[0] = (x + 0) + _width * (z + 0);
+			index[1] = (x + 1) + _width * (z + 0);
+			index[2] = (x + 0) + _width * (z + 1);
+			index[3] = (x + 1) + _width * (z + 1);
+
+			Vector3 pos[4];
+			for (int i = 0; i < 4; i++)
+			{
+				pos[i] = _vertices[index[i]].pos;
+			}
+
+			float distance = 0.0f;
+
+			if (TriangleTests::Intersects(ray.origion, ray.direction, pos[0], pos[1], pos[2], distance))
+			{
+				*position = ray.origion + ray.direction * distance;
+				return true;
+			}
+
+			if (TriangleTests::Intersects(ray.origion, ray.direction, pos[3], pos[1], pos[2], distance))
+			{
+				*position = ray.origion + ray.direction * distance;
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
+
+void TerrainEditor::CreateMesh()
+{
 	//Vertex
 	for (float z = 0; z < _height; z++)
 	{
@@ -62,12 +93,8 @@ void Terrain::CreateMesh()
 			VertexType vertex;
 			vertex.pos = Vector3(x, 0, z);
 
-			vertex.uv.x =	  x / (_width  - 1);
+			vertex.uv.x = x / (_width - 1);
 			vertex.uv.y = 1 - z / (_height - 1);
-
-			//HeightMap
-			UINT index = x + z * _width;
-			vertex.pos.y = colors[index].x * MAP_HEIGHT;
 
 			_vertices.push_back(vertex);
 		}
@@ -92,9 +119,9 @@ void Terrain::CreateMesh()
 	}
 }
 
-void Terrain::CreateNormal()
+void TerrainEditor::CreateNormal()
 {
-	for (UINT i = 0; i < _indices.size() /3; i++)
+	for (UINT i = 0; i < _indices.size() / 3; i++)
 	{
 		UINT index0 = _indices[i * 3 + 0];
 		UINT index1 = _indices[i * 3 + 1];
@@ -115,7 +142,7 @@ void Terrain::CreateNormal()
 	}
 }
 
-void Terrain::CreateTangent()
+void TerrainEditor::CreateTangent()
 {
 	for (UINT i = 0; i < _indices.size() / 3; i++)
 	{
@@ -157,5 +184,3 @@ void Terrain::CreateTangent()
 		vertex.tangent = (T - N * Vector3::Dot(N, T)).GetNormalized();
 	}
 }
-
-

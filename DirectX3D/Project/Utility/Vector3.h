@@ -41,7 +41,7 @@ struct Vector3
 
 	float Length() { return XMVectorGetX(XMVector3Length(*this)); }
 
-	float Normalize() { *this = XMVector3Normalize(*this); }
+	void Normalize() { *this = XMVector3Normalize(*this); }
 
 	Vector3 GetNormalized() { return XMVector3Normalize(*this); }
 
@@ -71,6 +71,11 @@ struct Vector3
 	void operator*=(const float& value) { this->x *= value; this->y *= value; this->z *= value; }
 	void operator/=(const float& value) { this->x /= value; this->y /= value; this->z /= value; }
 
+	Vector3 operator*(const Matrix& value)
+	{
+		return XMVector3TransformNormal(*this, value);
+		//TODO : Coord 번전 구분하기
+	}
 
 	float x = 0.0f;
 	float y = 0.0f;
