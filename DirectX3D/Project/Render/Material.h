@@ -20,6 +20,7 @@ public:
 	MaterialBuffer* GetBuffer() { return _buffer; }
 
 	void PostRender();
+	void SeletMap();
 
 private:
 	VertexShader* _vertexShader = nullptr;
@@ -30,4 +31,8 @@ private:
 	Texture* _normalMap = nullptr;
 
 	MaterialBuffer* _buffer = nullptr;
+
+	string _projectDir;
+	
+	static string _ID;
 };

@@ -26,6 +26,11 @@ void Robot::Render()
 		part->Render();
 }
 
+void Robot::SetPosition(Vector3 pos)
+{
+	_robot[0]->_translation = pos;
+}
+
 void Robot::CreateRobot()
 {
 	//head 0

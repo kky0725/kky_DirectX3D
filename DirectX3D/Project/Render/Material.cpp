@@ -1,15 +1,33 @@
 #include "Framework.h"
 #include "Material.h"
 
+string Material::_ID = "";
+
 Material::Material()
 {
 	_buffer = new MaterialBuffer();
+
+	char path[128];
+	GetCurrentDirectoryA(128, path);
+
+	_projectDir = path;
+	_projectDir += "_Texture/";
+
+	_ID += ".";
 }
 
 Material::Material(wstring file)
 {
 	SetShader(file);
 	_buffer = new MaterialBuffer();
+
+	char path[128];
+	GetCurrentDirectoryA(128, path);
+
+	_projectDir = path;
+	_projectDir += "_Texture/";
+
+	_ID += ".";
 }
 
 Material::~Material()
@@ -79,6 +97,47 @@ void Material::PostRender()
 	ImGui::Checkbox("HasNormalMap", (bool*)&_buffer->data.hasNormalMap);
 
 	ImGui::SliderFloat("Shininess", &_buffer->data.shininess, 1.0f, 50.0f);
+}
+
+void Material::SeletMap()
+{
+#define Dialog ImGuiFileDialog::Instance()
+
+	if (ImGui::BeginChild(_ID.c_str(), ImVec2(100, 85), true))
+	{
+		if (ImGui::Button("DiffuseMap"))
+			Dialog->OpenDialog("Diffuse", "Select Diffuse", ".png,.jpg,.dds,.tga", "_Texture/");
+
+		if (ImGui::Button("SpecularMap"))
+			Dialog->OpenDialog("Specular", "Select Specular", ".png,.jpg,.dds,.tga", "_Texture/");
+
+		if (ImGui::Button("NormalMap"))
+			Dialog->OpenDialog("Normal", "Select Normal", ".png,.jpg,.dds,.tga", "_Texture/");
+
+		if (Dialog->Display("Diffuse") || Dialog->Display("Specular") || Dialog->Display("Normal"))
+		{
+			if (Dialog->IsOk())
+			{
+				string path = Dialog->GetFilePathName();
+
+				path = path.substr(_projectDir.size() + 1, path.size());
+
+				wstring file = ToWstring(path);
+
+				if(Dialog->GetOpenedKey() == "Diffuse")
+					SetDiffuseMap(file);
+				else if (Dialog->GetOpenedKey() == "Specular")
+					SetSpecularMap(file);
+				else if (Dialog->GetOpenedKey() == "Normal")
+					SetNormalMap(file);
+			}
+
+			Dialog->Close();
+		}
+
+
+		ImGui::EndChild();
+	}
 }
 
 

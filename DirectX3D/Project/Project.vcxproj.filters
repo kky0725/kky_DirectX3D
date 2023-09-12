@@ -78,30 +78,6 @@
     <ClInclude Include="Render\Mesh.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="_Include\imconfig.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="_Include\imgui.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="_Include\imgui_impl_dx11.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="_Include\imgui_impl_win32.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="_Include\imgui_internal.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="_Include\imstb_rectpack.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="_Include\imstb_textedit.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="_Include\imstb_truetype.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="Utility\Vector3.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -273,6 +249,9 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Object\Landscape\TerrainEditor.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="_Include\ImGuiFileDialog.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

@@ -7,3 +7,21 @@ wstring Utility::GetExtension(wstring path)
 
 	return path.substr(index + 1, path.length());
 }
+
+string Utility::ToString(wstring str)
+{
+	string temp;
+
+	temp.assign(str.begin(), str.end());
+
+	return temp;
+}
+
+wstring Utility::ToWstring(string str)
+{
+	wstring temp;
+
+	temp.assign(str.begin(), str.end());
+
+	return temp;
+}

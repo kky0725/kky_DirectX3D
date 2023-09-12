@@ -37,6 +37,8 @@ using namespace DirectX;
 
 #pragma comment(lib, "ImGui.lib")
 
+#include "ImGuiFileDialog.h"
+
 #define WIN_WIDTH 1280.0f
 #define WIN_HEIGHT 720.0f
 

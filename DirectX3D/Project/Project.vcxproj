@@ -174,14 +174,6 @@
     <ClInclude Include="Render\Buffer\GlobalBuffer.h" />
     <ClInclude Include="Utility\Time.h" />
     <ClInclude Include="Utility\Vector3.h" />
-    <ClInclude Include="_Include\imconfig.h" />
-    <ClInclude Include="_Include\imgui.h" />
-    <ClInclude Include="_Include\imgui_impl_dx11.h" />
-    <ClInclude Include="_Include\imgui_impl_win32.h" />
-    <ClInclude Include="_Include\imgui_internal.h" />
-    <ClInclude Include="_Include\imstb_rectpack.h" />
-    <ClInclude Include="_Include\imstb_textedit.h" />
-    <ClInclude Include="_Include\imstb_truetype.h" />
     <ClInclude Include="__Others\Resource.h" />
     <ClInclude Include="__Others\targetver.h" />
   </ItemGroup>
@@ -224,6 +216,9 @@
     <ClCompile Include="Utility\Keyboard.cpp" />
     <ClCompile Include="Utility\Time.cpp" />
     <ClCompile Include="Utility\Vector3.cpp" />
+    <ClCompile Include="_Include\ImGuiFileDialog.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="__Others\Project.rc" />

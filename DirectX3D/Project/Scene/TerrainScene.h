@@ -12,4 +12,8 @@ public:
 
 private:
 	Terrain* _terrain;
+
+	Vector3 _pickedPos;
+
+	class Robot* _robot;
 };

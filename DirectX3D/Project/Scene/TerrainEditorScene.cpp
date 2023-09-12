@@ -36,6 +36,7 @@ void TerrainEditorScene::Render()
 void TerrainEditorScene::PostRender()
 {
 	_terrainEidtor->Debug();
+	_terrainEidtor->Getmaterial()->SeletMap();
 
 	ImGui::Text("PickedPos : %.1f, %.1f, %.1f", _pickedPos.x, _pickedPos.y, _pickedPos.z);
 }
