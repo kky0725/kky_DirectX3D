@@ -51,4 +51,5 @@ void Time::Update()
 
 void Time::Render()
 {
+	ImGui::Text("FPS : %d", frameRate);
 }

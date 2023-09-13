@@ -32,6 +32,18 @@ PixelShader* Shader::GetPS(wstring file)
 	return (PixelShader*)_shaders[file];
 }
 
+ComputeShader* Shader::GetCS(wstring file)
+{
+	file = L"_Shader/" + file + L".hlsl";
+
+	if (_shaders.count(file) > 0)
+		return (ComputeShader*)_shaders[file];
+
+	_shaders[file] = new ComputeShader(file);
+
+	return (ComputeShader*)_shaders[file];
+}
+
 void Shader::Delete()
 {
 	for (pair<wstring, Shader*> shader : _shaders)

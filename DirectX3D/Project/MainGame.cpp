@@ -8,8 +8,8 @@ MainGame::MainGame()
 	//scene = new TutorialScene();
 	//scene = new TextureScene();
 	//scene = new TestScene();
-	scene = new TerrainScene();
-	//scene = new TerrainEditorScene();
+	//scene = new TerrainScene();
+	scene = new TerrainEditorScene();
 }
 
 MainGame::~MainGame()
@@ -41,6 +41,7 @@ void MainGame::Render()
 	Environment::GetInstance()->SetEnvironment();
 
 	scene->Render();
+	Time::GetInstance()->Render();
 
 	scene->PostRender();
 	Camera::GetInstance()->PostRender();
