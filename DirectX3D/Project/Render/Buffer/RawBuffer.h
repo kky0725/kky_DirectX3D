@@ -10,7 +10,7 @@ public:
 
 	ID3D11UnorderedAccessView* GetUAV() { return _uav; }
 private:
-	void CrateOutput();
+	void CreateOutput();
 	void CreateUAV();
 	void CreateResult();
 

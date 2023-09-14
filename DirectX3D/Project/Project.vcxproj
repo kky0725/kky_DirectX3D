@@ -137,6 +137,7 @@
     <ClInclude Include="Render\Buffer\RawBuffer.h" />
     <ClInclude Include="Render\Shader\ComputeShader.h" />
     <ClInclude Include="Object\Basic\Sphere.h" />
+    <ClInclude Include="Render\Buffer\StructuredBuffer.h" />
     <ClInclude Include="System\Camera.h" />
     <ClInclude Include="Object\Basic\ImageCube.h" />
     <ClInclude Include="Object\Basic\Quad.h" />
@@ -183,6 +184,7 @@
     <ClCompile Include="Render\Buffer\RawBuffer.cpp" />
     <ClCompile Include="Render\Shader\ComputeShader.cpp" />
     <ClCompile Include="Object\Basic\Sphere.cpp" />
+    <ClCompile Include="Render\Buffer\StructuredBuffer.cpp" />
     <ClCompile Include="System\Camera.cpp" />
     <ClCompile Include="Object\Basic\ImageCube.cpp" />
     <ClCompile Include="Object\Basic\Quad.cpp" />

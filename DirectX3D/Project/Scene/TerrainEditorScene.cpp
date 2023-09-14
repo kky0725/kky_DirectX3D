@@ -45,7 +45,7 @@ void TerrainEditorScene::PostRender()
 
 void TerrainEditorScene::RawData()
 {
-	ComputeShader* shader = Shader::GetCS(L"ByteShader");//ByteAddress
+	ComputeShader* shader = Shader::GetCS(L"ByteShader");
 
 	struct Output
 	{
@@ -55,7 +55,7 @@ void TerrainEditorScene::RawData()
 		UINT groupIndex;
 	};
 
-	UINT size = 10 * 8 * 3;
+	UINT size = 10 * 8 * 3  * 2;
 
 	Output* output = new Output[size];
 
@@ -67,7 +67,7 @@ void TerrainEditorScene::RawData()
 
 	DC->CSSetUnorderedAccessViews(0, 1, &uav, nullptr);
 
-	DC->Dispatch(1, 1, 1);
+	DC->Dispatch(2, 1, 1);//comupteÀÇ ½ÃÀÛ
 
 	buffer->Copy(output, sizeof(Output) * size);
 

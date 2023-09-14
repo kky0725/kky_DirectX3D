@@ -4,7 +4,7 @@
 RawBuffer::RawBuffer(void* inputData, UINT byteWidth)
 	:_inputData(inputData), _byteWidth(byteWidth)
 {
-	CrateOutput();
+	CreateOutput();
 	CreateUAV();
 	CreateResult();
 }
@@ -29,7 +29,7 @@ void RawBuffer::Copy(void* data, UINT size)
 	DC->Unmap(_result, 0);
 }
 
-void RawBuffer::CrateOutput()
+void RawBuffer::CreateOutput()
 {
 	ID3D11Buffer* buffer;
 
