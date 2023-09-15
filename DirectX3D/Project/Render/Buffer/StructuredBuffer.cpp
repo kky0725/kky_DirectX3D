@@ -34,6 +34,16 @@ void StructuredBuffer::Copy(void* data, UINT size)
 	DC->Unmap(_result, 0);
 }
 
+void StructuredBuffer::SetSRV()
+{
+	DC->CSSetShaderResources(0, 1, &_srv);
+}
+
+void StructuredBuffer::SetUAV()
+{
+	DC->CSSetUnorderedAccessViews(0, 1, &_uav, nullptr);
+}
+
 void StructuredBuffer::CreateInput()
 {
 	ID3D11Buffer* buffer;
@@ -44,6 +54,7 @@ void StructuredBuffer::CreateInput()
 	desc.ByteWidth	= _inputStride * _inputCount;
 	desc.BindFlags	= D3D11_BIND_SHADER_RESOURCE;
 	desc.MiscFlags	= D3D11_RESOURCE_MISC_BUFFER_STRUCTURED;
+	desc.StructureByteStride = _inputStride;
 
 	D3D11_SUBRESOURCE_DATA initData = {};
 	initData.pSysMem = _inputData;
@@ -79,6 +90,8 @@ void StructuredBuffer::CreateOutput()
 	desc.ByteWidth	= _outputStride * _outputCount;
 	desc.BindFlags	= D3D11_BIND_UNORDERED_ACCESS;
 	desc.MiscFlags	= D3D11_RESOURCE_MISC_BUFFER_STRUCTURED;
+	desc.StructureByteStride = _outputStride;
+
 
 	DEVICE->CreateBuffer(&desc, nullptr, &buffer);
 

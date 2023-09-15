@@ -35,5 +35,33 @@ private:
 	Texture* _heightMap;
 
 	const float MAP_HEIGHT = 20.0f;
+
+	//computeShader
+
+	struct InputDesc
+	{
+		UINT index;
+
+		Vector3 v0, v1, v2;
+	};
+
+	struct OutputDesc
+	{
+		int isPicked;
+
+		float u, v;
+
+		float distance;
+	};
+
+	StructuredBuffer* _structuredBuffer;
+		   RayBuffer* _rayBuffer;
+
+	ComputeShader* _computeShader;
+
+	 InputDesc* _input;
+	OutputDesc* _output;
+
+	UINT _polygonCount;
 };
 

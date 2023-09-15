@@ -263,7 +263,7 @@
     <Image Include="__Others\small.ico" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="_Shader\ByteShader.hlsl">
+    <FxCompile Include="_Shader\ComputePicking.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compute</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Compute</ShaderType>

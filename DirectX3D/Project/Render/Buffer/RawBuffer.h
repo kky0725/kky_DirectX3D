@@ -7,8 +7,8 @@ public:
 
 	void Copy(void* data, UINT size);
 
-
 	ID3D11UnorderedAccessView* GetUAV() { return _uav; }
+
 private:
 	void CreateOutput();
 	void CreateUAV();

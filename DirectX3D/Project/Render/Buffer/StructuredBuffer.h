@@ -9,6 +9,10 @@ public:
 
 	ID3D11UnorderedAccessView* GetUAV() { return _uav; }
 	ID3D11ShaderResourceView*  GetSRV() { return _srv; }
+
+	void SetSRV();
+	void SetUAV();
+
 private:
 	void CreateInput();
 	void CreateSRV();

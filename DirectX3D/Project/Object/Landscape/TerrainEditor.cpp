@@ -14,6 +14,31 @@ TerrainEditor::TerrainEditor(UINT height, UINT width)
 	CreateTangent();
 
 	_mesh = new Mesh(_vertices, _indices);
+
+	_rayBuffer = new RayBuffer();
+	_computeShader = Shader::GetCS(L"ComputePicking");
+
+	_polygonCount = _indices.size() / 3;
+
+	_input = new InputDesc[_polygonCount];
+
+	for (UINT i = 0; i < _polygonCount; i++)
+	{
+		_input[i].index = i;
+
+		UINT index0 = _indices[i * 3 + 0];
+		UINT index1 = _indices[i * 3 + 1];
+		UINT index2 = _indices[i * 3 + 2];
+
+		_input[i].v0 = _vertices[index0].pos;
+		_input[i].v1 = _vertices[index1].pos;
+		_input[i].v2 = _vertices[index2].pos;
+
+	}
+
+	_structuredBuffer = new StructuredBuffer(_input, sizeof(InputDesc), _polygonCount, sizeof(OutputDesc), _polygonCount);
+
+	_output = new OutputDesc[_polygonCount];
 }
 
 TerrainEditor::~TerrainEditor()
@@ -21,6 +46,12 @@ TerrainEditor::~TerrainEditor()
 	delete _mesh;
 	delete _worldBuffer;
 	delete _material;
+
+	delete[] _input;
+	delete[] _output;
+
+	delete _rayBuffer;
+	delete _structuredBuffer;
 }
 
 void TerrainEditor::Update()
@@ -47,40 +78,35 @@ void TerrainEditor::Debug()
 bool TerrainEditor::Picking(OUT Vector3* position)
 {
 	Ray ray = Camera::GetInstance()->ScreenPointToRay(mousePos);
+	
+	_rayBuffer->data.origin		= ray.origion;
+	_rayBuffer->data.direction  = ray.direction;
+	_rayBuffer->data.outputSize = _polygonCount;
 
-	for (UINT z = 0; z < _height - 1; z++)
+	_rayBuffer->SetCSBuffer(0);
+
+	/////////
+
+	_structuredBuffer->SetSRV();
+	_structuredBuffer->SetUAV();
+
+	_computeShader->SetShader();
+
+	UINT gruopCount = ceil(_polygonCount / 1024.0f);
+
+	DC->Dispatch(gruopCount, 1, 1);
+
+	_structuredBuffer->Copy(_output, sizeof(OutputDesc) * _polygonCount);
+
+	for (UINT i = 0; i < _polygonCount; i++)
 	{
-		for (UINT x = 0; x < _width - 1; x++)
+		if (_output[i].isPicked)
 		{
-			UINT index[4];
-			index[0] = (x + 0) + _width * (z + 0);
-			index[1] = (x + 1) + _width * (z + 0);
-			index[2] = (x + 0) + _width * (z + 1);
-			index[3] = (x + 1) + _width * (z + 1);
-
-			Vector3 pos[4];
-			for (int i = 0; i < 4; i++)
-			{
-				pos[i] = _vertices[index[i]].pos;
-			}
-
-			float distance = 0.0f;
-
-			if (TriangleTests::Intersects(ray.origion, ray.direction, pos[0], pos[1], pos[2], distance))
-			{
-				*position = ray.origion + ray.direction * distance;
-				return true;
-			}
-
-			if (TriangleTests::Intersects(ray.origion, ray.direction, pos[3], pos[1], pos[2], distance))
-			{
-				*position = ray.origion + ray.direction * distance;
-				return true;
-			}
+			*position = ray.origion + ray.direction * _output[i].distance;
 		}
 	}
 
-	return false;
+	return true;
 }
 
 void TerrainEditor::CreateMesh()

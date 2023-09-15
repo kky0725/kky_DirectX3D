@@ -90,3 +90,22 @@ public:
 	} data;
 private:
 };
+
+class RayBuffer : public ConstBuffer
+{
+public:
+	RayBuffer()
+		:ConstBuffer(&data, sizeof(Data))
+	{
+	}
+
+	struct Data
+	{
+		Vector3 origin		= {};
+		float   outputSize  = 0;
+
+		Vector3 direction = {};
+		float   padding   = 0;
+	} data;
+private:
+};

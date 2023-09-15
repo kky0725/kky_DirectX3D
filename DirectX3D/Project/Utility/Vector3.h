@@ -59,8 +59,9 @@ struct Vector3
 
 
 	Vector3 operator+ (const Vector3& other) const { return Vector3(this->x + other.x, this->y + other.y, this->z + other.z); }
-	Vector3 operator- (const Vector3& other) const { return Vector3(this->x - other.x, this->y - other.y, this->z - other.z);
-	}
+	//Vector3 operator+ (const XMVECTOR& other) { return XMVECTOR(*this) + other; }
+
+	Vector3 operator- (const Vector3& other) const { return Vector3(this->x - other.x, this->y - other.y, this->z - other.z); }
 
 	void operator+=(const Vector3& other) { this->x += other.x; this->y += other.y; this->z += other.z; }
 	void operator-=(const Vector3& other) { this->x -= other.x; this->y -= other.y; this->z -= other.z; }

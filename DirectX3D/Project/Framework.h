@@ -80,6 +80,7 @@ using namespace Utility;
 #include "Render/Buffer/ConstBuffer.h"
 #include "Render/Buffer/GlobalBuffer.h"
 #include "Render/Buffer/RawBuffer.h"
+#include "Render/Buffer/StructuredBuffer.h"
 
 #include "Render/Texture/Texture.h"
 #include "Render/Mesh.h"
