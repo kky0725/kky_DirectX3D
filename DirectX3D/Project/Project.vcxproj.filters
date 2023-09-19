@@ -373,6 +373,8 @@
     <FxCompile Include="_Shader\VertexNormalMapping.hlsl" />
     <FxCompile Include="_Shader\PixelNormalMapping.hlsl" />
     <FxCompile Include="_Shader\ComputePicking.hlsl" />
+    <FxCompile Include="_Shader\VertexTerrainBrush.hlsl" />
+    <FxCompile Include="_Shader\PixelTerrainBrush.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="_Library\ImGui.idb" />

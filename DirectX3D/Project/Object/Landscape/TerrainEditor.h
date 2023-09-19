@@ -20,6 +20,8 @@ private:
 	void CreateNormal();
 	void CreateTangent();
 
+	void AdjustHeight();
+
 private:
 	vector<VertexType>	_vertices;
 	vector<UINT>		_indices;
@@ -63,5 +65,9 @@ private:
 	OutputDesc* _output;
 
 	UINT _polygonCount;
+
+	Vector3 _pickedPos;
+
+	BrushBuffer* _brushBuffer;
 };
 

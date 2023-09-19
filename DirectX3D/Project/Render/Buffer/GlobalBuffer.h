@@ -109,3 +109,22 @@ public:
 	} data;
 private:
 };
+
+class BrushBuffer : public ConstBuffer
+{
+public:
+	BrushBuffer()
+		:ConstBuffer(&data, sizeof(Data))
+	{
+	}
+
+	struct Data
+	{
+		int		type = 0;
+		Vector3 location = {};
+
+		float	range = 10.0f;
+		Vector3 color = { 0.0f, 0.5f, 0.0f };
+	} data;
+private:
+};

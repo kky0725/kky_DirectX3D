@@ -5,7 +5,7 @@ TerrainEditor::TerrainEditor(UINT height, UINT width)
 	: _height(height), _width(width)
 {
 	_material = new Material();
-	_material->SetShader(L"NormalMapping");
+	_material->SetShader(L"TerrainBrush");
 
 	_worldBuffer = new MatrixBuffer();
 
@@ -15,8 +15,8 @@ TerrainEditor::TerrainEditor(UINT height, UINT width)
 
 	_mesh = new Mesh(_vertices, _indices);
 
-	_rayBuffer = new RayBuffer();
-	_computeShader = Shader::GetCS(L"ComputePicking");
+	_rayBuffer		= new RayBuffer();
+	_computeShader	= Shader::GetCS(L"ComputePicking");
 
 	_polygonCount = _indices.size() / 3;
 
@@ -39,6 +39,8 @@ TerrainEditor::TerrainEditor(UINT height, UINT width)
 	_structuredBuffer = new StructuredBuffer(_input, sizeof(InputDesc), _polygonCount, sizeof(OutputDesc), _polygonCount);
 
 	_output = new OutputDesc[_polygonCount];
+
+	_brushBuffer = new BrushBuffer();
 }
 
 TerrainEditor::~TerrainEditor()
@@ -52,10 +54,19 @@ TerrainEditor::~TerrainEditor()
 
 	delete _rayBuffer;
 	delete _structuredBuffer;
+	delete _brushBuffer;
 }
 
 void TerrainEditor::Update()
 {
+	Transform::Update();
+
+	Picking(&_pickedPos);
+
+	_brushBuffer->data.location = _pickedPos;
+
+	if (KEY_PRESS(VK_LBUTTON))
+		AdjustHeight();
 }
 
 void TerrainEditor::Render()
@@ -66,13 +77,19 @@ void TerrainEditor::Render()
 	_mesh->SetMesh();
 	_material->SetMaterial();
 
+	_brushBuffer->SetPSBuffer(10);
+
 	DC->DrawIndexed(_indices.size(), 0, 0);
+
+	////////////////////
 
 	_material->PostRender();
 }
 
 void TerrainEditor::Debug()
 {
+	ImGui::Text("PickedPos : %.1f, %.1f, %.1f", _pickedPos.x, _pickedPos.y, _pickedPos.z);
+	ImGui::ColorEdit3("BrushColor", (float*)&_brushBuffer->data.color);
 }
 
 bool TerrainEditor::Picking(OUT Vector3* position)
@@ -80,7 +97,7 @@ bool TerrainEditor::Picking(OUT Vector3* position)
 	Ray ray = Camera::GetInstance()->ScreenPointToRay(mousePos);
 	
 	_rayBuffer->data.origin		= ray.origion;
-	_rayBuffer->data.direction  = ray.direction;
+	_rayBuffer->data.direction	= ray.direction;
 	_rayBuffer->data.outputSize = _polygonCount;
 
 	_rayBuffer->SetCSBuffer(0);
@@ -209,4 +226,29 @@ void TerrainEditor::CreateTangent()
 
 		vertex.tangent = (T - N * Vector3::Dot(N, T)).GetNormalized();
 	}
+}
+
+void TerrainEditor::AdjustHeight()
+{
+	switch (_brushBuffer->data.type)
+	{
+	case 0:
+		for (VertexType& vertex : _vertices)
+		{
+			Vector3 p1 = Vector3(vertex.pos.x, 0.0f, vertex.pos.z);
+			Vector3 p2 = Vector3(_pickedPos.x, 0.0f, _pickedPos.z);
+
+			float distance = (p1 - p2).Length();
+
+			if (distance <= _brushBuffer->data.range)
+			{
+				vertex.pos.y += 10 * Time::Delta();
+			}
+		}
+		break;
+	default:
+		break;
+	}
+
+	_mesh->UpdateVertex(_vertices.data(), _vertices.size());
 }

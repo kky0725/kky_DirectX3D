@@ -31,6 +31,12 @@
 using namespace std;
 using namespace DirectX;
 
+//#include <d2d1_2.h>
+//#include <dwrite.h>
+//
+//#pragma comment(lib, "d2d1.lib")
+//#pragma comment(lib, "dwrite.lib")
+
 #include "imgui.h"
 #include "imgui_impl_win32.h"
 #include "imgui_impl_dx11.h"

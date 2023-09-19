@@ -19,9 +19,6 @@ TerrainEditorScene::~TerrainEditorScene()
 void TerrainEditorScene::Update()
 {
 	_terrainEidtor->Update();
-
-	if (KEY_DOWN(VK_LBUTTON))
-		_terrainEidtor->Picking(&_pickedPos);
 }
 
 void TerrainEditorScene::PreRender()
@@ -39,8 +36,6 @@ void TerrainEditorScene::PostRender()
 {
 	_terrainEidtor->Debug();
 	_terrainEidtor->Getmaterial()->SeletMap();
-
-	ImGui::Text("PickedPos : %.1f, %.1f, %.1f", _pickedPos.x, _pickedPos.y, _pickedPos.z);
 }
 
 void TerrainEditorScene::RawData()

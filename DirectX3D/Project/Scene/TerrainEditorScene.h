@@ -14,6 +14,4 @@ public:
 
 private:
 	TerrainEditor* _terrainEidtor;
-
-	Vector3 _pickedPos;
 };
