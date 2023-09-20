@@ -6,6 +6,7 @@ public:
 	~StructuredBuffer();
 
 	void Copy(void* data, UINT size);
+	void UpdateInput(void* data);
 
 	ID3D11UnorderedAccessView* GetUAV() { return _uav; }
 	ID3D11ShaderResourceView*  GetSRV() { return _srv; }

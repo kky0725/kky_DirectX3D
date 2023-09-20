@@ -16,10 +16,12 @@ Texture::~Texture()
 
 Texture* Texture::Get(wstring file)
 {
+	file = L"_Texture/" + file;
+
+	assert(PathFileExists(file.c_str()));
+
 	if (_textures.count(file) > 0)
 		return _textures[file];
-
-	file = L"_Texture/" + file;
 
 	wstring extension = GetExtension(file);
 

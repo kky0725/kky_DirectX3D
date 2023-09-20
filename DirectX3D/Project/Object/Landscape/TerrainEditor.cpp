@@ -33,7 +33,6 @@ TerrainEditor::TerrainEditor(UINT height, UINT width)
 		_input[i].v0 = _vertices[index0].pos;
 		_input[i].v1 = _vertices[index1].pos;
 		_input[i].v2 = _vertices[index2].pos;
-
 	}
 
 	_structuredBuffer = new StructuredBuffer(_input, sizeof(InputDesc), _polygonCount, sizeof(OutputDesc), _polygonCount);
@@ -61,11 +60,9 @@ void TerrainEditor::Update()
 {
 	Transform::Update();
 
-	Picking(&_pickedPos);
-
 	_brushBuffer->data.location = _pickedPos;
 
-	if (KEY_PRESS(VK_LBUTTON))
+	if (Picking(&_pickedPos) && KEY_PRESS(VK_LBUTTON) && !ImGui::GetIO().WantCaptureMouse)
 		AdjustHeight();
 }
 
@@ -90,6 +87,8 @@ void TerrainEditor::Debug()
 {
 	ImGui::Text("PickedPos : %.1f, %.1f, %.1f", _pickedPos.x, _pickedPos.y, _pickedPos.z);
 	ImGui::ColorEdit3("BrushColor", (float*)&_brushBuffer->data.color);
+	ImGui::SliderFloat("BrushIntensity", &_adjustValue, 1.0f, 50.0f);
+	ImGui::SliderFloat("BrushRange", &_brushBuffer->data.range, 1.0f, 50.0f);
 }
 
 bool TerrainEditor::Picking(OUT Vector3* position)
@@ -115,15 +114,27 @@ bool TerrainEditor::Picking(OUT Vector3* position)
 
 	_structuredBuffer->Copy(_output, sizeof(OutputDesc) * _polygonCount);
 
+	float minDistance = FLT_MAX;
+
 	for (UINT i = 0; i < _polygonCount; i++)
 	{
 		if (_output[i].isPicked)
 		{
-			*position = ray.origion + ray.direction * _output[i].distance;
+			if (minDistance > _output[i].distance)
+			{ 
+				minDistance = _output[i].distance;
+			}
 		}
 	}
 
-	return true;
+	if (minDistance < FLT_MAX)
+	{
+		*position = ray.origion + ray.direction * minDistance;
+
+		return true;
+	}
+
+	return false;
 }
 
 void TerrainEditor::CreateMesh()
@@ -164,6 +175,9 @@ void TerrainEditor::CreateMesh()
 
 void TerrainEditor::CreateNormal()
 {
+	for (VertexType& vertex : _vertices)
+		vertex.normal = Vector3();
+
 	for (UINT i = 0; i < _indices.size() / 3; i++)
 	{
 		UINT index0 = _indices[i * 3 + 0];
@@ -187,6 +201,9 @@ void TerrainEditor::CreateNormal()
 
 void TerrainEditor::CreateTangent()
 {
+	for (VertexType& vertex : _vertices)
+		vertex.tangent = Vector3();
+
 	for (UINT i = 0; i < _indices.size() / 3; i++)
 	{
 		UINT index0 = _indices[i * 3 + 0];
@@ -240,9 +257,11 @@ void TerrainEditor::AdjustHeight()
 
 			float distance = (p1 - p2).Length();
 
+			float value = _adjustValue * max(0, cos(XM_PIDIV2 * distance / _brushBuffer->data.range));
+
 			if (distance <= _brushBuffer->data.range)
 			{
-				vertex.pos.y += 10 * Time::Delta();
+				vertex.pos.y += value * Time::Delta();
 			}
 		}
 		break;
@@ -250,5 +269,23 @@ void TerrainEditor::AdjustHeight()
 		break;
 	}
 
+	CreateNormal();
+	CreateTangent();
+
 	_mesh->UpdateVertex(_vertices.data(), _vertices.size());
+
+	for (UINT i = 0; i < _polygonCount; i++)
+	{
+		_input[i].index = i;
+
+		UINT index0 = _indices[i * 3 + 0];
+		UINT index1 = _indices[i * 3 + 1];
+		UINT index2 = _indices[i * 3 + 2];
+
+		_input[i].v0 = _vertices[index0].pos;
+		_input[i].v1 = _vertices[index1].pos;
+		_input[i].v2 = _vertices[index2].pos;
+	}
+
+	_structuredBuffer->UpdateInput(_input);
 }

@@ -69,5 +69,7 @@ private:
 	Vector3 _pickedPos;
 
 	BrushBuffer* _brushBuffer;
+
+	float _adjustValue = 10.0f;
 };
 

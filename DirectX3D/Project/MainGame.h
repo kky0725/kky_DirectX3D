@@ -16,4 +16,5 @@ private:
 
 private:
 	Scene* scene = nullptr;
+	bool _isWireFrame = false;
 };
