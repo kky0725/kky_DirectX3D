@@ -35,6 +35,11 @@ float3 SetBrushColor(float3 pos)
 	}
 	else if(type == 1)
 	{
+		float x = pos.x - location.x;
+		float z = pos.z - location.z;
+		
+		if (abs(x) <= range && abs(z) <= range)
+			return color;
 	}
 	
 	

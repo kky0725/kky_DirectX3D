@@ -3,7 +3,7 @@ class Sphere : public Transform
 {
 	typedef VertexTextureNormalTangent VertexType;
 public:
-	Sphere(float radius = 1.0f, UINT latitudes = 10, UINT longitudes = 20);
+	Sphere(float radius = 1.0f, UINT sliceCount = 10, UINT stackCount = 20);
 	virtual ~Sphere();
 
 	virtual void Update();
@@ -23,7 +23,7 @@ private:
 	Material* _material;
 	Mesh* _mesh;
 
-	UINT  _latitudes;//위도의 수//stack
-	UINT _longitudes;//경도의 수//slice
+	UINT _sliceCount;
+	UINT _stackCount;
 	float _radius;
 };

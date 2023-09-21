@@ -14,7 +14,7 @@ cbuffer Projection : register(b2)
 	matrix projection;
 };
 
-cbuffer LightDirection : register(b3)
+cbuffer LightDirection : register(b0)
 {
 	float3 lightDirection;
 	float padding;

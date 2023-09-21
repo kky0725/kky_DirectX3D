@@ -1,8 +1,8 @@
 #include "Framework.h"
 #include "Sphere.h"
 
-Sphere::Sphere(float radius, UINT latitudes, UINT longitudes)
-	:_radius(radius), _latitudes(latitudes), _longitudes(longitudes)
+Sphere::Sphere(float radius, UINT sliceCount, UINT stackCount)
+	:_radius(radius), _sliceCount(sliceCount), _stackCount(stackCount)
 {
 	CreateMesh();
 	CreateTangent();
@@ -30,56 +30,53 @@ void Sphere::Update()
 
 void Sphere::Render()
 {
+	_worldBuffer->SetVSBuffer(0);
+
 	_material->SetMaterial();
 	_mesh->SetMesh();
-
-	_worldBuffer->SetVSBuffer(0);
 
 	DC->DrawIndexed(_indices.size(), 0, 0);
 }
 
 void Sphere::CreateMesh()
 {
-	for (int i = 0; i <= _latitudes; i++)//stack
+	for (int i = 0; i <= _stackCount; i++)
 	{
-		float thetaI = i * XM_PI / _latitudes;
-		for (int j = 0; j <= _longitudes; j++)//slice
+		float phi = i * XM_PI / _stackCount;
+
+		for (int j = 0; j <= _sliceCount; j++)
 		{
 			VertexType vertex;
-			float thetaJ = j * XM_2PI / _longitudes;
+			float theta = j * XM_2PI / _sliceCount;
 
-			vertex.pos.x = _radius * sin(thetaI) * cos(thetaJ);
-			vertex.pos.y = _radius * cos(thetaI);
-			vertex.pos.z = _radius * sin(thetaI) * sin(thetaJ);
+			vertex.pos.x = _radius * sin(phi) * cos(theta);
+			vertex.pos.y = _radius * cos(phi);
+			vertex.pos.z = _radius * sin(phi) * sin(theta);
 
-			vertex.normal.x = sin(thetaI) * cos(thetaJ);
-			vertex.normal.y = cos(thetaI);
-			vertex.normal.z = sin(thetaI) * sin(thetaJ);
+			vertex.normal.x = sin(phi) * cos(theta);
+			vertex.normal.y = cos(phi);
+			vertex.normal.z = sin(phi) * sin(theta);
 
 			//vertex.normal = vertex.pos / _radius;
 
-			vertex.uv.x = j / (float)_longitudes;
-			vertex.uv.y = i / (float)_latitudes;
+			vertex.uv.x = j / (float)_sliceCount;
+			vertex.uv.y = i / (float)_stackCount;
 
 			_vertices.push_back(vertex);
 		}
 	}
 
-	for (int i = 0; i < _latitudes; i++)//stack
+	for (int j = 0; j < _stackCount; j++)//stack
 	{
-		for (int j = 0; j < _longitudes; j++)//slice
+		for (int i = 0; i < _sliceCount; i++)//slice
 		{
-			UINT LB = j + 0 + (i + 0) * (_longitudes + 1);
-			UINT RB = j + 1 + (i + 0) * (_longitudes + 1);
-			UINT LT = j + 0 + (i + 1) * (_longitudes + 1);
-			UINT RT = j + 1 + (i + 1) * (_longitudes + 1);
-			_indices.push_back(LB);
-			_indices.push_back(LT);
-			_indices.push_back(RB);
+			_indices.push_back(i + 0 + (_sliceCount + 1) * (j + 0));
+			_indices.push_back(i + 1 + (_sliceCount + 1) * (j + 0));
+			_indices.push_back(i + 0 + (_sliceCount + 1) * (j + 1));
 
-			_indices.push_back(RB);
-			_indices.push_back(LT);
-			_indices.push_back(RT);
+			_indices.push_back(i + 0 + (_sliceCount + 1) * (j + 1));
+			_indices.push_back(i + 1 + (_sliceCount + 1) * (j + 0));
+			_indices.push_back(i + 1 + (_sliceCount + 1) * (j + 1));
 		}
 	}
 }

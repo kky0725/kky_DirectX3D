@@ -30,7 +30,7 @@ VertexOutPut main(VertexTextureNormalTangent input)
 	output.uv = input.uv;
 	
 	output.normal = normalize(mul(input.normal, (float3x3) world));
-	output.tangent = normalize(mul(input.normal, (float3x3) world));
+	output.tangent = normalize(mul(input.tangent, (float3x3) world));
 	
 	output.binormal = cross(output.normal, output.tangent);
 
