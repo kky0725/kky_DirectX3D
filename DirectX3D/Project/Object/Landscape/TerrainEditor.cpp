@@ -9,6 +9,15 @@ TerrainEditor::TerrainEditor(UINT height, UINT width)
 
 	_worldBuffer = new MatrixBuffer();
 
+	BinaryReader data(L"HeigthMap");
+
+	if (data.Succeeded())
+	{
+		wstring heightPath = data.ReadWString();
+
+		_heightMap = Texture::Load(heightPath);
+	}
+
 	CreateMesh();
 	CreateNormal();
 	CreateTangent();
@@ -44,6 +53,10 @@ TerrainEditor::TerrainEditor(UINT height, UINT width)
 
 TerrainEditor::~TerrainEditor()
 {
+	BinaryWriter data(L"HeigthMap");
+
+	data.WriteData(_heightMap->GetPath());
+
 	delete _mesh;
 	delete _worldBuffer;
 	delete _material;

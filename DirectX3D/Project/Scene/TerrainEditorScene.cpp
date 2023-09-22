@@ -9,6 +9,8 @@ TerrainEditorScene::TerrainEditorScene()
 	_terrainEidtor->Getmaterial()->SetNormalMap(L"Landscape/fieldstone_NM.tga");
 
 	RawData();
+
+	BinaryWriter data(L"Data");
 }
 
 TerrainEditorScene::~TerrainEditorScene()

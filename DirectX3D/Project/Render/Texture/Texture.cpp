@@ -16,6 +16,8 @@ Texture::~Texture()
 
 Texture* Texture::Get(wstring file)
 {
+	wstring path = file;
+
 	file = L"_Texture/" + file;
 
 	assert(PathFileExists(file.c_str()));
@@ -39,12 +41,15 @@ Texture* Texture::Get(wstring file)
 	CreateShaderResourceView(DEVICE, image.GetImages(), image.GetImageCount(), image.GetMetadata(), &srv);
 	
 	_textures[file] = new Texture(srv, image);
+	_textures[file]->_path = path;
 
 	return _textures[file];
 }
 
 Texture* Texture::Load(wstring file)
 {
+	wstring path = file;
+
 	file = L"_Texture/" + file;
 
 	assert(PathFileExists(file.c_str()));
@@ -75,6 +80,8 @@ Texture* Texture::Load(wstring file)
 	);
 
 	_textures[file] = new Texture(srv, image);
+	_textures[file]->_path = path;
+
 
 	return _textures[file];
 }
