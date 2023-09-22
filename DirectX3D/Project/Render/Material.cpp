@@ -101,8 +101,6 @@ void Material::PostRender()
 
 void Material::SeletMap()
 {
-#define Dialog ImGuiFileDialog::Instance()
-
 	if (ImGui::BeginChild(_ID.c_str(), ImVec2(100, 85), true))
 	{
 		if (ImGui::Button("DiffuseMap"))

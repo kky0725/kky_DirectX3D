@@ -6,4 +6,7 @@ namespace Utility
 
 	string ToString(wstring str);
 	wstring ToWstring(string str);
+
+	wstring GetProjectDir();
+	wstring GetTextureDir();
 }

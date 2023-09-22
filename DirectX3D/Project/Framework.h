@@ -62,6 +62,8 @@ using namespace DirectX;
 
 #define RS StateManager::GetInstance()->GetRS()
 
+#define Dialog ImGuiFileDialog::Instance()
+
 typedef XMMATRIX Matrix;
 typedef XMFLOAT4 Vector4;
 typedef XMFLOAT2 Vector2;

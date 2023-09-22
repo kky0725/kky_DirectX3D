@@ -134,6 +134,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Utility\BinaryReader.h" />
+    <ClInclude Include="Utility\BinaryWriter.h" />
     <ClInclude Include="Render\Buffer\RawBuffer.h" />
     <ClInclude Include="Render\Shader\ComputeShader.h" />
     <ClInclude Include="Object\Basic\Sphere.h" />
@@ -181,6 +183,8 @@
     <ClInclude Include="__Others\targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Utility\BinaryReader.cpp" />
+    <ClCompile Include="Utility\BinaryWriter.cpp" />
     <ClCompile Include="Render\Buffer\RawBuffer.cpp" />
     <ClCompile Include="Render\Shader\ComputeShader.cpp" />
     <ClCompile Include="Object\Basic\Sphere.cpp" />

@@ -33,7 +33,7 @@ float3 SetBrushColor(float3 pos)
 		if(distance <= range)
 			return color;
 	}
-	else if(type == 1)
+	else if (type == 1)
 	{
 		float x = pos.x - location.x;
 		float z = pos.z - location.z;
@@ -41,7 +41,6 @@ float3 SetBrushColor(float3 pos)
 		if (abs(x) <= range && abs(z) <= range)
 			return color;
 	}
-	
 	
 	return float3(0,0,0);
 }

@@ -64,6 +64,11 @@ void TerrainEditor::Update()
 
 	if (Picking(&_pickedPos) && KEY_PRESS(VK_LBUTTON) && !ImGui::GetIO().WantCaptureMouse)
 		AdjustHeight();
+
+	if (KEY_PRESS(VK_LSHIFT))
+		_isRaise = false;
+	else
+		_isRaise = true;
 }
 
 void TerrainEditor::Render()
@@ -89,6 +94,13 @@ void TerrainEditor::Debug()
 	ImGui::ColorEdit3("BrushColor", (float*)&_brushBuffer->data.color);
 	ImGui::SliderFloat("BrushIntensity", &_adjustValue, 1.0f, 50.0f);
 	ImGui::SliderFloat("BrushRange", &_brushBuffer->data.range, 1.0f, 50.0f);
+
+	const char* typeList[] = { "Circle", "Rect" };
+
+	ImGui::Combo("BrushType", &_brushBuffer->data.type, typeList, 2);
+
+	SaveHeightDialog();
+	LoadHeightDialog();
 }
 
 bool TerrainEditor::Picking(OUT Vector3* position)
@@ -137,8 +149,113 @@ bool TerrainEditor::Picking(OUT Vector3* position)
 	return false;
 }
 
+void TerrainEditor::SaveHeightMap(wstring file)
+{
+	file = L"_Texture/" + file;
+
+	UINT size = _width * _height * 4;
+
+	uint8_t* pixels = new uint8_t[size];
+
+	for (UINT i = 0; i < size / 4; i++)
+	{
+		float y = _vertices[i].pos.y;
+
+		uint8_t height = y * 255.0f / MAP_HEIGHT;
+
+		pixels[4 * i + 0] = height;
+		pixels[4 * i + 1] = height;
+		pixels[4 * i + 2] = height;
+		pixels[4 * i + 3] = 255.0f;
+	}
+
+	Image image;
+
+	image.width = _width;
+	image.height = _height;
+	image.pixels = pixels;
+	image.format = DXGI_FORMAT_R8G8B8A8_UNORM;
+	image.rowPitch = _width * 4;
+	image.slicePitch = size;
+
+	SaveToWICFile(image, WIC_FLAGS_FORCE_RGB, GetWICCodec(WIC_CODEC_PNG), file.c_str());
+}
+
+void TerrainEditor::LoadHeightMap(wstring file)
+{
+	_heightMap = Texture::Load(file);
+
+	if (_mesh != nullptr)
+		delete _mesh;
+
+	_vertices.clear();
+	_indices.clear();
+
+	CreateMesh();
+	CreateNormal();
+	CreateTangent();
+
+	_mesh = new Mesh(_vertices, _indices);
+
+	CreateCompute();
+}
+
+void TerrainEditor::SaveHeightDialog()
+{
+	if (ImGui::Button("Save HeightMap"))
+	{
+		Dialog->OpenDialog("SaveKey", "Save", ".png", "_Texture/HeightMap/");
+	}
+
+	if (Dialog->Display("SaveKey", 32, { 500, 400 }))
+	{
+		if (Dialog->IsOk())
+		{
+			string path = Dialog->GetFilePathName();
+
+			path = path.substr(GetTextureDir().size(), path.length());
+
+			SaveHeightMap(ToWstring(path));
+		}
+
+		Dialog->Close();
+	}
+}
+
+void TerrainEditor::LoadHeightDialog()
+{
+	if (ImGui::Button("Load HeightMap"))
+	{
+		Dialog->OpenDialog("LoadKey", "Load", ".png", "_Texture/HeightMap/");
+	}
+
+	if (Dialog->Display("LoadKey", 32, { 500, 400 }))
+	{
+		if (Dialog->IsOk())
+		{
+			string path = Dialog->GetFilePathName();
+
+			path = path.substr(GetTextureDir().size(), path.length());
+
+			LoadHeightMap(ToWstring(path));
+		}
+
+		Dialog->Close();
+	}
+}
+
 void TerrainEditor::CreateMesh()
 {
+	vector<Vector4> colors;
+
+	if (_heightMap != nullptr)
+	{
+		_width = _heightMap->GetSize().x;
+		_height = _heightMap->GetSize().y;
+
+		colors = _heightMap->ReadPixels();
+	}
+
 	//Vertex
 	for (float z = 0; z < _height; z++)
 	{
@@ -149,6 +266,12 @@ void TerrainEditor::CreateMesh()
 
 			vertex.uv.x = x / (_width - 1);
 			vertex.uv.y = 1 - z / (_height - 1);
+
+			if (colors.size() > 0)
+			{
+				UINT index = x + z * _width;
+				vertex.pos.y = colors[index].x * MAP_HEIGHT;
+			}
 
 			_vertices.push_back(vertex);
 		}
@@ -245,6 +368,46 @@ void TerrainEditor::CreateTangent()
 	}
 }
 
+void TerrainEditor::CreateCompute()
+{
+	_polygonCount = _indices.size() / 3;
+
+	if (_input != nullptr)
+		delete[] _input;
+
+	_input = new InputDesc[_polygonCount];
+
+	for (UINT i = 0; i < _polygonCount; i++)
+	{
+		_input[i].index = i;
+
+		UINT index0 = _indices[i * 3 + 0];
+		UINT index1 = _indices[i * 3 + 1];
+		UINT index2 = _indices[i * 3 + 2];
+
+		_input[i].v0 = _vertices[index0].pos;
+		_input[i].v1 = _vertices[index1].pos;
+		_input[i].v2 = _vertices[index2].pos;
+	}
+
+	if (_structuredBuffer != nullptr)
+		delete _structuredBuffer;
+
+	_structuredBuffer = new StructuredBuffer
+	(
+		_input,
+		sizeof(InputDesc),
+		_polygonCount,
+		sizeof(OutputDesc),
+		_polygonCount
+	);
+
+	if (_output != nullptr)
+		delete[] _output;
+
+	_output = new OutputDesc[_polygonCount];
+}
+
 void TerrainEditor::AdjustHeight()
 {
 	switch (_brushBuffer->data.type)
@@ -261,7 +424,42 @@ void TerrainEditor::AdjustHeight()
 
 			if (distance <= _brushBuffer->data.range)
 			{
-				vertex.pos.y += value * Time::Delta();
+				if(_isRaise)
+					vertex.pos.y += value * Time::Delta();
+				else
+					vertex.pos.y -= value * Time::Delta();
+
+				if (vertex.pos.y > MAP_HEIGHT)
+					vertex.pos.y = MAP_HEIGHT;
+
+				if (vertex.pos.y < 0)
+					vertex.pos.y = 0;
+			}
+		}
+		break;
+	case 1:
+		for (VertexType& vertex : _vertices)
+		{
+			Vector3 p1 = Vector3(vertex.pos.x, 0.0f, vertex.pos.z);
+			Vector3 p2 = Vector3(_pickedPos.x, 0.0f, _pickedPos.z);
+
+			//float distanceX = abs(p1.x - p2.x);
+			//float distanceZ = abs(p1.z - p2.z);
+
+			Vector3 distance = p1 - p2;
+
+			if (abs(distance.x) <= _brushBuffer->data.range && abs(distance.z) <= _brushBuffer->data.range)
+			{
+				if (_isRaise)
+					vertex.pos.y += _adjustValue * Time::Delta();
+				else
+					vertex.pos.y -= _adjustValue * Time::Delta();
+				
+				if (vertex.pos.y > MAP_HEIGHT)
+					vertex.pos.y = MAP_HEIGHT;
+
+				if (vertex.pos.y < 0)
+					vertex.pos.y = 0;
 			}
 		}
 		break;
