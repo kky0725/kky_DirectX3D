@@ -53,9 +53,12 @@ TerrainEditor::TerrainEditor(UINT height, UINT width)
 
 TerrainEditor::~TerrainEditor()
 {
-	BinaryWriter data(L"HeigthMap");
+	if (_heightMap != nullptr)
+	{
+		BinaryWriter data(L"HeightMap");
 
-	data.WriteData(_heightMap->GetPath());
+		data.WriteData(_heightMap->GetPath());
+	}
 
 	delete _mesh;
 	delete _worldBuffer;

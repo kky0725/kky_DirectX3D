@@ -22,6 +22,12 @@ public:
 	void PostRender();
 	void SeletMap();
 
+	void SaveMap(wstring file);
+	void LoadMap(wstring file);
+
+	void SaveMapDialog();
+	void LoadMapDialog();
+
 private:
 	VertexShader* _vertexShader = nullptr;
 	PixelShader* _pixelShader = nullptr;

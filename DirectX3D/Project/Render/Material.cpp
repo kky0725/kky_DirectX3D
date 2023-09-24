@@ -138,4 +138,62 @@ void Material::SeletMap()
 	}
 }
 
+void Material::SaveMap(wstring file)
+{
+	BinaryWriter data(file);
+
+	data.WriteData(_diffuseMap->GetPath());
+	data.WriteData(_specularMap->GetPath());
+	data.WriteData(_normalMap->GetPath());
+}
+
+void Material::LoadMap(wstring file)
+{
+	BinaryReader data(file);
+
+	SetDiffuseMap(data.ReadWString());
+	SetSpecularMap(data.ReadWString());
+	SetNormalMap(data.ReadWString());
+}
+
+void Material::SaveMapDialog()
+{
+	if (ImGui::Button("SaveMap"))
+		Dialog->OpenDialog("SaveMap", "Select Map", ".materialmap", "_TextData/");
+
+	if (Dialog->Display("SaveMap"))
+	{
+		if (Dialog->IsOk())
+		{
+			string path = Dialog->GetFilePathName();
+			path = path.substr(_projectDir.size() + 1, path.size());
+
+			wstring file = ToWstring(path);
+			if (Dialog->GetOpenedKey() == "SaveMap")
+				SaveMap(file);
+		}
+		Dialog->Close();
+	}
+}
+
+void Material::LoadMapDialog()
+{
+	if (ImGui::Button("LoadMap"))
+		Dialog->OpenDialog("LoadMap", "Select Map", ".materialmap", "_TextData/");
+
+	if (Dialog->Display("LoadMap"))
+	{
+		if (Dialog->IsOk())
+		{
+			string path = Dialog->GetFilePathName();
+			path = path.substr(_projectDir.size() + 1, path.size());
+
+			wstring file = ToWstring(path);
+			if (Dialog->GetOpenedKey() == "LoadMap")
+				LoadMap(file);
+		}
+		Dialog->Close();
+	}
+}
+
 
