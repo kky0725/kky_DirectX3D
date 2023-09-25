@@ -4,11 +4,8 @@
 TerrainEditorScene::TerrainEditorScene()
 {
 	_terrainEidtor = new TerrainEditor();
-	_terrainEidtor->Getmaterial()->SetDiffuseMap(L"Landscape/fieldstone_DM.tga");
-	_terrainEidtor->Getmaterial()->SetSpecularMap(L"Landscape/fieldstone_SM.tga");
-	_terrainEidtor->Getmaterial()->SetNormalMap(L"Landscape/fieldstone_NM.tga");
 
-	RawData();
+	//RawData();
 }
 
 TerrainEditorScene::~TerrainEditorScene()
@@ -35,7 +32,6 @@ void TerrainEditorScene::Render()
 void TerrainEditorScene::PostRender()
 {
 	_terrainEidtor->Debug();
-	_terrainEidtor->Getmaterial()->SeletMap();
 	_terrainEidtor->Getmaterial()->SaveMapDialog();
 	_terrainEidtor->Getmaterial()->LoadMapDialog();
 

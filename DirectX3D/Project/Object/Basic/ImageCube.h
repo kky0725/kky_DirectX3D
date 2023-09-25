@@ -20,5 +20,5 @@ private:
 	float _size = 1.0f;
 
 	static int _count;
-	string _label = "";
+	string _ID = "";
 };

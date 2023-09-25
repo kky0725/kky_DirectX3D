@@ -5,7 +5,6 @@ TerrainEditor::TerrainEditor(UINT height, UINT width)
 	: _height(height), _width(width)
 {
 	_material = new Material();
-	_material->SetShader(L"TerrainBrush");
 
 	_worldBuffer = new MatrixBuffer();
 
@@ -98,25 +97,39 @@ void TerrainEditor::Render()
 	_brushBuffer->SetPSBuffer(10);
 
 	DC->DrawIndexed(_indices.size(), 0, 0);
-
-	////////////////////
-
-	_material->PostRender();
 }
 
 void TerrainEditor::Debug()
 {
-	ImGui::Text("PickedPos : %.1f, %.1f, %.1f", _pickedPos.x, _pickedPos.y, _pickedPos.z);
-	ImGui::ColorEdit3("BrushColor", (float*)&_brushBuffer->data.color);
-	ImGui::SliderFloat("BrushIntensity", &_adjustValue, 1.0f, 50.0f);
-	ImGui::SliderFloat("BrushRange", &_brushBuffer->data.range, 1.0f, 50.0f);
+	if (ImGui::BeginChild("TerrainEditor", ImVec2(250, 100), true))
+	{
+		ImGui::Text("PickedPos : %.1f, %.1f, %.1f", _pickedPos.x, _pickedPos.y, _pickedPos.z);
 
-	const char* typeList[] = { "Circle", "Rect" };
+		if (ImGui::BeginMenu("TerrainBrush"))
+		{
+			ImGui::ColorEdit3("BrushColor", (float*)&_brushBuffer->data.color);
+			ImGui::SliderFloat("BrushIntensity", &_adjustValue, 1.0f, 50.0f);
+			ImGui::SliderFloat("BrushRange", &_brushBuffer->data.range, 1.0f, 50.0f);
 
-	ImGui::Combo("BrushType", &_brushBuffer->data.type, typeList, 2);
+			const char* typeList[] = { "Circle", "Rect" };
 
-	SaveHeightDialog();
-	LoadHeightDialog();
+			ImGui::Combo("BrushType", &_brushBuffer->data.type, typeList, 2);
+
+			ImGui::EndMenu();
+		}
+
+		if (ImGui::BeginMenu("Save/Load HeightMap"))
+		{
+			SaveHeightDialog();
+			LoadHeightDialog();
+
+			ImGui::EndMenu();
+		}
+
+		_material->PostRender();
+	}
+
+	ImGui::EndChild();
 }
 
 bool TerrainEditor::Picking(OUT Vector3* position)

@@ -7,7 +7,7 @@ ImageCube::ImageCube()
 {
 	_size = 1.0f;
 	_count++;
-	_label = "Cube" + to_string(_count);
+	_ID = "Cube" + to_string(_count);
 	CreateFaces();
 }
 
@@ -90,7 +90,7 @@ void ImageCube::Move()
 
 void ImageCube::Debug()
 {
-	if (ImGui::BeginMenu(_label.c_str()))
+	if (ImGui::BeginMenu(_ID.c_str()))
 	{
 		ImGui::DragFloat3("Scale", (float*)&_scale, 0.01f, 0.01f, 100.0f);
 		ImGui::SliderAngle("Rotationx", &_rotation.x);//270에서 짐벌락 현상 발생->쿼터니언 각도를 사용해서 해결 가능

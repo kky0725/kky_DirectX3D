@@ -22,6 +22,9 @@ public:
 	void PostRender();
 	void SeletMap();
 
+	void Save(wstring file);
+	void Load(wstring file);
+
 	void SaveMap(wstring file);
 	void LoadMap(wstring file);
 
@@ -40,5 +43,7 @@ private:
 
 	string _projectDir;
 	
-	static string _ID;
+	static int _ID;
+
+	string _label = "";
 };

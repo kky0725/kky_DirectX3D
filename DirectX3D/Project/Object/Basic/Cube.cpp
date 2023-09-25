@@ -16,7 +16,7 @@ Cube::Cube(Vector4 color)
 
 	_count++;
 
-	_label = "Cube" + to_string(_count);
+	_ID = "Cube" + to_string(_count);
 }
 
 Cube::~Cube()

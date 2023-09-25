@@ -46,7 +46,7 @@ void Transform::UpdateWorld()
 
 void Transform::Debug()
 {
-	if (ImGui::BeginMenu(_label.c_str()))
+	if (ImGui::BeginMenu(_ID.c_str()))
 	{
 		ImGui::DragFloat3("Scale", (float*)&_scale, 0.01f, 0.01f, 100.0f);
 		//ImGui::DragFloat3("Rotation",	 (float*)&_rotation,	0.01f, -XM_2PI, +XM_2PI);

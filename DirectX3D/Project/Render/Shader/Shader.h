@@ -14,8 +14,12 @@ public:
 
 	virtual void SetShader() abstract;
 
+	wstring GetPath() { return _path; }
+
 protected:
 	ID3DBlob* _blob;
 
 	static map<wstring, Shader*> _shaders;
+
+	wstring _path;
 };
