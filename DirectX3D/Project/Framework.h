@@ -75,8 +75,10 @@ typedef XMFLOAT2 Vector2;
 #include "Utility/Utility.h"
 #include "Utility/BinaryWriter.h"
 #include "Utility/BinaryReader.h"
+#include "Utility/MyMath.h"
 
 using namespace Utility;
+using namespace MyMath;
 
 #include "Object/Transform.h"
 

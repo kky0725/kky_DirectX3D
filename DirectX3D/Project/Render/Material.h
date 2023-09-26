@@ -28,6 +28,9 @@ public:
 	void SaveMap(wstring file);
 	void LoadMap(wstring file);
 
+	void SaveDialog();
+	void LoadDialog();
+
 	void SaveMapDialog();
 	void LoadMapDialog();
 

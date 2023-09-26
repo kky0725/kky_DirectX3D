@@ -5,6 +5,7 @@ TerrainEditor::TerrainEditor(UINT height, UINT width)
 	: _height(height), _width(width)
 {
 	_material = new Material();
+	_material->SetShader(L"01TextureSplatting");
 
 	_worldBuffer = new MatrixBuffer();
 
@@ -48,6 +49,11 @@ TerrainEditor::TerrainEditor(UINT height, UINT width)
 	_output = new OutputDesc[_polygonCount];
 
 	_brushBuffer = new BrushBuffer();
+
+	//////////////
+
+	_alphaMap = Texture::Get(L"HeightMap/AlphaMap.png");
+	_secondMap = Texture::Get(L"LandScape/Box.png");
 }
 
 TerrainEditor::~TerrainEditor()
@@ -78,7 +84,12 @@ void TerrainEditor::Update()
 	_brushBuffer->data.location = _pickedPos;
 
 	if (Picking(&_pickedPos) && KEY_PRESS(VK_LBUTTON) && !ImGui::GetIO().WantCaptureMouse)
-		AdjustHeight();
+	{
+		if (_adjustAlpha)
+			AdjustAlpha();
+		else
+			AdjustHeight();
+	}
 
 	if (KEY_PRESS(VK_LSHIFT))
 		_isRaise = false;
@@ -96,6 +107,12 @@ void TerrainEditor::Render()
 
 	_brushBuffer->SetPSBuffer(10);
 
+	if (_alphaMap)
+		_alphaMap->PSSetShaderResources(10);
+
+	if (_secondMap)
+		_secondMap->PSSetShaderResources(11);
+
 	DC->DrawIndexed(_indices.size(), 0, 0);
 }
 
@@ -108,12 +125,15 @@ void TerrainEditor::Debug()
 		if (ImGui::BeginMenu("TerrainBrush"))
 		{
 			ImGui::ColorEdit3("BrushColor", (float*)&_brushBuffer->data.color);
-			ImGui::SliderFloat("BrushIntensity", &_adjustValue, 1.0f, 50.0f);
+			//ImGui::SliderFloat("BrushIntensity", &_adjustValue, 1.0f, 50.0f);
 			ImGui::SliderFloat("BrushRange", &_brushBuffer->data.range, 1.0f, 50.0f);
 
 			const char* typeList[] = { "Circle", "Rect" };
 
 			ImGui::Combo("BrushType", &_brushBuffer->data.type, typeList, 2);
+
+			ImGui::Checkbox("AdjustAlpha", &_adjustAlpha);
+			ImGui::Checkbox("HasAlphaMap", (bool*)& _material->GetBuffer()->data.hasAlphaMap);
 
 			ImGui::EndMenu();
 		}
@@ -439,6 +459,8 @@ void TerrainEditor::CreateCompute()
 
 void TerrainEditor::AdjustHeight()
 {
+	_adjustValue = 50.0f;
+
 	switch (_brushBuffer->data.type)
 	{
 	case 0:
@@ -458,11 +480,7 @@ void TerrainEditor::AdjustHeight()
 				else
 					vertex.pos.y -= value * Time::Delta();
 
-				if (vertex.pos.y > MAP_HEIGHT)
-					vertex.pos.y = MAP_HEIGHT;
-
-				if (vertex.pos.y < 0)
-					vertex.pos.y = 0;
+				vertex.pos.y = Clamp(vertex.pos.y, 0, MAP_HEIGHT);
 			}
 		}
 		break;
@@ -484,11 +502,7 @@ void TerrainEditor::AdjustHeight()
 				else
 					vertex.pos.y -= _adjustValue * Time::Delta();
 				
-				if (vertex.pos.y > MAP_HEIGHT)
-					vertex.pos.y = MAP_HEIGHT;
-
-				if (vertex.pos.y < 0)
-					vertex.pos.y = 0;
+				vertex.pos.y = Clamp(vertex.pos.y, 0, MAP_HEIGHT);
 			}
 		}
 		break;
@@ -516,3 +530,78 @@ void TerrainEditor::AdjustHeight()
 
 	_structuredBuffer->UpdateInput(_input);
 }
+
+void TerrainEditor::AdjustAlpha()
+{
+	_adjustValue = 5.0f;
+
+	switch (_brushBuffer->data.type)
+	{
+	case 0:
+		for (VertexType& vertex : _vertices)
+		{
+			Vector3 p1 = Vector3(vertex.pos.x, 0.0f, vertex.pos.z);
+			Vector3 p2 = Vector3(_pickedPos.x, 0.0f, _pickedPos.z);
+
+			float distance = (p1 - p2).Length();
+
+			float value = _adjustValue * max(0, cos(XM_PIDIV2 * distance / _brushBuffer->data.range));
+
+			if (distance <= _brushBuffer->data.range)
+			{
+				if (_isRaise)
+					vertex.alpha[_selectedMap] += value * Time::Delta();
+				else
+					vertex.alpha[_selectedMap] -= value * Time::Delta();
+
+				vertex.alpha[_selectedMap] = Saturate(vertex.alpha[_selectedMap]);
+			}
+		}
+		break;
+	case 1:
+		for (VertexType& vertex : _vertices)
+		{
+			Vector3 p1 = Vector3(vertex.pos.x, 0.0f, vertex.pos.z);
+			Vector3 p2 = Vector3(_pickedPos.x, 0.0f, _pickedPos.z);
+
+			//float distanceX = abs(p1.x - p2.x);
+			//float distanceZ = abs(p1.z - p2.z);
+
+			Vector3 distance = p1 - p2;
+
+			if (abs(distance.x) <= _brushBuffer->data.range && abs(distance.z) <= _brushBuffer->data.range)
+			{
+				if (_isRaise)
+					vertex.alpha[_selectedMap] += _adjustValue * Time::Delta();
+				else
+					vertex.alpha[_selectedMap] -= _adjustValue * Time::Delta();
+
+				vertex.alpha[_selectedMap] = Saturate(vertex.alpha[_selectedMap]);
+			}
+		}
+		break;
+	default:
+		break;
+	}
+
+	CreateNormal();
+	CreateTangent();
+
+	_mesh->UpdateVertex(_vertices.data(), _vertices.size());
+
+	for (UINT i = 0; i < _polygonCount; i++)
+	{
+		_input[i].index = i;
+
+		UINT index0 = _indices[i * 3 + 0];
+		UINT index1 = _indices[i * 3 + 1];
+		UINT index2 = _indices[i * 3 + 2];
+
+		_input[i].v0 = _vertices[index0].pos;
+		_input[i].v1 = _vertices[index1].pos;
+		_input[i].v2 = _vertices[index2].pos;
+	}
+
+	_structuredBuffer->UpdateInput(_input);
+}
+

@@ -82,11 +82,14 @@ public:
 		Vector4 specular= Vector4(1, 1, 1, 1);
 		Vector4 ambinet = Vector4(1, 1, 1, 1);
 
-		int hasDiffuseMap = 0;
+		int hasDiffuseMap  = 0;
 		int hasSpecularMap = 0;
-		int hasNormalMap = 0;
+		int hasNormalMap   = 0;
+		int hasAlphaMap    = 0;
 
 		float shininess = 24.0f;
+
+		Vector3 padding = {};
 	} data;
 private:
 };

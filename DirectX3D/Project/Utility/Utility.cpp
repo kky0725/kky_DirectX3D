@@ -40,3 +40,9 @@ wstring Utility::GetTextureDir()
 {
 	return GetProjectDir() + L"_Texture/";
 }
+
+wstring Utility::GetTextDataDir()
+{
+
+    return  GetProjectDir() + L"_TextData/";
+}

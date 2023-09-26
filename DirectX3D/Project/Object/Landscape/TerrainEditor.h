@@ -1,7 +1,7 @@
 #pragma once
 class TerrainEditor : public Transform
 {
-	typedef VertexTextureNormalTangent VertexType;
+	typedef VertexTextureNormalTangentAlpha VertexType;
 public:
 	TerrainEditor(UINT height = 100, UINT width = 100);
 	virtual ~TerrainEditor();
@@ -29,6 +29,7 @@ private:
 
 
 	void AdjustHeight();
+	void AdjustAlpha();
 
 private:
 	vector<VertexType>	_vertices;
@@ -81,5 +82,14 @@ private:
 	float _adjustValue = 20.0f;
 
 	bool _isRaise = true;
+
+	///alphaMap
+
+	Texture* _alphaMap = nullptr;
+	Texture* _secondMap = nullptr;
+
+	UINT _selectedMap = 0;
+
+	bool _adjustAlpha = true;
 };
 

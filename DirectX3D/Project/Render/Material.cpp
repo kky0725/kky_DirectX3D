@@ -104,7 +104,11 @@ void Material::SetNormalMap(wstring file)
 
 void Material::PostRender()
 {
+	//_label.resize(100);
 	ImGui::InputText("Label", (char*)_label.data(), 128);
+
+	if (_label[0] == '\0')
+		_label = "NULL";
 
 	if (ImGui::BeginMenu(_label.c_str()))
 	{
@@ -118,11 +122,8 @@ void Material::PostRender()
 
 		ImGui::SliderFloat("Shininess", &_buffer->data.shininess, 1.0f, 50.0f);
 	
-		if (ImGui::Button(("Save " + _label).c_str()))
-			Save(ToWstring(_label + " Data"));
-
-		if (ImGui::Button(("Load " + _label).c_str()))
-			Load(ToWstring(_label + " Data"));
+		SaveDialog();
+		LoadDialog();
 
 		ImGui::EndMenu();
 	}
@@ -250,6 +251,44 @@ void Material::LoadMap(wstring file)
 	SetDiffuseMap(data.ReadWString());
 	SetSpecularMap(data.ReadWString());
 	SetNormalMap(data.ReadWString());
+}
+
+void Material::SaveDialog()
+{
+	if (ImGui::Button(("Save " + _label).c_str()))
+		Dialog->OpenDialog("Save Material", "Save", ".mat", "_TextData/");
+
+	if (Dialog->Display("Save Material"))
+	{
+		if (Dialog->IsOk())
+		{
+			string path = Dialog->GetFilePathName();
+			path = path.substr(GetTextDataDir().size(), path.size());
+
+			if (Dialog->GetOpenedKey() == "Save Material")
+				Save(ToWstring(path));
+		}
+		Dialog->Close();
+	}
+}
+
+void Material::LoadDialog()
+{
+	if (ImGui::Button(("Load " + _label).c_str()))
+		Dialog->OpenDialog("Load Material", "Load", ".mat", "_TextData/");
+
+	if (Dialog->Display("Load Material"))
+	{
+		if (Dialog->IsOk())
+		{
+			string path = Dialog->GetFilePathName();
+			path = path.substr(GetTextDataDir().size(), path.size());
+
+			if (Dialog->GetOpenedKey() == "Load Material")
+				Load(ToWstring(path));
+		}
+		Dialog->Close();
+	}
 }
 
 void Material::SaveMapDialog()
