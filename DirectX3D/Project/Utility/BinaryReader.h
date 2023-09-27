@@ -11,6 +11,7 @@ public:
 	string	ReadString();
 	wstring ReadWString();
 	Vector3 ReadVector3();
+	Vector4 ReadVector4();
 
 	void ReadData(OUT void** data, UINT dataSize);
 

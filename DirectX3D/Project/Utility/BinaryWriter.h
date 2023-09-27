@@ -11,6 +11,7 @@ public:
 	void WriteData( string data);
 	void WriteData(wstring data);
 	void WriteData(Vector3 data);
+	void WriteData(Vector4 data);
 	void WriteData(  void* data, UINT dataSize);
 
 private:

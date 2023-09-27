@@ -48,6 +48,12 @@ using namespace DirectX;
 #include <Shlwapi.h>
 #pragma comment(lib, "shlwapi.lib")
 
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
+
+#pragma comment(lib, "assimp.lib");
+
 #define WIN_WIDTH 1280.0f
 #define WIN_HEIGHT 720.0f
 
@@ -117,12 +123,15 @@ using namespace MyMath;
 #include "Object/Landscape/Terrain.h"
 #include "Object/Landscape/TerrainEditor.h"
 
+#include "ModelExporter/ModelExporter.h"
+
 #include "Scene/Scene.h"
 #include "Scene/TutorialScene.h"
 #include "Scene/TextureScene.h"
 #include "Scene/TestScene.h"
 #include "Scene/TerrainScene.h"
 #include "Scene/TerrainEditorScene.h"
+#include "Scene/ModelExportScene.h"
 
 #include "MainGame.h"
 

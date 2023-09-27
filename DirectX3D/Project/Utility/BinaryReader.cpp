@@ -79,6 +79,18 @@ Vector3 BinaryReader::ReadVector3()
 	return data;
 }
 
+Vector4 BinaryReader::ReadVector4()
+{
+	Vector4 data;
+
+	data.x = ReadFloat();
+	data.y = ReadFloat();
+	data.z = ReadFloat();
+	data.w = ReadFloat();
+
+	return data;
+}
+
 void BinaryReader::ReadData(OUT void** data, UINT dataSize)
 {
 	assert(ReadFile(_file, *data, dataSize, &_size, nullptr));

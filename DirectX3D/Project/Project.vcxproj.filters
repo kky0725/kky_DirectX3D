@@ -159,6 +159,12 @@
     <ClInclude Include="Utility\MyMath.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Scene\ModelExportScene.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelExporter\ModelExporter.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -288,6 +294,12 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Utility\MyMath.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\ModelExportScene.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="ModelExporter\ModelExporter.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

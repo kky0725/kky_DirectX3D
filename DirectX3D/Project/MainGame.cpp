@@ -9,7 +9,8 @@ MainGame::MainGame()
 	//scene = new TextureScene();
 	//scene = new TestScene();
 	//scene = new TerrainScene();
-	scene = new TerrainEditorScene();
+	//scene = new TerrainEditorScene();
+	scene = new ModelExportScene();
 }
 
 MainGame::~MainGame()

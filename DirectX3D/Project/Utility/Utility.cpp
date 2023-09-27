@@ -44,5 +44,17 @@ wstring Utility::GetTextureDir()
 wstring Utility::GetTextDataDir()
 {
 
-    return  GetProjectDir() + L"_TextData/";
+	return  GetProjectDir() + L"_TextData/";
+}
+
+bool Utility::StartsWith(string str, string start)
+{
+	string result = str.substr(0, start.size());
+
+	return result == start;
+}
+
+bool Utility::StartsWith(wstring str, wstring start)
+{
+	return StartsWith(ToString(str), ToString(start));
 }

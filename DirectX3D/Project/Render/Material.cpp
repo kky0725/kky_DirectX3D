@@ -197,6 +197,12 @@ void Material::Save(wstring file)
 		data.WriteData(_normalMap->GetPath());
 	else
 		data.WriteData(L"");
+
+	data.WriteData(_buffer->data.diffuse  );
+	data.WriteData(_buffer->data.specular );
+	data.WriteData(_buffer->data.ambinet  );
+	data.WriteData(_buffer->data.emissive );
+	data.WriteData(_buffer->data.shininess);
 }
 
 void Material::Load(wstring file)
@@ -230,7 +236,12 @@ void Material::Load(wstring file)
 	if (str != L"")
 		_normalMap = Texture::Get(str);
 
+	_buffer->data.diffuse   = data.ReadVector4();
+	_buffer->data.specular  = data.ReadVector4();
+	_buffer->data.ambinet   = data.ReadVector4();
+	_buffer->data.emissive  = data.ReadVector4();
 
+	_buffer->data.shininess = data.ReadFloat();
 }
 
 void Material::SaveMap(wstring file)

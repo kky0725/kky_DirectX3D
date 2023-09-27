@@ -34,6 +34,8 @@ public:
 	void SaveMapDialog();
 	void LoadMapDialog();
 
+	void SetLabel(string label) { this->_label = label; }
+
 private:
 	VertexShader* _vertexShader = nullptr;
 	PixelShader* _pixelShader = nullptr;
