@@ -1,11 +1,12 @@
 #include "Framework.h"
 #include "BinaryWriter.h"
 
-BinaryWriter::BinaryWriter(wstring file)
+BinaryWriter::BinaryWriter(wstring path)
 {
-	file = L"_TextData/" + file;
+	if (!StartsWith(path, L"_"))
+		path = L"_Texture/" + path;
 
-	_file = CreateFile(file.c_str(), GENERIC_WRITE, 0, 0, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
+	_file = CreateFile(path.c_str(), GENERIC_WRITE, 0, 0, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
 }
 
 BinaryWriter::~BinaryWriter()

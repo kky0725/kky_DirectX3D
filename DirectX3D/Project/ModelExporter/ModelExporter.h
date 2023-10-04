@@ -2,11 +2,10 @@
 class ModelExporter
 {
 public:
-	ModelExporter(string file);
+	ModelExporter(string name);
 	~ModelExporter();
 
-	void ExportMaterial(string name);
-	void ReadMaterial();
+	void ExportMaterial();
 
 	wstring CreateTexture(string file);
 

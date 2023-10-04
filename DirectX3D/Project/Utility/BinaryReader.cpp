@@ -1,11 +1,12 @@
 #include "Framework.h"
 #include "BinaryReader.h"
 
-BinaryReader::BinaryReader(wstring file)
+BinaryReader::BinaryReader(wstring path)
 {
-	file = L"_TextData/" + file;
+	if (!StartsWith(path, L"_"))
+		path = L"_Texture/" + path;
 
-	_file = CreateFile(file.c_str(), GENERIC_READ, FILE_SHARE_READ, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
+	_file = CreateFile(path.c_str(), GENERIC_READ, FILE_SHARE_READ, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
 }
 
 BinaryReader::~BinaryReader()
