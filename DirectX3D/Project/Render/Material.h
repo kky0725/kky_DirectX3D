@@ -36,6 +36,8 @@ public:
 
 	void SetLabel(string label) { this->_label = label; }
 
+	string GetLabel() { return _label; }
+
 private:
 	VertexShader* _vertexShader = nullptr;
 	PixelShader* _pixelShader = nullptr;

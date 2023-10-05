@@ -135,6 +135,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="ModelExporter\ModelExporter.h" />
+    <ClInclude Include="ModelExporter\ModelType.h" />
     <ClInclude Include="Scene\ModelExportScene.h" />
     <ClInclude Include="Utility\MyMath.h" />
     <ClInclude Include="Utility\BinaryReader.h" />

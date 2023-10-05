@@ -113,9 +113,9 @@ void Utility::CreateFolder(string path)
 
 	for (UINT i = 0; i < size; i++)
 	{
-		temp = folders[i] + "/";
+		temp += folders[i] + "/";
 
-		if (PathFileExistsA(temp.c_str()))
+		if (!PathFileExistsA(temp.c_str()))
 		{
 			CreateDirectoryA(temp.c_str(), 0);
 		}
