@@ -168,6 +168,12 @@
     <ClInclude Include="ModelExporter\ModelType.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Model\ModelReader.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Model\ModelMesh.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -303,6 +309,12 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="ModelExporter\ModelExporter.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Model\ModelReader.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Model\ModelMesh.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

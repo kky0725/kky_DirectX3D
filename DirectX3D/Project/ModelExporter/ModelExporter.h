@@ -7,6 +7,7 @@ public:
 
 	void ExportModel();
 
+private:
 	void ExportMaterial();
 	void ExportMesh();
 
@@ -23,4 +24,6 @@ private:
 	const aiScene* _scene;
 
 	vector<MeshData*> _meshes;
+
+	vector<string> _materialNames;
 };

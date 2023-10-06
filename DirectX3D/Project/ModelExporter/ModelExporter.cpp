@@ -65,8 +65,17 @@ void ModelExporter::ExportMaterial()
 
 		material->Save(ToWstring(savePath));
 
+		_materialNames.push_back(material->GetLabel());
+
 		delete material;
 	}
+
+	BinaryWriter data(L"_ModelData/Material/" + ToWstring(_name) + L"/MaterialList.list");
+
+	data.WriteData((UINT)_materialNames.size());
+
+	for (string name : _materialNames)
+		data.WriteData(name);
 }
 
 void ModelExporter::ExportMesh()
@@ -135,7 +144,7 @@ void ModelExporter::ReadMesh(aiNode* node)
 		for (UINT j = 0; j < srcMesh->mNumVertices; j++)
 		{
 			ModelVertex vertex;
-			
+
 			memcpy(&vertex.pos, &srcMesh->mVertices[j], sizeof(Vector3));
 
 			if(srcMesh->HasTextureCoords(0))
@@ -146,11 +155,52 @@ void ModelExporter::ReadMesh(aiNode* node)
 
 			if (srcMesh->HasTangentsAndBitangents())
 				memcpy(&vertex.tangent, &srcMesh->mTangents[j], sizeof(Vector3));
+
+			mesh->vertices[j] = vertex;
 		}
+
+		for (UINT j = 0; j < srcMesh->mNumFaces; j++)
+		{
+			aiFace& face = srcMesh->mFaces[j];
+
+			for (UINT k = 0; k < face.mNumIndices; k++)
+			{
+				mesh->indices.push_back(face.mIndices[k] + startVertex);
+			}
+		}
+		_meshes.push_back(mesh);
+	}
+
+	for (UINT i = 0; i < node->mNumChildren; i++)
+	{
+		ReadMesh(node->mChildren[i]);
 	}
 }
 
 void ModelExporter::WriteMesh()
 {
+	string path = "_ModelData/Mesh/" + _name + ".mesh";
+
+	CreateFolder(path);
+
+	BinaryWriter data(ToWstring(path));
+
+	data.WriteData((UINT)_meshes.size());
+
+	for (MeshData* mesh : _meshes)
+	{
+		data.WriteData(mesh->name);
+		data.WriteData(mesh->materialIndex);
+
+		data.WriteData((UINT)mesh->vertices.size());
+		data.WriteData(mesh->vertices.data(), mesh->vertices.size() * sizeof(ModelVertex));
+
+		data.WriteData((UINT)mesh->indices.size());
+		data.WriteData(mesh->indices.data(), mesh->indices.size() * sizeof(UINT));
+
+		delete mesh;
+	}
+
+	_meshes.clear();
 }
 
