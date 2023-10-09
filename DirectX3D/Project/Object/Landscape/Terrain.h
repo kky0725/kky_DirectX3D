@@ -20,7 +20,7 @@ private:
 	vector<UINT>		_indices;
 
 	Material*	_material;
-	Mesh*		_mesh;
+	Mesh*		_meshes;
 
 	MatrixBuffer* _worldBuffer;
 

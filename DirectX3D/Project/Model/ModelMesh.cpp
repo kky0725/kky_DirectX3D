@@ -7,4 +7,5 @@ ModelMesh::ModelMesh()
 
 ModelMesh::~ModelMesh()
 {
+	delete _meshes;
 }

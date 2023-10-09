@@ -22,7 +22,7 @@ Quad::Quad(Vector2 size)
 		2, 1, 3
 	};
 
-	_mesh = new Mesh(_vertices, _indices);
+	_meshes = new Mesh(_vertices, _indices);
 
 	_material = new Material();
 	_material->SetShader(L"Diffuse");
@@ -34,7 +34,7 @@ Quad::Quad(Vector2 size)
 Quad::~Quad()
 {
 	delete _worldBuffer;
-	delete _mesh;
+	delete _meshes;
 }
 
 void Quad::Update()
@@ -48,7 +48,7 @@ void Quad::Render()
 	_worldBuffer->SetVSBuffer(0);
 	
 	_material->SetMaterial();
-	_mesh->SetMesh();
+	_meshes->SetMesh();
 
 	DC->DrawIndexed(_indices.size(), 0, 0);
 }

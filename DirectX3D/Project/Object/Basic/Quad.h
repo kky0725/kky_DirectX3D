@@ -10,7 +10,7 @@ public:
 
 private:
 	Material* _material	= nullptr;
-	Mesh*	  _mesh		= nullptr;
+	Mesh*	  _meshes		= nullptr;
 
 	vector<VertexTextureNormal> _vertices;
 	vector<UINT>				_indices;

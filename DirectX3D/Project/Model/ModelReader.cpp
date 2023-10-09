@@ -80,6 +80,8 @@ void ModelReader::ReadMesh()
 			data.ReadData(&ptr, sizeof(UINT) * count);
 		}
 
+		mesh->_meshes = new Mesh(mesh->_vertices, mesh->_indices);
+
 		_meshes.push_back(mesh);
 	}
 }

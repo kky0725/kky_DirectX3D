@@ -18,10 +18,10 @@ private:
 	MatrixBuffer* _worldBuffer;
 
 	vector<VertexType>	_vertices;
-	vector<UINT>				_indices;
+	vector<UINT>		_indices;
 
 	Material* _material;
-	Mesh* _mesh;
+	Mesh*	  _meshes;
 
 	static int _count;
 };

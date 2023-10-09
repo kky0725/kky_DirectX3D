@@ -22,7 +22,7 @@ TerrainEditor::TerrainEditor(UINT height, UINT width)
 	CreateNormal();
 	CreateTangent();
 
-	_mesh = new Mesh(_vertices, _indices);
+	_meshes = new Mesh(_vertices, _indices);
 
 	_rayBuffer		= new RayBuffer();
 	_computeShader	= Shader::GetCS(L"ComputePicking");
@@ -65,7 +65,7 @@ TerrainEditor::~TerrainEditor()
 		data.WriteData(_heightMap->GetPath());
 	}
 
-	delete _mesh;
+	delete _meshes;
 	delete _worldBuffer;
 	delete _material;
 
@@ -102,7 +102,7 @@ void TerrainEditor::Render()
 	_worldBuffer->SetData(_world);
 	_worldBuffer->SetVSBuffer(0);
 
-	_mesh->SetMesh();
+	_meshes->SetMesh();
 	_material->SetMaterial();
 
 	_brushBuffer->SetPSBuffer(10);
@@ -234,8 +234,8 @@ void TerrainEditor::LoadHeightMap(wstring file)
 {
 	_heightMap = Texture::Load(file);
 
-	if (_mesh != nullptr)
-		delete _mesh;
+	if (_meshes != nullptr)
+		delete _meshes;
 
 	_vertices.clear();
 	_indices.clear();
@@ -244,7 +244,7 @@ void TerrainEditor::LoadHeightMap(wstring file)
 	CreateNormal();
 	CreateTangent();
 
-	_mesh = new Mesh(_vertices, _indices);
+	_meshes = new Mesh(_vertices, _indices);
 
 	CreateCompute();
 }
@@ -513,7 +513,7 @@ void TerrainEditor::AdjustHeight()
 	CreateNormal();
 	CreateTangent();
 
-	_mesh->UpdateVertex(_vertices.data(), _vertices.size());
+	_meshes->UpdateVertex(_vertices.data(), _vertices.size());
 
 	for (UINT i = 0; i < _polygonCount; i++)
 	{
@@ -587,7 +587,7 @@ void TerrainEditor::AdjustAlpha()
 	CreateNormal();
 	CreateTangent();
 
-	_mesh->UpdateVertex(_vertices.data(), _vertices.size());
+	_meshes->UpdateVertex(_vertices.data(), _vertices.size());
 
 	for (UINT i = 0; i < _polygonCount; i++)
 	{

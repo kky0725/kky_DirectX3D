@@ -1,6 +1,7 @@
 #pragma once
 class ModelReader
 {
+	friend class Model;
 public:
 	ModelReader(string name);
 	~ModelReader();

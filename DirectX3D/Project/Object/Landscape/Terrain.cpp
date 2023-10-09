@@ -24,12 +24,12 @@ Terrain::Terrain(wstring diffuseFile, wstring heightFile)
 	CreateMesh();
 	CreateNormal();
 	CreateTangent();
-	_mesh = new Mesh(_vertices, _indices);
+	_meshes = new Mesh(_vertices, _indices);
 }
 
 Terrain::~Terrain()
 {
-	delete _mesh;
+	delete _meshes;
 	delete _worldBuffer;
 	delete _material;
 }
@@ -39,7 +39,7 @@ void Terrain::Render()
 	_worldBuffer->SetData(_world);
 	_worldBuffer->SetVSBuffer(0);
 
-	_mesh->SetMesh();
+	_meshes->SetMesh();
 	_material->SetMaterial();
 
 	DC->DrawIndexed(_indices.size(), 0, 0);
