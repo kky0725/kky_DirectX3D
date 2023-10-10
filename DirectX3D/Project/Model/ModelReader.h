@@ -1,12 +1,15 @@
 #pragma once
 class ModelReader
 {
-	friend class Model;
 public:
 	ModelReader(string name);
 	~ModelReader();
 
 	void SetShader(wstring file);
+
+	void Render();
+
+	void Debug();
 
 private:
 	void ReadMaterial();

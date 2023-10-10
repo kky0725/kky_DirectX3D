@@ -19,7 +19,7 @@ public:
 
 	MaterialBuffer* GetBuffer() { return _buffer; }
 
-	void PostRender();
+	void Debug();
 	void SeletMap();
 
 	void Save(wstring file);

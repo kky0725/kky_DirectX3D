@@ -14,13 +14,15 @@ public:
 
 	Vector3	 Forward() { return _forward; }
 	Vector3 Backward() { return _forward * -1; }
-	Vector3	    Left() { return _right * -1; }
+	Vector3		Left() { return _right * -1; }
 	Vector3	   Right() { return _right; }
 	Vector3		  Up() { return _up; }
 	Vector3		Down() { return _up * -1; }
 
 	void Debug();
 	void SetLabel(string label) { this->_ID = label; }
+
+	void SetWorld();
 
 public:
 	Vector3 _scale			= { 1.0f, 1.0f, 1.0f };
@@ -41,4 +43,6 @@ protected:
 	Vector3 _right, _up, _forward;
 
 	string _ID = "";
+
+	class MatrixBuffer* _worldBuffer;
 };

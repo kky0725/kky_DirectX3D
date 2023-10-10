@@ -56,6 +56,6 @@ void TextureScene::PostRender()
 {
 	_textureCube->Debug();
 
-	_sphere->GetMaterial()->PostRender();
+	_sphere->GetMaterial()->Debug();
 }
 

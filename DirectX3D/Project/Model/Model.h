@@ -2,17 +2,14 @@
 class Model : public Transform
 {
 public:
-	Model(string name);
+	Model(string name, wstring shaderFile = L"NormalMapping");
 	~Model();
 
 	virtual void Update();
 	void Render();
-
+	
+	ModelReader* GetReader() { return _reader; }
 
 private:
 	ModelReader* _reader;
-	MatrixBuffer* _worldBuffer;
-
-	vector<ModelVertex> _vertices;
-	vector<UINT>		_indices;
 };

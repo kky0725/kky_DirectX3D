@@ -6,17 +6,19 @@ public:
 	ModelMesh();
 	~ModelMesh();
 
-	Mesh* GetMesh() { return _meshes; }
-	UINT GetIndicesSize() { return _indices.size(); }
+	//Mesh* GetMesh() { return _mesh; }
+	//Material* GetMaterial() { return _material; }
+	//UINT GetIndicesSize() { return _indices.size(); }
+
+	void CreateMesh();
+	void Render();
 
 private:
 	string _name;
 
-	UINT _materialIndex;
+	Material* _material;
 
-	//Material* _material;
-
-	Mesh* _meshes;
+	Mesh* _mesh;
 
 	vector<ModelVertex> _vertices;
 	vector<UINT>		_indices;

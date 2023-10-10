@@ -28,7 +28,7 @@ void Camera::Update()
 	FreeMode();
 }
 
-void Camera::PostRender()
+void Camera::Debug()
 {
 	ImGui::Text("Camera Pos x : %.2f, y : %.2f, z : %.2f", _transform->_translation.x, _transform->_translation.y, _transform->_translation.z);
 	ImGui::Text("Camera Rot x : %.2f, y : %.2f, z : %.2f", _transform->_rotation.x, _transform->_rotation.y, _transform->_rotation.z);

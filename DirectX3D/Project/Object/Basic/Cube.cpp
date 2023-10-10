@@ -12,7 +12,7 @@ Cube::Cube(Vector4 color)
 	CreateMesh(color);
 	CreateNormal();
 
-	_meshes = new Mesh(_vertices, _indices);
+	_mesh = new Mesh(_vertices, _indices);
 
 	_count++;
 
@@ -21,7 +21,7 @@ Cube::Cube(Vector4 color)
 
 Cube::~Cube()
 {
-	delete _meshes;
+	delete _mesh;
 	delete _material;
 	delete _worldBuffer;
 }
@@ -37,7 +37,7 @@ void Cube::Render()
 {
 	//todo: Render
 	_material->SetMaterial();
-	_meshes->SetMesh();
+	_mesh->SetMesh();
 
 	_worldBuffer->SetVSBuffer(0);
 

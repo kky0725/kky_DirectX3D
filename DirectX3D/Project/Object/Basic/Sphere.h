@@ -21,7 +21,7 @@ private:
 	vector<UINT>		_indices;
 
 	Material* _material;
-	Mesh* _meshes;
+	Mesh* _mesh;
 
 	UINT _sliceCount;
 	UINT _stackCount;

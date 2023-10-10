@@ -24,12 +24,12 @@ Terrain::Terrain(wstring diffuseFile, wstring heightFile)
 	CreateMesh();
 	CreateNormal();
 	CreateTangent();
-	_meshes = new Mesh(_vertices, _indices);
+	_mesh = new Mesh(_vertices, _indices);
 }
 
 Terrain::~Terrain()
 {
-	delete _meshes;
+	delete _mesh;
 	delete _worldBuffer;
 	delete _material;
 }
@@ -39,12 +39,12 @@ void Terrain::Render()
 	_worldBuffer->SetData(_world);
 	_worldBuffer->SetVSBuffer(0);
 
-	_meshes->SetMesh();
+	_mesh->SetMesh();
 	_material->SetMaterial();
 
 	DC->DrawIndexed(_indices.size(), 0, 0);
 
-	_material->PostRender();
+	_material->Debug();
 }
 
 bool Terrain::Picking(OUT Vector3* position)

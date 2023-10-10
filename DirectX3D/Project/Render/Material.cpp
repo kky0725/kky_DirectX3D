@@ -9,9 +9,9 @@ Material::Material()
 
 	SetShader(L"TerrainBrush");
 
-	SetDiffuseMap(L"Landscape/fieldstone_DM.tga");
-	SetSpecularMap(L"Landscape/fieldstone_SM.tga");
-	SetNormalMap(L"Landscape/fieldstone_NM.tga");
+	//SetDiffuseMap(L"Landscape/fieldstone_DM.tga");
+	//SetSpecularMap(L"Landscape/fieldstone_SM.tga");
+	//SetNormalMap(L"Landscape/fieldstone_NM.tga");
 
 
 	char path[128];
@@ -29,9 +29,9 @@ Material::Material(wstring file)
 {
 	_buffer = new MaterialBuffer();
 
-	SetDiffuseMap(L"Landscape/fieldstone_DM.tga");
-	SetSpecularMap(L"Landscape/fieldstone_SM.tga");
-	SetNormalMap(L"Landscape/fieldstone_NM.tga");
+	//SetDiffuseMap(L"Landscape/fieldstone_DM.tga");
+	//SetSpecularMap(L"Landscape/fieldstone_SM.tga");
+	//SetNormalMap(L"Landscape/fieldstone_NM.tga");
 
 	SetShader(file);
 
@@ -102,7 +102,7 @@ void Material::SetNormalMap(wstring file)
 	_buffer->data.hasNormalMap = true;
 }
 
-void Material::PostRender()
+void Material::Debug()
 {
 	//_label.resize(100);
 	ImGui::InputText("Label", (char*)_label.data(), 128);
@@ -226,15 +226,15 @@ void Material::Load(wstring file)
 
 	str = data.ReadWString();
 	if (str != L"")
-		_diffuseMap = Texture::Get(str);
+		SetDiffuseMap(str);
 
 	str = data.ReadWString();
 	if (str != L"")
-		_specularMap = Texture::Get(str);
+		SetSpecularMap(str);
 
 	str = data.ReadWString();
 	if (str != L"")
-		_normalMap = Texture::Get(str);
+		SetNormalMap(str);
 
 	_buffer->data.diffuse   = data.ReadVector4();
 	_buffer->data.specular  = data.ReadVector4();

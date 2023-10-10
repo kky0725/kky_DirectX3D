@@ -26,6 +26,19 @@ void ModelReader::SetShader(wstring file)
 		material->SetShader(file);
 }
 
+void ModelReader::Render()
+{
+	for (ModelMesh* mesh : _meshes)
+		mesh->Render();
+}
+
+void ModelReader::Debug()
+{
+	for (Material* material : _materials)
+		material->Debug();
+
+}
+
 void ModelReader::ReadMaterial()
 {
 	string path = "_ModelData/Material/" + _name + "/MaterialList.list";
@@ -58,7 +71,9 @@ void ModelReader::ReadMesh()
 	{
 		ModelMesh* mesh = new ModelMesh();
 		mesh->_name = data.ReadString();
-		mesh->_materialIndex = data.ReadUINT();
+
+		UINT materialIndex = data.ReadUINT();
+		mesh->_material = _materials[materialIndex];
 
 		{
 			UINT count = data.ReadUINT();
@@ -80,7 +95,7 @@ void ModelReader::ReadMesh()
 			data.ReadData(&ptr, sizeof(UINT) * count);
 		}
 
-		mesh->_meshes = new Mesh(mesh->_vertices, mesh->_indices);
+		mesh->CreateMesh();
 
 		_meshes.push_back(mesh);
 	}
