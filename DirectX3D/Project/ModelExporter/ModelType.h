@@ -1,6 +1,6 @@
 #pragma once
 
-typedef VertexTextureNormalTangent ModelVertex;
+typedef VertexTextureNormalTangentBlend ModelVertex;
 
 struct MeshData
 {
@@ -10,4 +10,58 @@ struct MeshData
 
 	vector<ModelVertex> vertices;
 	vector<UINT> indices;
+};
+
+struct NodeData
+{
+	int index;
+
+	string name;
+
+	int parent;
+
+	XMFLOAT4X4 transform;
+};
+
+struct BoneData
+{
+	int index;
+	
+	string name;
+
+	XMFLOAT4X4 offset;
+};
+
+struct VertexWeight
+{
+	 UINT indices[4];
+	float weights[4];
+
+	void Add(const UINT& index, const float& weight)
+	{
+		for (UINT i = 0; i < 4; i++)
+		{
+			if (weights[i] == 0.0f)
+			{
+				indices[i] = index;
+				weights[i] = weight;
+				return;
+			}
+		}
+	}
+
+	void Normalize()
+	{
+		float sum = 0.0f;
+
+		for (UINT i = 0; i < 4; i++)
+		{
+			sum += weights[i];
+		}
+
+		for (UINT i = 0; i < 4; i++)
+		{
+			weights[i] /= sum;
+		}
+	}
 };

@@ -13,6 +13,7 @@ public:
 	void WriteData(Vector3 data);
 	void WriteData(Vector4 data);
 	void WriteData(  void* data, UINT dataSize);
+	void WriteData(XMFLOAT4X4 data);
 
 private:
 	HANDLE _file = nullptr;

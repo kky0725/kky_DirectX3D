@@ -3,15 +3,17 @@
 
 ModelExportScene::ModelExportScene()
 {
-	//_exporter = new ModelExporter("Y Bot");
-	//_exporter->ExportModel();
+	string name = "Knight D Pelegrini";
 
-	_model = new Model("Y Bot");
+	_exporter = new ModelExporter(name);
+	_exporter->ExportModel();
+
+	_model = new Model(name);
 }
 
 ModelExportScene::~ModelExportScene()
 {
-	//delete _exporter;
+	delete _exporter;
 	delete _model;
 }
 

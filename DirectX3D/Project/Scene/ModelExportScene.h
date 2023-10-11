@@ -10,7 +10,7 @@ public:
 	virtual void Render() override;
 	virtual void PostRender() override;
 private:
-	//ModelExporter* _exporter;
+	ModelExporter* _exporter;
 
 	Model* _model;
 };

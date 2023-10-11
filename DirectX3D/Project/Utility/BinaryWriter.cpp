@@ -66,3 +66,8 @@ void BinaryWriter::WriteData(void* data, UINT dataSize)
 {
 	WriteFile(_file, data, dataSize, &_size, nullptr);
 }
+
+void BinaryWriter::WriteData(XMFLOAT4X4 data)
+{
+	WriteFile(_file, &data, sizeof(data), &_size, nullptr);
+}

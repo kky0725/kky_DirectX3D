@@ -14,6 +14,9 @@ private:
 	wstring CreateTexture(string file);
 
 	void ReadMesh(aiNode* node);
+	void ReadNode(aiNode* node, int index, int parent);
+	void ReadBone(aiMesh* mesh, vector<VertexWeight>& vertexWeights);
+	
 	void WriteMesh();
 
 private:
@@ -26,4 +29,11 @@ private:
 	vector<MeshData*> _meshes;
 
 	vector<string> _materialNames;
+
+	vector<NodeData*> _nodes;
+	vector<BoneData*> _bones;
+
+	map<string, UINT> _boneMap;
+
+	UINT _boneCount = 0;
 };

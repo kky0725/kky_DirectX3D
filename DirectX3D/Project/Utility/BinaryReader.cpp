@@ -92,6 +92,15 @@ Vector4 BinaryReader::ReadVector4()
 	return data;
 }
 
+XMFLOAT4X4 BinaryReader::ReadXMFLOAT4X4()
+{
+	XMFLOAT4X4 data;
+	
+	ReadFile(_file, &data, sizeof(XMFLOAT4X4), &_size, nullptr);
+
+	return data;
+}
+
 void BinaryReader::ReadData(OUT void** data, UINT dataSize)
 {
 	assert(ReadFile(_file, *data, dataSize, &_size, nullptr));
