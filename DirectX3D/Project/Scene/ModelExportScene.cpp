@@ -6,7 +6,8 @@ ModelExportScene::ModelExportScene()
 	string name = "Knight D Pelegrini";
 
 	_exporter = new ModelExporter(name);
-	_exporter->ExportModel();
+	//_exporter->ExportModel();
+	_exporter->ExportClip("Hip Hop Dancing");
 
 	_model = new Model(name);
 }

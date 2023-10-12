@@ -22,6 +22,20 @@ void ModelExporter::ExportModel()
 	ExportMesh();
 }
 
+void ModelExporter::ExportClip(string file)
+{
+	_scene = _importer->ReadFile("_ModelData/Animation/" + _name + "/" + file + ".fbx", aiProcess_ConvertToLeftHanded | aiProcessPreset_TargetRealtime_MaxQuality);
+	
+	assert(_scene != nullptr);
+
+	for (UINT i = 0; i < _scene->mNumAnimations; i++)
+	{
+		Clip* clip = ReadClip(_scene->mAnimations[i]);
+
+		WriteClip(clip, file + to_string(i));
+	}
+}
+
 void ModelExporter::ExportMaterial()
 {
 	for (UINT i = 0; i < _scene->mNumMaterials; i++)
@@ -307,5 +321,168 @@ void ModelExporter::WriteMesh()
 	}
 
 	_bones.clear();
+}
+
+Clip* ModelExporter::ReadClip(aiAnimation* animation)
+{
+	Clip* clip = new Clip();
+	clip->name = animation->mName.C_Str();
+	clip->tickPerSecond = animation->mTicksPerSecond;
+	clip->frameCount = animation->mDuration + 1;
+	clip->duration = 0.0f;
+
+	vector<ClipNode> clipNodes;
+
+	for (UINT i = 0; i < animation->mNumChannels; i++)
+	{
+		aiNodeAnim* srcNode = animation->mChannels[i];
+
+		ClipNode node;
+		node.name = srcNode->mNodeName;
+
+		UINT keyCount = max(max(srcNode->mNumPositionKeys, srcNode->mNumRotationKeys), srcNode->mNumScalingKeys);
+		
+		KeyTransform transform;
+
+		for (UINT k = 0; k < keyCount; k++)
+		{
+			bool isFound = false;
+
+			UINT t = node.keyFrame.size();
+
+			if (k < srcNode->mNumScalingKeys)
+			{
+				aiVectorKey key = srcNode->mScalingKeys[k];
+				
+				if (abs(key.mTime - t) < FLT_EPSILON)
+				{
+					aiVector3D scale = key.mValue;
+
+					transform.scale.x = scale.x;
+					transform.scale.y = scale.y;
+					transform.scale.z = scale.z;
+
+					transform.time = key.mTime;
+
+					isFound = true;
+				}
+			}
+
+			if (k < srcNode->mNumRotationKeys)
+			{
+				aiQuatKey key = srcNode->mRotationKeys[k];
+
+				if (abs(key.mTime - t) < FLT_EPSILON)
+				{
+					aiQuaternion rotation = key.mValue;
+
+					transform.rotation.x = rotation.x;
+					transform.rotation.y = rotation.y;
+					transform.rotation.z = rotation.z;
+					transform.rotation.w = rotation.w;
+
+					transform.time = key.mTime;
+
+					isFound = true;
+				}
+			}
+
+			if (k < srcNode->mNumPositionKeys)
+			{
+				aiVectorKey key = srcNode->mPositionKeys[k];
+
+				if (abs(key.mTime - t) < FLT_EPSILON)
+				{
+					aiVector3D position = key.mValue;
+
+					transform.position.x = position.x;
+					transform.position.y = position.y;
+					transform.position.z = position.z;
+
+					transform.time = key.mTime;
+
+					isFound = true;
+				}
+			}
+
+			if (isFound)
+				node.keyFrame.push_back(transform);
+		}
+
+		if (node.keyFrame.size() < clip->frameCount)
+		{
+			UINT count = clip->frameCount - node.keyFrame.size();
+
+			KeyTransform keyTransform = node.keyFrame.back();
+			
+			for (UINT n = 0; n < count; n++)
+			{
+				node.keyFrame.push_back(keyTransform);
+			}
+		}
+		
+		clip->duration = max(clip->duration, node.keyFrame.back().time);
+
+		clipNodes.push_back(node);
+	}
+
+	ReadKeyFrame(clip, _scene->mRootNode, clipNodes);
+
+	return clip;
+}
+
+void ModelExporter::WriteClip(Clip* clip, string file)
+{
+}
+
+void ModelExporter::ReadKeyFrame(Clip* clip, aiNode* node, vector<ClipNode>& clipNodes)
+{
+	KeyFrame* keyFrame = new KeyFrame();
+
+	keyFrame->boneName = node->mName.C_Str();
+
+	for (UINT i = 0; i < clip->frameCount; i++)
+	{
+		ClipNode* clipNode = nullptr;
+
+		for (ClipNode& temp : clipNodes)
+		{
+			if (temp.name == node->mName)
+			{
+				clipNode = &temp;
+				break;
+			}
+		}
+
+		KeyTransform keyTransform;
+
+		if (clipNode == nullptr)
+		{
+			Matrix transform(node->mTransformation[0]);
+			transform = XMMatrixTranspose(transform);
+
+			XMVECTOR S, R, T;
+			XMMatrixDecompose(&S, &R, &T, transform);
+
+			keyTransform.scale = S;
+			XMStoreFloat4(&keyTransform.rotation, R);
+			keyTransform.position = T;
+
+			keyTransform.time = i;
+		}
+		else
+		{
+			keyTransform = clipNode->keyFrame[i];
+		}
+
+		keyFrame->transforms.push_back(keyTransform);
+	}
+
+	clip->keyFrame.push_back(keyFrame);
+
+	for (UINT i = 0; i < node->mNumChildren; i++)
+	{
+		ReadKeyFrame(clip, node->mChildren[i], clipNodes);
+	}
 }
 

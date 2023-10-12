@@ -65,3 +65,40 @@ struct VertexWeight
 		}
 	}
 };
+
+struct KeyTransform
+{
+	float time;
+
+	Vector3 scale;
+	Vector4 rotation;
+	Vector3 position;
+};
+
+struct KeyFrame
+{
+	string boneName;
+	vector<KeyTransform> transforms;
+};
+
+struct ClipNode
+{
+	vector<KeyTransform> keyFrame;
+	aiString name;
+};
+
+struct Clip
+{
+	string name;
+	UINT frameCount;
+	float tickPerSecond;
+	float duration;
+
+	vector<KeyFrame*> keyFrame;
+};
+
+struct ClipTransform
+{
+	Matrix transform[MAX_FRAME_KEY][MAX_BONE];
+
+};

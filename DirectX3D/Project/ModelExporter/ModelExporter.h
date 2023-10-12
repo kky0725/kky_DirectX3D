@@ -6,6 +6,7 @@ public:
 	~ModelExporter();
 
 	void ExportModel();
+	void ExportClip(string file);
 
 private:
 	void ExportMaterial();
@@ -18,6 +19,11 @@ private:
 	void ReadBone(aiMesh* mesh, vector<VertexWeight>& vertexWeights);
 	
 	void WriteMesh();
+
+	Clip* ReadClip(aiAnimation* animation);
+	void WriteClip(Clip* clip, string file);
+
+	void ReadKeyFrame(Clip* clip, aiNode* node, vector<ClipNode>& clipNodes);
 
 private:
 	string _name;
