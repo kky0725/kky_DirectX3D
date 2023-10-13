@@ -33,6 +33,8 @@ void ModelExporter::ExportClip(string file)
 		Clip* clip = ReadClip(_scene->mAnimations[i]);
 
 		WriteClip(clip, file + to_string(i));
+
+		delete clip;
 	}
 }
 
@@ -221,8 +223,8 @@ void ModelExporter::ReadNode(aiNode* node, int index, int parent)
 
 	Matrix matrix(node->mTransformation[0]);
 	matrix = XMMatrixTranspose(matrix);
-	XMStoreFloat4x4(&nodeData->transform, matrix);
-	
+	nodeData->transform = matrix;
+
 	_nodes.emplace_back(nodeData);
 
 	for (UINT i = 0; i < node->mNumChildren; i++)
@@ -250,7 +252,7 @@ void ModelExporter::ReadBone(aiMesh* mesh, vector<VertexWeight>& vertexWeights)
 
 			Matrix matrix(mesh->mBones[i]->mOffsetMatrix[0]);
 			matrix = XMMatrixTranspose(matrix);
-			XMStoreFloat4x4(&boneData->offset, matrix);
+			boneData->offset = matrix;
 
 			_bones.emplace_back(boneData);
 		}
@@ -433,6 +435,30 @@ Clip* ModelExporter::ReadClip(aiAnimation* animation)
 
 void ModelExporter::WriteClip(Clip* clip, string file)
 {
+	string savePath = "_ModelData/Clip/" + _name + "/" + file + ".clip";
+
+	CreateFolder(savePath);
+
+	BinaryWriter data(savePath);
+
+	data.WriteData(clip->name);
+	data.WriteData(clip->tickPerSecond);
+	data.WriteData(clip->frameCount);
+	data.WriteData(clip->duration);
+
+	data.WriteData(clip->keyFrame.size());
+
+	for (KeyFrame* keyFrame : clip->keyFrame)
+	{
+		data.WriteData(keyFrame->boneName);
+
+		data.WriteData(keyFrame->transforms.size());
+		data.WriteData(keyFrame->transforms.data(), sizeof(KeyTransform) * keyFrame->transforms.size());
+
+		delete keyFrame;
+	}
+
+	clip->keyFrame.clear();
 }
 
 void ModelExporter::ReadKeyFrame(Clip* clip, aiNode* node, vector<ClipNode>& clipNodes)

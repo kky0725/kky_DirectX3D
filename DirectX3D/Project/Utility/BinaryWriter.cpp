@@ -9,6 +9,14 @@ BinaryWriter::BinaryWriter(wstring path)
 	_file = CreateFile(path.c_str(), GENERIC_WRITE, 0, 0, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
 }
 
+BinaryWriter::BinaryWriter(string path)
+{
+	if (!StartsWith(path, "_"))
+		path = "_Texture/" + path;
+
+	_file = CreateFileA(path.c_str(), GENERIC_WRITE, 0, 0, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
+}
+
 BinaryWriter::~BinaryWriter()
 {
 	CloseHandle(_file);
@@ -69,5 +77,15 @@ void BinaryWriter::WriteData(void* data, UINT dataSize)
 
 void BinaryWriter::WriteData(XMFLOAT4X4 data)
 {
-	WriteFile(_file, &data, sizeof(data), &_size, nullptr);
+	WriteFile(_file, &data, sizeof(XMFLOAT4X4), &_size, nullptr);
+}
+
+void BinaryWriter::WriteData(Matrix data)
+{
+	WriteFile(_file, &data, sizeof(Matrix), &_size, nullptr);
+}
+
+void BinaryWriter::WriteData(size_t data)
+{
+	WriteData((UINT)data);
 }
