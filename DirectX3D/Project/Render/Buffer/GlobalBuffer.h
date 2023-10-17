@@ -132,3 +132,21 @@ public:
 	} data;
 private:
 };
+
+class FrameBuffer : public ConstBuffer
+{
+public:
+	FrameBuffer()
+		:ConstBuffer(&data, sizeof(Data))
+	{
+	}
+
+	struct Data
+	{
+		int	  clip		  = 0;
+		UINT  curFrame	  = 0;
+		float time		  = 0.0f;
+		float runningTime = 0.0f;
+	} data;
+private:
+};

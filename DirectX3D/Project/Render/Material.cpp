@@ -18,7 +18,7 @@ Material::Material()
 	GetCurrentDirectoryA(128, path);
 
 	_projectDir = path;
-	_projectDir += "_Texture/";
+	_projectDir += "/_Texture";
 
 	_ID++;
 
@@ -39,7 +39,7 @@ Material::Material(wstring file)
 	GetCurrentDirectoryA(128, path);
 
 	_projectDir = path;
-	_projectDir += "_Texture/";
+	_projectDir += "/_Texture";
 
 	_ID++;
 

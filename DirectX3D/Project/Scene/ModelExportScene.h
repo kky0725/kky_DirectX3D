@@ -13,4 +13,5 @@ private:
 	ModelExporter* _exporter;
 
 	Model* _model;
+	ModelAnimator* _modelAnimator;
 };

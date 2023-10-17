@@ -441,7 +441,7 @@
     <FxCompile Include="_Shader\Vertex01TextureSplatting.hlsl" />
     <FxCompile Include="_Shader\Pixel01TextureSplatting.hlsl" />
     <FxCompile Include="_Shader\Vertex02ModelAnimation.hlsl" />
-    <FxCompile Include="_Shader\Pixel02ModelAnimation..hlsl" />
+    <FxCompile Include="_Shader\Pixel02ModelAnimation.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="_Library\ImGui.idb" />
