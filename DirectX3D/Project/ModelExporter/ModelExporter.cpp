@@ -6,6 +6,9 @@ ModelExporter::ModelExporter(string name)
 {
 	_importer = new Assimp::Importer();
 
+	_importer->SetPropertyBool(AI_CONFIG_IMPORT_FBX_PRESERVE_PIVOTS, false);
+	_importer->SetPropertyInteger(AI_CONFIG_PP_RVC_FLAGS, aiComponent_TANGENTS_AND_BITANGENTS);
+
 	_scene = _importer->ReadFile("_ModelData/FBX/" + name + ".fbx", aiProcess_ConvertToLeftHanded | aiProcessPreset_TargetRealtime_MaxQuality);
 
 	assert(_scene != nullptr);

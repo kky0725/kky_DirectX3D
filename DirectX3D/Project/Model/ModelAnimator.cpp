@@ -8,6 +8,8 @@ ModelAnimator::ModelAnimator(string name, wstring shaderFile)
 	_reader->SetShader(shaderFile);
 
 	_frameBuffer = new FrameBuffer();
+
+	_ID = name;
 }
 
 ModelAnimator::~ModelAnimator()
@@ -19,11 +21,8 @@ ModelAnimator::~ModelAnimator()
 void ModelAnimator::Update()
 {
 	Transform::Update();
-
-	static float time = 0.0f;
-	time += Time::Delta();
-
-	_frameBuffer->data.curFrame = time;
+	
+	UpdateFrame();
 }
 
 void ModelAnimator::Render()
@@ -70,6 +69,13 @@ void ModelAnimator::ReadClip(string file, UINT clipIndex)
 	}
 
 	_clips.emplace_back(clip);
+}
+
+void ModelAnimator::PlayClip(UINT clipIndex, float speed, float takeTime)
+{
+	_frameBuffer->data.next.clip  = clipIndex;
+	_frameBuffer->data.next.speed = speed;
+	_frameBuffer->data.takeTime   = takeTime;
 }
 
 void ModelAnimator::CreateTexture()
@@ -137,6 +143,50 @@ void ModelAnimator::CreateTexture()
 	DEVICE->CreateShaderResourceView(_texture, &srvDesc, &_srv);
 }
 
+void ModelAnimator::UpdateFrame()
+{
+	FrameBuffer::Data& frameData = _frameBuffer->data;
+
+	ModelClip* clip = _clips[frameData.cur.clip];
+
+	frameData.cur.time += Time::Delta() * clip->tickPerSecond * frameData.cur.speed;
+
+	if (frameData.cur.time >= 1.0f)
+	{
+		++frameData.cur.curFrame %= (clip->frameCount - 1);
+		frameData.cur.time = 0.0f;
+	}
+
+
+	//NextClip
+	if (frameData.next.clip < 0)
+		return;
+
+	frameData.tweenTime += Time::Delta() / frameData.takeTime;
+
+	clip = _clips[frameData.next.clip];
+
+	if (frameData.tweenTime >= 1.0f)
+	{
+		frameData.cur = frameData.next;
+		frameData.tweenTime = 0.0f;
+
+		frameData.next.clip = -1;
+		frameData.next.curFrame = 0;
+		frameData.next.time = 0.0f;
+	}
+	else
+	{
+		frameData.next.time += Time::Delta() * clip->tickPerSecond * frameData.next.speed;
+
+		if (frameData.next.time >= 1.0f)
+		{
+			++frameData.next.curFrame %= (clip->frameCount - 1);
+			frameData.next.time = 0.0f;
+		}
+	}
+}
+
 void ModelAnimator::CreateClipTransform(UINT index)
 {
 	ModelClip* clip = _clips[index];
@@ -190,11 +240,6 @@ void ModelAnimator::CreateClipTransform(UINT index)
 			}
 
 			nodeIndex++;
-		}
-
-		for (BoneData bone : _reader->_bones)
-		{
-
 		}
 	}
 }

@@ -14,4 +14,7 @@ private:
 
 	Model* _model;
 	ModelAnimator* _modelAnimator;
+
+	float speed		= 1.0f;
+	float takeTime	= 0.2f;
 };

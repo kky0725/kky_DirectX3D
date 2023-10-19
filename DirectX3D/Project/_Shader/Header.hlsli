@@ -36,12 +36,27 @@ cbuffer MaterialBuffer : register(b1)
 	float shininess;
 };
 
-cbuffer FrameBuffer : register(b3)
+struct Frame
 {
 	int clip;
 	uint curFrame;
 	float time;
+	float speed;
+};
+
+struct Motion
+{
+	float takeTime;
+	float tweenTime;
 	float runningTime;
+	float padding2;
+	
+	Frame cur, next;
+};
+
+cbuffer FrameBuffer : register(b3)
+{
+	Motion motion;
 };
 
 Texture2DArray transforMap : register(t0);
