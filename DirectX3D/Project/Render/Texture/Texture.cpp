@@ -33,9 +33,9 @@ Texture* Texture::Get(wstring file)
 
 	ScratchImage image;
 
-	if (extension == L"tga")
+	if (extension == L"tga" || extension == L"TGA")
 		LoadFromTGAFile(file.c_str(), nullptr, image);
-	else if (extension == L"dds")
+	else if (extension == L"dds" || extension == L"DDS")
 		LoadFromDDSFile(file.c_str(), DDS_FLAGS_NONE, nullptr, image);
 	else
 		LoadFromWICFile(file.c_str(), WIC_FLAGS_NONE, nullptr, image);
@@ -68,9 +68,9 @@ Texture* Texture::Load(wstring file)
 
 	wstring extension = GetExtension(file);
 
-	if (extension == L"tga")
+	if (extension == L"tga" || extension == L"TGA")
 		LoadFromTGAFile(file.c_str(), nullptr, image);
-	else if (extension == L"dds")
+	else if (extension == L"dds" || extension == L"DDS")
 		LoadFromDDSFile(file.c_str(), DDS_FLAGS_NONE, nullptr, image);
 	else
 		LoadFromWICFile(file.c_str(), WIC_FLAGS_NONE, nullptr, image);

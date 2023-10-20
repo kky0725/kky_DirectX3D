@@ -10,7 +10,8 @@ MainGame::MainGame()
 	//scene = new TestScene();
 	//scene = new TerrainScene();
 	//scene = new TerrainEditorScene();
-	scene = new ModelExportScene();
+	//scene = new ModelExportScene();
+	scene = new ModelAnimationScene();
 }
 
 MainGame::~MainGame()

@@ -134,6 +134,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Scene\ModelAnimationScene.h" />
+    <ClInclude Include="Object\Model\Groot.h" />
     <ClInclude Include="Model\ModelAnimator.h" />
     <ClInclude Include="Model\ModelClip.h" />
     <ClInclude Include="Model\Model.h" />
@@ -192,6 +194,8 @@
     <ClInclude Include="__Others\targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Scene\ModelAnimationScene.cpp" />
+    <ClCompile Include="Object\Model\Groot.cpp" />
     <ClCompile Include="Model\ModelAnimator.cpp" />
     <ClCompile Include="Model\ModelClip.cpp" />
     <ClCompile Include="Model\Model.cpp" />

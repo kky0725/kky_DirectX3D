@@ -5,8 +5,8 @@ public:
 	ModelAnimator(string name, wstring shaderFile = L"02ModelAnimation");
 	~ModelAnimator();
 
-	void Update();
-	void Render();
+	virtual void Update();
+	virtual void Render();
 
 	void ReadClip(string file, UINT clipIndex = 0);
 	void PlayClip(UINT clipIndex, float speed = 1.0f, float takeTime = 2.0f);
@@ -15,10 +15,15 @@ public:
 	
 	void UpdateFrame();
 
+	virtual void Debug();
+
+	Matrix GetTransformByBone(UINT boneIndex);
+	Matrix GetTransformByNode(UINT nodeIndex);
+
 private:
 	void CreateClipTransform(UINT index);
 
-private:
+protected:
 	ModelReader*		_reader;
 	vector<ModelClip*>	_clips;
 	string				_name;

@@ -19,7 +19,7 @@ public:
 	Vector3		  Up() { return _up; }
 	Vector3		Down() { return _up * -1; }
 
-	void Debug();
+	virtual void Debug();
 	void SetLabel(string label) { this->_ID = label; }
 
 	void SetWorld();
@@ -42,7 +42,7 @@ protected:
 
 	Vector3 _right, _up, _forward;
 
-	string _ID = "";
+	string _ID = "Null";
 
 	class MatrixBuffer* _worldBuffer;
 };

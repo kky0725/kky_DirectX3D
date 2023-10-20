@@ -11,7 +11,7 @@ Camera::Camera()
 	//_transform->_translation = { 0.0f, 0.0f, -20.0f };
 	_transform->_rotation.x = 0.65f;
 
-	Load();
+	//Load();
 }
 
 Camera::~Camera()
@@ -95,6 +95,9 @@ void Camera::FreeMode()
 			_transform->_translation += _transform->Down() * _moveSpeed * Time::Delta();
 	
 		Vector3 dir = mousePos - _oldPos;
+
+		if (abs(dir.x) > 15.0f || abs(dir.y) > 15.0f)
+			dir = Vector3(0.0f, 0.0f, 0.0f);
 
 		_transform->_rotation.y += dir.x * _rotSpeed * Time::Delta();
 		_transform->_rotation.x += dir.y * _rotSpeed * Time::Delta();

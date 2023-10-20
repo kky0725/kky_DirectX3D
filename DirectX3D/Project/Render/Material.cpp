@@ -136,13 +136,13 @@ void Material::SeletMap()
 	if (ImGui::BeginMenu(_label.c_str()))
 	{
 		if (ImGui::Button("DiffuseMap"))
-			Dialog->OpenDialog("Diffuse", "Select Diffuse", ".png,.jpg,.dds,.tga", "_Texture/");
+			Dialog->OpenDialog("Diffuse", "Select Diffuse", ".png,.jpg,.dds,.tga,.TGA", "_Texture/");
 
 		if (ImGui::Button("NormalMap"))
-			Dialog->OpenDialog("Normal", "Select Normal", ".png,.jpg,.dds,.tga", "_Texture/");
+			Dialog->OpenDialog("Normal", "Select Normal", ".png,.jpg,.dds,.tga,.TGA", "_Texture/");
 
 		if (ImGui::Button("SpecularMap"))
-			Dialog->OpenDialog("Specular", "Select Specular", ".png,.jpg,.dds,.tga", "_Texture/");
+			Dialog->OpenDialog("Specular", "Select Specular", ".png,.jpg,.dds,.tga,.TGA", "_Texture/");
 
 		if (Dialog->Display("Diffuse") || Dialog->Display("Normal") || Dialog->Display("Specular"))
 		{

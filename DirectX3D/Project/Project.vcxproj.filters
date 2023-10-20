@@ -183,6 +183,12 @@
     <ClInclude Include="Model\ModelAnimator.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Object\Model\Groot.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\ModelAnimationScene.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -333,6 +339,12 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Model\ModelAnimator.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Model\Groot.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\ModelAnimationScene.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
