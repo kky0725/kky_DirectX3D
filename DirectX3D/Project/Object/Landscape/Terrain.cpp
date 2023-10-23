@@ -7,15 +7,15 @@ Terrain::Terrain(wstring diffuseFile, wstring heightFile)
 	//_material->SetShader(L"Diffuse");
 	//_material->SetShader(L"Specular");
 	_material->SetShader(L"NormalMapping");
-	//_material->SetDiffuseMap(diffuseFile);
+	_material->SetDiffuseMap(diffuseFile);
 
 	//_material->SetDiffuseMap(L"Landscape/Wall.png");
 	//_material->SetSpecularMap(L"Landscape/Wall_specular.png");
 	//_material->SetNormalMap(L"Landscape/Wall_normal.png");
 
-	_material->SetDiffuseMap(L"Landscape/Fieldstone_DM.tga");
-	_material->SetSpecularMap(L"Landscape/Fieldstone_SM.tga");
-	_material->SetNormalMap(L"Landscape/Fieldstone_NM.tga");
+	//_material->SetDiffuseMap(L"Landscape/Fieldstone_DM.tga");
+	//_material->SetSpecularMap(L"Landscape/Fieldstone_SM.tga");
+	//_material->SetNormalMap(L"Landscape/Fieldstone_NM.tga");
 
 	_worldBuffer = new MatrixBuffer();
 

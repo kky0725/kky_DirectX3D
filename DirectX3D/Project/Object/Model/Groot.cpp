@@ -4,7 +4,7 @@
 Groot::Groot()
 	:ModelAnimator("Groot")
 {
-	_scale *= 0.1f;
+	_scale *= 0.01f;
 	ReadClip("Sad Idle");
 	ReadClip("Running");
 	ReadClip("Mutant Swiping");
@@ -12,8 +12,12 @@ Groot::Groot()
 
 	_reader->GetMaterial()[0]->Load(L"groot.mat");
 
-	_weapon = new Sphere();
-	_weapon->_scale = Vector3(100.0f, 100.0f, 100.0f);
+	_weapon = new Model(name);
+	_weapon->GetReader()->GetMaterial()[0]->Load(L"warven_Axe.mat");
+	_weapon->_rotation.y = XMConvertToRadians(61.0f);
+	_weapon->_rotation.z = XMConvertToRadians(195.0f);
+	_weapon->_translation = { -2.0f, 60.0f, -20.0f };
+	//_weapon->_scale = Vector3(100.0f, 100.0f, 100.0f);
 
 	_lefthand = new Transform();
 	_weapon->SetParent(_lefthand);
@@ -41,6 +45,7 @@ void Groot::Update()
 		PlayClip(2, speed, takeTime);
 
 	UpdateLeftHand();
+	Move();
 }
 
 void Groot::Render()
@@ -67,4 +72,48 @@ void Groot::UpdateLeftHand()
 	Matrix nodeTransform = GetTransformByNode(nodeIndex);
 
 	_lefthand->GetWorld() = nodeTransform * _world;
+}
+
+void Groot::SetClip(AnimState state)
+{
+	if (_curState != state)
+	{
+		PlayClip(state);
+		_curState = state;
+	}
+}
+
+void Groot::Move()
+{
+	if (KEY_PRESS('W'))
+	{
+		_translation -= Forward() * _moveSpeed * Time::Delta();
+		SetClip(RUN);
+	}
+
+	if (KEY_PRESS('S'))
+	{
+		_translation -= Backward() * _moveSpeed * Time::Delta();
+		SetClip(RUN);
+	}
+
+	if (KEY_UP('W') || KEY_UP('S'))
+		SetClip(IDLE);
+
+	if (KEY_PRESS('A'))
+	{
+		_rotation.y -= _rotSpeed * Time::Delta();
+	}
+
+	if (KEY_PRESS('D'))
+	{
+		_rotation.y += _rotSpeed * Time::Delta();
+	}
+
+	if (KEY_DOWN(VK_LBUTTON))
+	{
+		SetClip(ATTACK);
+
+		//PlayClip(IDLE);
+	}
 }

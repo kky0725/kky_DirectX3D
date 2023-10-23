@@ -36,7 +36,7 @@ private:
 	float  _rotSpeed = 5.0f;
 
 	ViewBuffer* _viewBuffer;
-	Matrix		  _viewMatrix;
+	Matrix		_viewMatrix;
 
 	Vector3 _oldPos;
 };
