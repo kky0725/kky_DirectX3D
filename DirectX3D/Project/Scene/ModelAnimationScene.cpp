@@ -6,6 +6,9 @@ ModelAnimationScene::ModelAnimationScene()
 {
 	_groot = new Groot();
 	_terrain = new Terrain(L"Landscape/Dirt.png", L"HeightMap/HeightMap.png");
+	_terrain->_scale = Vector3(2.0f, 2.0f, 2.0f);
+
+	Camera::GetInstance()->SetTarget(_groot);
 }
 
 ModelAnimationScene::~ModelAnimationScene()
@@ -18,6 +21,8 @@ void ModelAnimationScene::Update()
 {
 	_groot->Update();
 	_terrain->Update();
+
+	_groot->_translation.y = _terrain->GetHeight(_groot->GetGlobalPosition());
 }
 
 void ModelAnimationScene::PreRender()

@@ -21,6 +21,8 @@ Groot::Groot()
 
 	_lefthand = new Transform();
 	_weapon->SetParent(_lefthand);
+	
+	_clips[ATTACK]->SetEndEvent(std::bind(&Groot::SetClip, this, IDLE), 0.7f);
 }
 
 Groot::~Groot()
@@ -113,7 +115,5 @@ void Groot::Move()
 	if (KEY_DOWN(VK_LBUTTON))
 	{
 		SetClip(ATTACK);
-
-		//PlayClip(IDLE);
 	}
 }

@@ -8,6 +8,12 @@ public:
 
 	KeyFrame* GetKeyFrames(string name);
 
+	void SetEndEvent(function<void(void)> EndEvent, float ratio)
+	{
+		this->_EndEvent = EndEvent;
+		this->_ratio = ratio;
+	}
+
 private:
 	string name ="";
 	UINT frameCount = 0;
@@ -15,4 +21,8 @@ private:
 	float duration = 0.0f;
 
 	unordered_map<string, KeyFrame*> _keyFrames = {};
+
+	function<void()> _EndEvent;
+
+	float _ratio;
 };

@@ -19,6 +19,9 @@ public:
 	Vector3		  Up() { return _up; }
 	Vector3		Down() { return _up * -1; }
 
+	Vector3 GetGlobalPosition() { return _globalPosition; }
+	Vector3 GetGlobalRoation() { return _globalRotation; }
+
 	virtual void Debug();
 	void SetLabel(string label) { this->_ID = label; }
 

@@ -86,6 +86,49 @@ bool Terrain::Picking(OUT Vector3* position)
 	return false;
 }
 
+float Terrain::GetHeight(Vector3 position)
+{
+	position.x /= _scale.x;
+	position.z /= _scale.z;
+
+	int x = (int)position.x;
+	int z = (int)position.z;
+
+	if (x < 0 || x >= _width || z < 0 || z >= _height)
+		return 0;
+
+	UINT index[4];
+	index[0] = x + 0 + _width * (z + 1);
+	index[1] = x + 1 + _width * (z + 1);
+	index[2] = x + 0 + _width * (z + 0);
+	index[3] = x + 1 + _width * (z + 0);
+
+	Vector3 vertex[4];
+	for (UINT i = 0; i < 4; i++)
+	{
+		vertex[i] = _vertices[index[i]].pos;
+	}
+
+	float u = position.x - vertex[0].x;
+	float v = position.z - vertex[0].z;
+	v = abs(v);
+
+	Vector3 result;
+
+	if (u + v <= 1.0f)
+	{
+		result = vertex[0] + (vertex[2] - vertex[0]) * u + (vertex[1] - vertex[0]) * v;
+	}
+	else
+	{
+		u = 1 - u;
+		v = 1 - v;
+		result = vertex[3] + (vertex[2] - vertex[3]) * u + (vertex[1] - vertex[3]) * v;
+	}
+
+	return result.y * _scale.y;
+}
+
 void Terrain::CreateMesh()
 {
 	 _width = _heightMap->GetSize().x;

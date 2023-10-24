@@ -21,7 +21,6 @@ public:
 	Matrix GetTransformByBone(UINT boneIndex);
 	Matrix GetTransformByNode(UINT nodeIndex);
 
-	void SetEndEvent(function<void()> EndEvent, float ratio);
 	//bool& IsPlay() { return _isPlay; }
 
 private:
@@ -41,8 +40,4 @@ protected:
 	ID3D11ShaderResourceView*	_srv;
 
 	bool _isPlay = true;
-	function<void()> EndEvent;
-
-	float _animRatio;
-	float _ratio;
 };

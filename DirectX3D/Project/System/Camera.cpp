@@ -25,13 +25,25 @@ Camera::~Camera()
 
 void Camera::Update()
 {
-	FreeMode();
+	if(!_target)
+		FreeMode();
+	else
+		TargetMode();
 }
 
 void Camera::Debug()
 {
-	ImGui::Text("Camera Pos x : %.2f, y : %.2f, z : %.2f", _transform->_translation.x, _transform->_translation.y, _transform->_translation.z);
-	ImGui::Text("Camera Rot x : %.2f, y : %.2f, z : %.2f", _transform->_rotation.x, _transform->_rotation.y, _transform->_rotation.z);
+	if (ImGui::TreeNode("Camera Option"))
+	{
+		ImGui::Text("Camera Pos x : %.2f, y : %.2f, z : %.2f", _transform->_translation.x, _transform->_translation.y, _transform->_translation.z);
+		ImGui::Text("Camera Rot x : %.2f, y : %.2f, z : %.2f", _transform->_rotation.x, _transform->_rotation.y, _transform->_rotation.z);
+
+		ImGui::SliderFloat("Camera MoveDamping", &_moveDamping, 0.0f, 30.0f);
+		ImGui::SliderFloat("Camera RotDamping", &_rotDamping, 0.0f, 30.0f);
+		ImGui::SliderFloat("Camera RotY", &_rotY, 0.0f, XM_2PI);
+
+		ImGui::TreePop();
+	}
 }
 
 Ray Camera::ScreenPointToRay(Vector3 screenPos)
@@ -105,11 +117,42 @@ void Camera::FreeMode()
 
 	_oldPos = mousePos;
 
+	_viewMatrix = XMMatrixInverse(nullptr, _transform->GetWorld());
+
 	SetView();
 }
 
 void Camera::TargetMode()
 {
+	//위치랑 회전을 따라감
+	//_destination = _target->_translation - _target->Backward() * _distance + V_UP * _height;
+	//
+	//_transform->_translation = _destination;
+
+	//_viewMatrix = XMMatrixLookAtLH(_destination, _target->_translation, V_UP);
+
+
+	//위치만 따라감
+	//_destination = _target->_translation - V_FORWARD * _distance + V_UP * _height;
+
+	//_transform->_translation = _destination;
+
+	//_viewMatrix = XMMatrixLookAtLH(_destination, _target->_translation, V_UP);
+	
+	//damping 적용
+	_destRot = LERP(_destRot, _target->_rotation.y, _rotDamping * Time::Delta());
+
+	XMMATRIX rotMatrix = XMMatrixRotationY(_destRot + _rotY);
+
+	Vector3 forward = V_FORWARD * rotMatrix;
+
+	_destination = _target->GetGlobalPosition() + forward * _distance + V_UP * _height;
+
+	_transform->_translation = LERP(_transform->_translation, _destination, _moveDamping * Time::Delta());
+
+	_viewMatrix = XMMatrixLookAtLH(_transform->_translation, _target->_translation, V_UP);
+
+	SetView();
 }
 
 void Camera::SetView()
@@ -121,8 +164,6 @@ void Camera::SetView()
 	//XMVECTOR upVector = _transform->Up();
 
 	//_viewMatrix = XMMatrixLookAtLH(eyePos, focusPos, upVector);
-
-	_viewMatrix = XMMatrixInverse(nullptr, _transform->GetWorld());
 
 	_viewBuffer->SetData(_viewMatrix, _transform->GetWorld());
 	_viewBuffer->SetVSBuffer(1);
