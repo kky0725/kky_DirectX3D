@@ -26,7 +26,7 @@ bool ColliderSphere::Collision(ColliderSphere* other)
 {
 	float distance = Distance(this->_globalPosition, other->_globalPosition);
 
-	return distance<= (this->Radius() + other->Radius());
+	return distance<= this->Radius() + other->Radius();
 }
 
 bool ColliderSphere::Collision(ColliderCapsule* other)
@@ -61,7 +61,7 @@ void ColliderSphere::CreateMesh()
 			_indices.push_back(i + 1 + (_sliceCount + 1) * (j + 0));
 
 			_indices.push_back(i + 0 + (_sliceCount + 1) * (j + 0));
-			_indices.push_back(i + 1 + (_sliceCount + 1) * (j + 1));
+			_indices.push_back(i + 0 + (_sliceCount + 1) * (j + 1));
 		}
 	}
 
