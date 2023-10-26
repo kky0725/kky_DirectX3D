@@ -14,6 +14,36 @@ ColliderSphere::~ColliderSphere()
 
 bool ColliderSphere::Collision(IN Ray& ray, OUT Contact* contact)
 {
+	Transform::UpdateWorld();
+
+	Vector3 O = ray.origion;
+	Vector3 D = ray.direction;
+	Vector3 P = this->_globalPosition;
+	Vector3 X = O - P;
+
+	float a = Vector3::Dot(D,D);
+	float b = 2 * Vector3::Dot(D,X);
+	float c = Vector3::Dot(X,X) - pow(Radius(), 2);
+
+	//float theta = acos(Vector3::Dot(D,X) /X.Length());
+
+	//if (X.Length() * sin(theta) <= Radius())
+	//	return true;
+
+	if (pow(b, 2) - 4 * a * c >= 0)
+	{
+		if(contact != nullptr)
+		{
+			float t = (-b - sqrt(pow(b,2) - 4 * a * c)) / (2 * a);
+
+			contact->distance = t;
+			contact->hitPoint = O + D * t;
+		}
+		return true;
+	}
+
+
+
 	return false;
 }
 

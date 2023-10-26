@@ -7,7 +7,13 @@ CollisionScene::CollisionScene()
 	{
 		_colliders.emplace_back(new ColliderSphere);
 		_colliders[i]->SetLabel("ColliderSphere" + to_string(i));
-		_colliders[i]->_translation.x = 2 * i;
+		_colliders[i]->_translation.x = 3 * i;
+	}
+	for (UINT i = 2; i < 4; i++)
+	{
+		_colliders.emplace_back(new ColliderBox);
+		_colliders[i]->SetLabel("ColliderBox" + to_string(i));
+		_colliders[i]->_translation.x = 3 * i;
 	}
 }
 
@@ -24,10 +30,16 @@ void CollisionScene::Update()
 	for (Collider* collider : _colliders)
 		collider->Update();
 
-	if (_colliders[0]->Collision(_colliders[1]))
-		_colliders[0]->SetColor(1, 0, 0);
+	Ray ray = Camera::GetInstance()->ScreenPointToRay(mousePos);
+
+	//static Contact contact;
+
+	if (_colliders[2]->Collision(_colliders[3]))
+		_colliders[2]->SetColor(1, 0, 0);
 	else
-		_colliders[0]->SetColor(0, 1, 0);
+		_colliders[2]->SetColor(0, 1, 0);
+
+	//_colliders[1]->_translation = contact.hitPoint;
 }
 
 void CollisionScene::PreRender()
