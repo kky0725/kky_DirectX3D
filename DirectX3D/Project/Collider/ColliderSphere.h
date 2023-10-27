@@ -3,7 +3,7 @@ class ColliderSphere : public Collider
 {
 public:
 	ColliderSphere(float radius = 1.0f, UINT stackCount = 15, UINT sliceCount = 30);
-	~ColliderSphere();
+	virtual ~ColliderSphere();
 
 	virtual bool Collision(IN Ray& ray, OUT Contact* contact) override;
 	virtual bool Collision(ColliderBox* other) override;

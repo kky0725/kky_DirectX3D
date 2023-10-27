@@ -11,7 +11,7 @@ public:
 	};
 
 	ColliderBox(Vector3 size = Vector3(1.0f, 1.0f, 1.0f));
-	~ColliderBox();
+	virtual ~ColliderBox();
 
 	virtual bool Collision(IN Ray& ray, OUT Contact* contact) override;
 	virtual bool Collision(ColliderBox* other) override;

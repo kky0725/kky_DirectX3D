@@ -32,9 +32,9 @@ void CollisionScene::Update()
 
 	Ray ray = Camera::GetInstance()->ScreenPointToRay(mousePos);
 
-	//static Contact contact;
+	static Contact contact;
 
-	if (_colliders[2]->Collision(_colliders[3]))
+	if (_colliders[2]->Collision(_colliders[1]))
 		_colliders[2]->SetColor(1, 0, 0);
 	else
 		_colliders[2]->SetColor(0, 1, 0);

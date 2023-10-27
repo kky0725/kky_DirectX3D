@@ -66,6 +66,8 @@ using namespace DirectX;
 
 #define CAMERA Camera::GetInstance()->GetTransform()
 
+#define SCENE SceneManager::GetInstance()
+
 #define RS StateManager::GetInstance()->GetRS()
 
 #define Dialog ImGuiFileDialog::Instance()
@@ -154,6 +156,8 @@ using namespace MyMath;
 #include "Scene/ModelExportScene.h"
 #include "Scene/ModelAnimationScene.h"
 #include "Scene/CollisionScene.h"
+#include "Scene/GridScene.h"
+#include "Scene/SceneManager.h"
 
 #include "MainGame.h"
 
