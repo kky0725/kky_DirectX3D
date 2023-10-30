@@ -49,7 +49,7 @@ bool ColliderSphere::Collision(IN Ray& ray, OUT Contact* contact)
 
 bool ColliderSphere::Collision(ColliderBox* other)
 {
-	return false;
+	return other->Collision(this);
 }
 
 bool ColliderSphere::Collision(ColliderSphere* other)

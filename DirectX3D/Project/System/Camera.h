@@ -45,7 +45,7 @@ private:
 
 	Transform* _target = nullptr;
 	float _distance = 60.0f;
-	float _height = 20.0f;
+	float _height = 10.0f;
 	Vector3 _destination;
 	Vector3 _focusOffset;
 
@@ -54,7 +54,7 @@ private:
 	//float _rotX = 0.0f;
 	float _destRotX = 0.0f;
 
-	float _moveDamping = 5.0f;
-	float _rotDamping = 10.0f;
+	float _moveDamping = 30.0f;
+	float _rotDamping = 30.0f;
 
 };

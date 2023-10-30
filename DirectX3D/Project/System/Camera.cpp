@@ -78,6 +78,8 @@ Ray Camera::ScreenPointToRay(Vector3 screenPos)
 	////InvView/////
 
 	Matrix invView = _transform->GetWorld();
+	//if (_target)
+		//invView = XMMatrixInverse();
 
 	ray.direction = point * invView;
 	ray.direction.Normalize();

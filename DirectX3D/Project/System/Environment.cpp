@@ -5,6 +5,7 @@ Environment::Environment()
 {
 	CreateViewport();
 	CreatePerspective();
+	CreateOrthographic();
 
 	_lightBuffer = new LightBuffer();
 }
@@ -12,7 +13,7 @@ Environment::Environment()
 Environment::~Environment()
 {
 	delete _lightBuffer;
-	delete _projectionBuffer;
+	delete _persBuffer;
 }
 
 void Environment::CreateViewport()
@@ -30,18 +31,34 @@ void Environment::CreateViewport()
 
 void Environment::CreatePerspective()
 {
-	_projectionBuffer = new MatrixBuffer();
+	_persBuffer = new MatrixBuffer();
 
-	_projectionMatrix = XMMatrixPerspectiveFovLH(XM_PIDIV4, WIN_WIDTH / WIN_HEIGHT, 0.1f, 1000.0f);
+	_PersMatrix = XMMatrixPerspectiveFovLH(XM_PIDIV4, WIN_WIDTH / WIN_HEIGHT, 0.1f, 1000.0f);
 
-	_projectionBuffer->SetData(_projectionMatrix);
+	_persBuffer->SetData(_PersMatrix);
+}
 
-	_projectionBuffer->SetVSBuffer(2);
+void Environment::CreateOrthographic()
+{
+	_orthoBuffer = new MatrixBuffer();
+
+	_orthoMatrix = XMMatrixOrthographicOffCenterLH(0.0f, WIN_WIDTH, 0.0f, WIN_HEIGHT, -1.0f, 1.0f);
+
+	_orthoBuffer->SetData(_orthoMatrix);
+
+	_UIViewBuffer = new ViewBuffer();
 }
 
 void Environment::SetEnvironment()
 {
 	_lightBuffer->SetPSBuffer(0);//header.hlsl 문제 해결하면 0으로 변경
+	_persBuffer->SetVSBuffer(2);
+}
+
+void Environment::PostSet()
+{
+	_UIViewBuffer->SetVSBuffer(1);
+	_orthoBuffer->SetVSBuffer(2);
 }
 
 void Environment::PostRneder()

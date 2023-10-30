@@ -23,12 +23,17 @@ Groot::Groot()
 	_weapon->SetParent(_lefthand);
 	
 	_clips[ATTACK]->SetEndEvent(std::bind(&Groot::SetClip, this, IDLE), 0.7f);
+
+	_hpBar = new ProgressBar(L"UI/hp_bar.png", L"UI/hp_bar_BG.png");
+	_hpBar->SetLabel("Hp Bar");
 }
 
 Groot::~Groot()
 {
 	delete _weapon;
 	delete _lefthand;
+
+	delete _hpBar;
 }
 
 void Groot::Update()
@@ -46,6 +51,10 @@ void Groot::Update()
 	if (KEY_DOWN('3'))
 		PlayClip(2, speed, takeTime);
 
+	_hpBar->Update();
+	_hpBar->_translation = this->_translation;
+	_hpBar->_translation.y += 1.0f;
+
 	UpdateLeftHand();
 	Move();
 }
@@ -54,6 +63,7 @@ void Groot::Render()
 {
 	ModelAnimator::Render();
 
+	_hpBar->Render();
 	_weapon->Render();
 }
 
@@ -63,8 +73,19 @@ void Groot::Debug()
 
 	ImGui::SliderFloat("Speed", &speed, 0.0f, 10.0f);
 	ImGui::SliderFloat("TakeTime", &takeTime, 0.0f, 1.0f);
-
+	
 	_weapon->Debug();
+
+	Transform::Debug();
+	//_label = "Groot";
+	_ID = "Groot";
+
+	static float value = 1.0f;
+
+	_hpBar->SetValue(value);
+
+	ImGui::SliderFloat("HP", &value, 0.0f, 1.0f);
+
 }
 
 void Groot::UpdateLeftHand()

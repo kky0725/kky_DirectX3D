@@ -53,12 +53,12 @@ void ImageCube::CreateFaces()
 
 void ImageCube::CreateFace(Vector3 rotation, Vector3 translation)
 {
-	Quad* quad = new Quad({ _size, _size });
-	quad->_rotation = rotation;
-	quad->_translation = translation;
+	//Quad* quad = new Quad({ _size, _size });
+	//quad->_rotation = rotation;
+	//quad->_translation = translation;
 
-	quad->SetParent(this);
-	_faces.push_back(quad);
+	//quad->SetParent(this);
+	//_faces.push_back(quad);
 }
 
 void ImageCube::Move()

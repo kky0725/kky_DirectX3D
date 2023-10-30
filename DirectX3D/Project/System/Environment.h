@@ -7,16 +7,24 @@ class Environment : public Singleton<Environment>
 
 	void CreateViewport();
 	void CreatePerspective();
+	void CreateOrthographic();
+
 public:
 	void SetEnvironment();
+	void PostSet();
 
 	void PostRneder();
 
-	Matrix GetProjMatirx() { return _projectionMatrix; }
+	Matrix GetProjMatirx() { return _PersMatrix; }
 
 private:
-	MatrixBuffer* _projectionBuffer;
-	Matrix		  _projectionMatrix;
+	MatrixBuffer* _persBuffer;
+	Matrix		  _PersMatrix;
+
+	MatrixBuffer* _orthoBuffer;
+	Matrix		  _orthoMatrix;
+
+	ViewBuffer* _UIViewBuffer;
 
 	LightBuffer* _lightBuffer;
 };

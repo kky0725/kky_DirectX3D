@@ -9,18 +9,28 @@ ModelAnimationScene::ModelAnimationScene()
 	_terrain->_scale = Vector3(2.0f, 2.0f, 2.0f);
 
 	Camera::GetInstance()->SetTarget(_groot);
+
+	_crossHair = new Quad();
+	_crossHair->GetMaterial()->SetDiffuseMap(L"UI/CrossHair.png");
+	_crossHair->GetMaterial()->SetShader(L"Texture");
+	_crossHair->_scale = { 200, 200, 1 };
 }
 
 ModelAnimationScene::~ModelAnimationScene()
 {
 	delete _groot;
 	delete _terrain;
+	delete _crossHair;
 }
 
 void ModelAnimationScene::Update()
 {
 	_groot->Update();
 	_terrain->Update();
+	_crossHair->Update();
+
+	_crossHair->_translation.x = mousePos.x;
+	_crossHair->_translation.y = WIN_HEIGHT - mousePos.y;
 
 	_groot->_translation.y = _terrain->GetHeight(_groot->GetGlobalPosition());
 }
@@ -38,5 +48,9 @@ void ModelAnimationScene::Render()
 void ModelAnimationScene::PostRender()
 {
 	_groot->Debug();
+
+	StateManager::GetInstance()->AlphaBegin();
+	_crossHair->Render();
+	StateManager::GetInstance()->AlphaEnd();
 }
 

@@ -117,6 +117,7 @@ using namespace MyMath;
 
 #include "Render/State/SamplerState.h"
 #include "Render/State/RasterizerState.h"
+#include "Render/State/BlendState.h"
 #include "Render/State/StateManager.h"
 
 #include "Collider/Collider.h"
@@ -135,6 +136,8 @@ using namespace MyMath;
 
 #include "Object/Landscape/Terrain.h"
 #include "Object/Landscape/TerrainEditor.h"
+
+#include "Object/UI/ProgressBar.h"
 
 #include "ModelExporter/ModelType.h"
 #include "ModelExporter/ModelExporter.h"

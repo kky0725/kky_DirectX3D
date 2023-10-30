@@ -161,3 +161,33 @@ public:
 	} data;
 private:
 };
+
+class FloatValueBuffer : public ConstBuffer
+{
+public:
+	FloatValueBuffer()
+		:ConstBuffer(&data, sizeof(Data))
+	{
+	}
+
+	struct Data
+	{
+		float value[4];
+	} data;
+private:
+};
+
+class IntValueBuffer : public ConstBuffer
+{
+public:
+	IntValueBuffer()
+		:ConstBuffer(&data, sizeof(Data))
+	{
+	}
+
+	struct Data
+	{
+		int value[4];
+	} data;
+private:
+};
