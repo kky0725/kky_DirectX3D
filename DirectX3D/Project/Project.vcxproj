@@ -155,6 +155,7 @@
     <ClInclude Include="Model\ModelReader.h" />
     <ClInclude Include="Scene\ModelExportScene.h" />
     <ClInclude Include="Object\Landscape\Sky.h" />
+    <ClInclude Include="Object\Landscape\SkyBox.h" />
     <ClInclude Include="Utility\MyMath.h" />
     <ClInclude Include="Utility\BinaryReader.h" />
     <ClInclude Include="Utility\BinaryWriter.h" />
@@ -225,6 +226,7 @@
     <ClCompile Include="Model\ModelReader.cpp" />
     <ClCompile Include="Scene\ModelExportScene.cpp" />
     <ClCompile Include="Object\Landscape\Sky.cpp" />
+    <ClCompile Include="Object\Landscape\SkyBox.cpp" />
     <ClCompile Include="Utility\MyMath.cpp" />
     <ClCompile Include="Utility\BinaryReader.cpp" />
     <ClCompile Include="Utility\BinaryWriter.cpp" />

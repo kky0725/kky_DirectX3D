@@ -222,6 +222,9 @@
     <ClInclude Include="Object\Landscape\Sky.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Object\Landscape\SkyBox.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -411,6 +414,9 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Object\Landscape\Sky.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Landscape\SkyBox.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

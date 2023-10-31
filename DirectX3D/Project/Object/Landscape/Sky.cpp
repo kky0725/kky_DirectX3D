@@ -4,7 +4,8 @@
 Sky::Sky()
 {
 	_sphere = new Sphere();
-	_sphere->GetMaterial()->SetShader(L"05Sky");
+	//_sphere->GetMaterial()->SetShader(L"05Sky");
+	_sphere->GetMaterial()->SetShader(L"05SkyBox");
 
 	_buffer = new SkyBuffer();
 
@@ -41,5 +42,3 @@ void Sky::PostRender()
 
 	ImGui::DragFloat("Height", &_buffer->data.height);
 }
-
-
