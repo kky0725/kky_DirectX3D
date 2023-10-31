@@ -52,7 +52,7 @@ void Groot::Update()
 		PlayClip(2, speed, takeTime);
 
 	_hpBar->Update();
-	_hpBar->_translation = this->_translation;
+	_hpBar->_translation = Camera::GetInstance()->WolrdToScreenPoint(this->_globalPosition);
 	_hpBar->_translation.y += 1.0f;
 
 	UpdateLeftHand();
@@ -63,8 +63,13 @@ void Groot::Render()
 {
 	ModelAnimator::Render();
 
-	_hpBar->Render();
 	_weapon->Render();
+}
+
+void Groot::PostRender()
+{
+	Debug();
+	_hpBar->Render();
 }
 
 void Groot::Debug()

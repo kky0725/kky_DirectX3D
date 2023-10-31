@@ -12,6 +12,7 @@ public:
 
 	virtual void Update();
 	virtual void Render();
+	void PostRender();
 
 	virtual void Debug();
 

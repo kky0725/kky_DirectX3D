@@ -134,6 +134,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Render\State\DepthStencilState.h" />
     <ClInclude Include="Object\UI\ProgressBar.h" />
     <ClInclude Include="Render\State\BlendState.h" />
     <ClInclude Include="Collider\ColliderBox.h" />
@@ -203,6 +204,7 @@
     <ClInclude Include="__Others\targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Render\State\DepthStencilState.cpp" />
     <ClCompile Include="Object\UI\ProgressBar.cpp" />
     <ClCompile Include="Render\State\BlendState.cpp" />
     <ClCompile Include="Collider\ColliderBox.cpp" />

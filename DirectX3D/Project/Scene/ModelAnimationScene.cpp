@@ -47,7 +47,7 @@ void ModelAnimationScene::Render()
 
 void ModelAnimationScene::PostRender()
 {
-	_groot->Debug();
+	_groot->PostRender();
 
 	StateManager::GetInstance()->AlphaBegin();
 	_crossHair->Render();

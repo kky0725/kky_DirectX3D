@@ -20,6 +20,7 @@ public:
 	Transform* GetTransform() { return _transform; }
 	
 	Ray ScreenPointToRay(Vector3 screenPos);
+	Vector3 WolrdToScreenPoint(Vector3 worldPos);
 
 	void SetTarget(Transform* target) { this->_target = target; }
 
