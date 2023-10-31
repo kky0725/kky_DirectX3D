@@ -191,3 +191,22 @@ public:
 	} data;
 private:
 };
+
+class SkyBuffer : public ConstBuffer
+{
+public:
+	SkyBuffer()
+		:ConstBuffer(&data, sizeof(Data))
+	{
+	}
+
+	struct Data
+	{
+		Vector3 centerColor = { 1.0f, 0.6f, 0.2f };
+		float height		= 5.0f;
+
+		Vector3 apexColor = { 0.3f, 0.5f, 1.0f };
+		float padding;
+	} data;
+private:
+};

@@ -137,6 +137,7 @@ using namespace MyMath;
 
 #include "Object/Landscape/Terrain.h"
 #include "Object/Landscape/TerrainEditor.h"
+#include "Object/Landscape/Sky.h"
 
 #include "Object/UI/ProgressBar.h"
 

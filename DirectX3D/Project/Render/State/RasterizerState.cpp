@@ -34,3 +34,14 @@ void RasterizerState::ChangeState(D3D11_FILL_MODE mode)
 	DEVICE->CreateRasterizerState(&_desc, &_rasterizerStae);
 	DC->RSSetState(_rasterizerStae);
 }
+
+void RasterizerState::FrontCounterClockWise(bool value)
+{
+	_desc.FrontCounterClockwise = value;
+
+	if (_rasterizerStae != nullptr)
+		_rasterizerStae->Release();
+
+
+	DEVICE->CreateRasterizerState(&_desc, &_rasterizerStae);
+}

@@ -14,4 +14,5 @@ private:
 	Groot* _groot;
 	Terrain* _terrain;
 	Quad* _crossHair;
+	Sky* _sky;
 };
