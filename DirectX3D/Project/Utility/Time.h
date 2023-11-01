@@ -11,7 +11,7 @@ public:
 	void Update();
 	void Render();
 
-	static float Delta() { return timeElapsed; }
+	static float Delta() { if (timeElapsed > 0.1f) return 0.1f; else return timeElapsed; }
 
 	UINT GetFPS() { return frameRate; }
 

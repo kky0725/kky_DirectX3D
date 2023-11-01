@@ -16,6 +16,9 @@ StateManager::~StateManager()
 
 	for (BlendState* blend : _blendStates)
 		delete blend;
+
+	for (DepthStencilState* depth : _depthStencilStates)
+		delete depth;
 }
 
 void StateManager::CreateSamplerState()

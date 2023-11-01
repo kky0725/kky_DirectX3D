@@ -36,3 +36,13 @@ float MyMath::Distance(Vector3 v1, Vector3 v2)
 {
 	return (v2 - v1).Length();
 }
+
+float MyMath::Random(const float& min, const float& max)
+{
+	return min + (max - min) * rand() / (float)RAND_MAX;
+}
+
+int MyMath::Random(const int& min, const int& max)
+{
+	return rand()%(max - min) + min ;
+}

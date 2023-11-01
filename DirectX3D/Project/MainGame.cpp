@@ -3,6 +3,10 @@
 
 MainGame::MainGame()
 {
+	srand(time(NULL));
+	//srand((unsigned int)time(nullptr));
+
+
 	Initialize();
 
 	//scene = new TutorialScene();
@@ -16,11 +20,13 @@ MainGame::MainGame()
 
 	SCENE->Create("Grid", new GridScene());
 	//SCENE->Create("Collision", new CollisionScene);
-	SCENE->Create("ModelAnimation", new ModelAnimationScene);
+	//SCENE->Create("ModelAnimation", new ModelAnimationScene);
+	SCENE->Create("Instancing", new InstancingScene);
 
 	SCENE->Add("Grid");
 	//SCENE->Add("Collision");
-	SCENE->Add("ModelAnimation");
+	//SCENE->Add("ModelAnimation");
+	SCENE->Add("Instancing");
 }
 
 MainGame::~MainGame()
@@ -110,6 +116,7 @@ void MainGame::Release()
 	Device::Delete();
 	Camera::Delete();
 	Texture::Delete();
+	//SceneManager::Delete();
 
 	ImGui_ImplDX11_Shutdown();
 	ImGui_ImplWin32_Shutdown();
