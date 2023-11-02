@@ -39,6 +39,17 @@ void ModelAnimator::Render()
 	_reader->Render();
 }
 
+void ModelAnimator::RenderInstanced(UINT instanceCount)
+{
+	Transform::SetWorld();
+
+	_frameBuffer->SetVSBuffer(3);
+
+	DC->VSSetShaderResources(0, 1, &_srv);
+
+	_reader->RenderInstanced(instanceCount);
+}
+
 void ModelAnimator::ReadClip(string file, UINT clipIndex)
 {
 	string path = "_ModelData/Clip/" + _name + "/" + file + to_string(clipIndex) + ".clip";
@@ -76,9 +87,10 @@ void ModelAnimator::ReadClip(string file, UINT clipIndex)
 
 void ModelAnimator::PlayClip(UINT clipIndex, float speed, float takeTime)
 {
-	_frameBuffer->data.next.clip  = clipIndex;
-	_frameBuffer->data.next.speed = speed;
-	_frameBuffer->data.takeTime   = takeTime;
+	_frameBuffer->data.next.clip   = clipIndex;
+	_frameBuffer->data.next.speed  = speed;
+	_frameBuffer->data.takeTime    = takeTime;
+	_frameBuffer->data.runningTime = 0.0f;
 }
 
 void ModelAnimator::CreateTexture()

@@ -7,9 +7,10 @@ public:
 
 	virtual void Update();
 	void Render();
+	void RenderInstanced(UINT instanceCount);
 	
 	ModelReader* GetReader() { return _reader; }
 
-private:
+protected:
 	ModelReader* _reader;
 };

@@ -7,6 +7,7 @@ public:
 
 	virtual void Update();
 	virtual void Render();
+	void RenderInstanced(UINT instanceCount);
 
 	void ReadClip(string file, UINT clipIndex = 0);
 	void PlayClip(UINT clipIndex, float speed = 1.0f, float takeTime = 2.0f);
@@ -20,6 +21,8 @@ public:
 
 	Matrix GetTransformByBone(UINT boneIndex);
 	Matrix GetTransformByNode(UINT nodeIndex);
+
+	ModelReader* GetReader() { return _reader; }
 
 	//bool& IsPlay() { return _isPlay; }
 

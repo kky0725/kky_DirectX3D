@@ -126,3 +126,10 @@ struct VertexTextureNormalTangentBlend
 	Vector4 indices = {};
 	Vector4 weights = {};
 };
+
+struct InstanceData
+{
+	Matrix	world = XMMatrixIdentity();
+	UINT	index = 0;
+
+};

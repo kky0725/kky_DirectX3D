@@ -13,6 +13,8 @@ public:
 	void CreateMesh();
 	void Render();
 
+	void RenderInstanced(UINT instanceCount);
+
 private:
 	string _name;
 

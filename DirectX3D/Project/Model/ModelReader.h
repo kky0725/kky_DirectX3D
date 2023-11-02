@@ -9,6 +9,7 @@ public:
 	void SetShader(wstring file);
 
 	void Render();
+	void RenderInstanced(UINT instancedCount);
 
 	void Debug();
 

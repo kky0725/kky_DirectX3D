@@ -2,6 +2,7 @@
 class ModelClip
 {
 	friend class ModelAnimator;
+	friend class ModelAnimatorInstancing;
 public:
 	ModelClip();
 	~ModelClip();

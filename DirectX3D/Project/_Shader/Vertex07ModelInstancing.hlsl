@@ -1,16 +1,5 @@
 #include "Header.hlsli"
 
-struct VertexInput
-{
-	float4 pos : POSITION;
-	float2 uv : UV;
-	float3 normal : NORMAL;
-	float3 tangent : TANGENT;
-	
-	matrix transform : INSTANCE_TRANSFORM;
-	float4 color : INSTANCE_COLOR;
-};
-
 struct VertexOutPut
 {
 	float4 pos : SV_POSITION;
@@ -19,10 +8,9 @@ struct VertexOutPut
 	float3 tangent : TANGENT;
 	float3 binormal : BINORMAL;
 	float3 viewDir : VIEWDIR;
-	float4 color : COLOR;
 };
 
-VertexOutPut main(VertexInput input)
+VertexOutPut main(VertexInstancing input)
 {
 	VertexOutPut output;
 
@@ -42,7 +30,5 @@ VertexOutPut main(VertexInput input)
 	
 	output.binormal = cross(output.normal, output.tangent);
 
-	output.color = input.color;
-	
 	return output;
 }

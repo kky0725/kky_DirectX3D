@@ -26,6 +26,7 @@ public:
 	void SetLabel(string label) { this->_ID = label; }
 
 	void SetWorld();
+	bool& IsActive() { return _isActive; }
 
 public:
 	Vector3 _scale			= { 1.0f, 1.0f, 1.0f };
@@ -48,4 +49,6 @@ protected:
 	string _ID = "Null";
 
 	class MatrixBuffer* _worldBuffer;
+
+	bool _isActive = true;
 };
