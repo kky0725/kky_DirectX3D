@@ -15,8 +15,6 @@ public:
 	void SetPivot(Vector3 pos) { _pivot = pos; }
 
 private:
-	MatrixBuffer* _worldBuffer;
-
 	vector<VertexType>	_vertices;
 	vector<UINT>		_indices;
 

@@ -22,12 +22,15 @@ MainGame::MainGame()
 	//SCENE->Create("Collision", new CollisionScene);
 	//SCENE->Create("ModelAnimation", new ModelAnimationScene);
 	//SCENE->Create("Instancing", new InstancingScene);
-	SCENE->Create("Start", new ModelInstancingScene);
+	//SCENE->Create("Start", new ModelInstancingScene);
+	SCENE->Create("Start", new LightScene);
+	//SCENE->Create("Export", new ModelExportScene);
 
 	SCENE->Add("Grid");
 	//SCENE->Add("Collision");
 	//SCENE->Add("ModelAnimation");
 	SCENE->Add("Start");
+	//SCENE->Add("Export");
 }
 
 MainGame::~MainGame()

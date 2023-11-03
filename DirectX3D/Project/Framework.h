@@ -169,6 +169,7 @@ using namespace MyMath;
 #include "Scene/GridScene.h"
 #include "Scene/InstancingScene.h"
 #include "Scene/ModelInstancingScene.h"
+#include "Scene/LightScene.h"
 #include "Scene/SceneManager.h"
 
 #include "MainGame.h"

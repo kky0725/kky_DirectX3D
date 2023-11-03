@@ -17,7 +17,6 @@ Terrain::Terrain(wstring diffuseFile, wstring heightFile)
 	//_material->SetSpecularMap(L"Landscape/Fieldstone_SM.tga");
 	//_material->SetNormalMap(L"Landscape/Fieldstone_NM.tga");
 
-	_worldBuffer = new MatrixBuffer();
 
 	_heightMap = Texture::Get(heightFile);
 
@@ -30,14 +29,12 @@ Terrain::Terrain(wstring diffuseFile, wstring heightFile)
 Terrain::~Terrain()
 {
 	delete _mesh;
-	delete _worldBuffer;
 	delete _material;
 }
 
 void Terrain::Render()
 {
-	_worldBuffer->SetData(_world);
-	_worldBuffer->SetVSBuffer(0);
+	Transform::SetWorld();
 
 	_mesh->SetMesh();
 	_material->SetMaterial();

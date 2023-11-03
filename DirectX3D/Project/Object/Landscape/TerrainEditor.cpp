@@ -7,8 +7,6 @@ TerrainEditor::TerrainEditor(UINT height, UINT width)
 	_material = new Material();
 	_material->SetShader(L"01TextureSplatting");
 
-	_worldBuffer = new MatrixBuffer();
-
 	BinaryReader data(L"HeigthMap");
 
 	if (data.Succeeded())
@@ -66,7 +64,6 @@ TerrainEditor::~TerrainEditor()
 	}
 
 	delete _mesh;
-	delete _worldBuffer;
 	delete _material;
 
 	delete[] _input;
@@ -99,8 +96,7 @@ void TerrainEditor::Update()
 
 void TerrainEditor::Render()
 {
-	_worldBuffer->SetData(_world);
-	_worldBuffer->SetVSBuffer(0);
+	Transform::SetWorld();
 
 	_mesh->SetMesh();
 	_material->SetMaterial();

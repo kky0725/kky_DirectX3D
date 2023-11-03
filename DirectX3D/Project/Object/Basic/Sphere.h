@@ -15,8 +15,6 @@ private:
 	void CreateMesh();
 	void CreateTangent();
 
-	MatrixBuffer* _worldBuffer;
-
 	vector<VertexType>	_vertices;
 	vector<UINT>		_indices;
 

@@ -10,27 +10,22 @@ Sphere::Sphere(float radius, UINT sliceCount, UINT stackCount)
 
 	//_material = new Material(L"Specular");
 	_material = new Material(L"NormalMapping");
-
-	_worldBuffer = new MatrixBuffer();
 }
 
 Sphere::~Sphere()
 {
 	delete _mesh;
 	delete _material;
-	delete _worldBuffer;
 }
 
 void Sphere::Update()
 {
 	Transform::Update();
-
-	_worldBuffer->SetData(_world);
 }
 
 void Sphere::Render()
 {
-	_worldBuffer->SetVSBuffer(0);
+	Transform::SetWorld();
 
 	_material->SetMaterial();
 	_mesh->SetMesh();

@@ -3,7 +3,7 @@
 
 ModelExportScene::ModelExportScene()
 {
-	string name = "Dwarven_Axe";
+	string name = "StanfordBunny";
 
 	_exporter = new ModelExporter(name);
 	_exporter->ExportModel();

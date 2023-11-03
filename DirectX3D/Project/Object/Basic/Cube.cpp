@@ -7,8 +7,6 @@ Cube::Cube(Vector4 color)
 {
 	_material = new Material(L"Color");
 
-	_worldBuffer = new MatrixBuffer();
-
 	CreateMesh(color);
 	CreateNormal();
 
@@ -23,14 +21,11 @@ Cube::~Cube()
 {
 	delete _mesh;
 	delete _material;
-	delete _worldBuffer;
 }
 
 void Cube::Update()
 {
 	Transform::Update();
-
-	_worldBuffer->SetData(_world);
 }
 
 void Cube::Render()
@@ -39,7 +34,7 @@ void Cube::Render()
 	_material->SetMaterial();
 	_mesh->SetMesh();
 
-	_worldBuffer->SetVSBuffer(0);
+	Transform::SetWorld();
 
 	DC->DrawIndexed(_indices.size(), 0, 0);
 	

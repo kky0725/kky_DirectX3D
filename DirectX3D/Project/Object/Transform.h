@@ -25,7 +25,7 @@ public:
 	virtual void Debug();
 	void SetLabel(string label) { this->_ID = label; }
 
-	void SetWorld();
+	void SetWorld(int hasAnimation = 0);
 	bool& IsActive() { return _isActive; }
 
 public:
@@ -48,7 +48,7 @@ protected:
 
 	string _ID = "Null";
 
-	class MatrixBuffer* _worldBuffer;
+	class WorldBuffer* _worldBuffer;
 
 	bool _isActive = true;
 };

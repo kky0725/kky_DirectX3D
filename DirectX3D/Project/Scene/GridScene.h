@@ -23,5 +23,5 @@ private:
 
 	vector<VertexColor> _vertices;
 
-	MatrixBuffer* _worldBuffer;
+	WorldBuffer* _worldBuffer;
 };

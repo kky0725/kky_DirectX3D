@@ -38,8 +38,6 @@ private:
 	Material*	_material;
 	Mesh*		_mesh;
 
-	MatrixBuffer* _worldBuffer;
-
 	UINT _width;
 	UINT _height;
 

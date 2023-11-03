@@ -5,7 +5,7 @@ Transform::Transform()
 {
 	_world = XMMatrixIdentity();
 	
-	_worldBuffer = new MatrixBuffer();
+	_worldBuffer = new WorldBuffer();
 }
 
 Transform::~Transform()
@@ -62,9 +62,9 @@ void Transform::Debug()
 	}
 }
 
-void Transform::SetWorld()
+void Transform::SetWorld(int hasAnimation)
 {
-	_worldBuffer->SetData(_world);
+	_worldBuffer->SetData(_world, hasAnimation);
 	_worldBuffer->SetVSBuffer(0);
 }
 

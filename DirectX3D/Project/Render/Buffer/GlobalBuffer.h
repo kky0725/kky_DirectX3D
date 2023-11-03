@@ -43,6 +43,31 @@ public:
 private:
 };
 
+class WorldBuffer : public ConstBuffer
+{
+public:
+	WorldBuffer()
+		:ConstBuffer(&data, sizeof(Data))
+	{
+		data.view = XMMatrixIdentity();
+		data.hasAnimation = 0;
+	}
+
+	void SetData(XMMATRIX view, int hasAnimation = 0)
+	{
+		data.view = XMMatrixTranspose(view);
+		data.hasAnimation = hasAnimation;
+	}
+
+private:
+	struct Data
+	{
+		XMMATRIX view;
+		int hasAnimation;
+		Vector3 padding;
+	} data;
+};
+
 class ViewBuffer : public ConstBuffer
 {
 public:

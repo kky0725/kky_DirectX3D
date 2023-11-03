@@ -4,7 +4,7 @@
 Groot::Groot()
 	:ModelAnimator("Groot")
 {
-	_scale *= 0.01f;
+	_scale *= 0.04f;
 	ReadClip("Sad Idle");
 	ReadClip("Running");
 	ReadClip("Mutant Swiping");
@@ -56,7 +56,7 @@ void Groot::Update()
 	_hpBar->_translation.y += 1.0f;
 
 	UpdateLeftHand();
-	Move();
+	//Move();
 }
 
 void Groot::Render()

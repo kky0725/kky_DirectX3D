@@ -30,7 +30,7 @@ void ModelAnimator::Update()
 
 void ModelAnimator::Render()
 {
-	Transform::SetWorld();
+	Transform::SetWorld(true);
 
 	_frameBuffer->SetVSBuffer(3);
 
@@ -41,7 +41,7 @@ void ModelAnimator::Render()
 
 void ModelAnimator::RenderInstanced(UINT instanceCount)
 {
-	Transform::SetWorld();
+	Transform::SetWorld(true);
 
 	_frameBuffer->SetVSBuffer(3);
 

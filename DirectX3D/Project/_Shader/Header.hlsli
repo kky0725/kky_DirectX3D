@@ -1,6 +1,7 @@
 cbuffer World : register(b0)
 {
 	matrix world;
+	int hasAnimation;
 };
 
 cbuffer View : register(b1)
@@ -17,7 +18,7 @@ cbuffer Projection : register(b2)
 cbuffer LightDirection : register(b0)
 {
 	float3 lightDirection;
-	float padding;
+	float  padding;
 	float4 ambientLight;
 };
 
@@ -138,8 +139,47 @@ Texture2D diffuseMap : register(t0);
 Texture2D specularMap : register(t1);
 Texture2D normalMap : register(t2);
 
-
 SamplerState	samp : register(s0);
+
+struct Ligth
+{
+	float4 color;
+	
+	float3 direction;
+	int type;
+	
+	float3 position;
+	float range;
+	
+	float inner;
+	float outer;
+	float length;
+	int active;
+};
+
+struct LightPixelInput
+{
+	float4 pos		: SV_POSITION;
+	float2 uv		: UV;
+	float3 normal	: NORMAL;
+	float3 tangent	: TANGENT;
+	float3 binormal : BINORMAL;
+	float3	viewPos : POSITION0;
+	float3 worldPos : POSITION1;
+};
+
+struct LightData
+{
+	float3 normal;
+	float4 diffuseColor;
+	float4 emissive;
+	float4 specularIntensity;
+
+	float shininess;
+
+	float3 viewPos;
+	float3 worldPos;
+};
 
 matrix SkinWorld(float4 indices, float4 weights)
 {
