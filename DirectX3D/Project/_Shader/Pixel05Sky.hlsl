@@ -17,5 +17,5 @@ float4 main(VertexOutput input) : SV_TARGET
 	
 	float3 result = lerp(centerColor, apexColor, y);
 	
-	return (result, 1.0f);
+	return float4(result, 1.0f);
 }

@@ -15,8 +15,8 @@ ModelAnimationScene::ModelAnimationScene()
 	_crossHair->GetMaterial()->SetShader(L"Texture");
 	_crossHair->_scale = { 200, 200, 1 };
 
-	//_sky = new Sky();
-	_sky = new SkyBox(L"LandScape/Snow_ENV.dds");
+	_sky = new Sky();
+	//_sky = new SkyBox(L"LandScape/Snow_ENV.dds");
 }
 
 ModelAnimationScene::~ModelAnimationScene()

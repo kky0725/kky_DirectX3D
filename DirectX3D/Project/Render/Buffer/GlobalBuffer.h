@@ -235,7 +235,7 @@ public:
 
 	struct Data
 	{
-		float value[4];
+		float value[4] = {};
 	} data;
 private:
 };

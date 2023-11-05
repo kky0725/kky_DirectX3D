@@ -11,13 +11,12 @@ struct VertexOutPut
 	float2 uv : UV;
 };
 
-
 Texture2D backImage : register(t10);
 
 float4 main(VertexOutPut input) : SV_TARGET
 {
 	if(input.uv.x < value)
 		return diffuseMap.Sample(samp, input.uv);
-	else
-		return backImage.Sample(samp, input.uv);
+	
+	return backImage.Sample(samp, input.uv);
 }

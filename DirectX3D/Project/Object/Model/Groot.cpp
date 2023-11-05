@@ -26,6 +26,7 @@ Groot::Groot()
 
 	_hpBar = new ProgressBar(L"UI/hp_bar.png", L"UI/hp_bar_BG.png");
 	_hpBar->SetLabel("Hp Bar");
+	_hpBar->_scale.x *= 0.5f;
 }
 
 Groot::~Groot()
@@ -52,8 +53,7 @@ void Groot::Update()
 		PlayClip(2, speed, takeTime);
 
 	_hpBar->Update();
-	_hpBar->_translation = Camera::GetInstance()->WolrdToScreenPoint(this->_globalPosition);
-	_hpBar->_translation.y += 1.0f;
+	_hpBar->_translation = Camera::GetInstance()->WolrdToScreenPoint(this->_globalPosition + V_UP * 10);
 
 	UpdateLeftHand();
 	//Move();

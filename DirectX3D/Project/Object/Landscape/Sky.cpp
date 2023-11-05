@@ -4,8 +4,7 @@
 Sky::Sky()
 {
 	_sphere = new Sphere();
-	//_sphere->GetMaterial()->SetShader(L"05Sky");
-	_sphere->GetMaterial()->SetShader(L"05SkyBox");
+	_sphere->GetMaterial()->SetShader(L"05Sky");
 
 	_buffer = new SkyBuffer();
 

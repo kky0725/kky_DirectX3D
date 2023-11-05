@@ -7,7 +7,7 @@ BlendState::BlendState()
 	_desc.IndependentBlendEnable = false;
 
 	_desc.RenderTarget[0].BlendEnable = false;
-	_desc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC1_ALPHA;
+	_desc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
 	_desc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
 	_desc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
 	_desc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
