@@ -76,6 +76,7 @@ using namespace DirectX;
 #define MAX_FRAME_KEY 512
 
 #define MAX_INSTANCE 128
+#define MAX_LIGHT 10
 
 //#define LERP(start, end, t) (start * (1 - t) + end * t)
 #define LERP(start, end, t) (start + (end - start) * t)

@@ -49,6 +49,34 @@ void Environment::CreateOrthographic()
 	_UIViewBuffer = new ViewBuffer();
 }
 
+void Environment::DebugLight(int lightIndex)
+{
+	string label = "Light_" + to_string(lightIndex);
+
+	LightBuffer::LightData& light = _lightBuffer->data.lights[lightIndex];
+
+	if (ImGui::TreeNode(label.c_str()))
+	{
+		ImGui::Checkbox("Active", (bool*)&light.active);
+
+		const char* list[] = { "Directional", "Point", "Capsule" };
+		ImGui::Combo("Type", &light.type, list, 4);
+
+		ImGui::ColorEdit3("Color", (float*)&light.color);
+		ImGui::SliderFloat3("Direction", (float*)&light.direction, -1, 1);
+
+		ImGui::DragFloat3("Position", (float*)&light.position);
+
+		ImGui::SliderFloat("Range", &light.range, 1, 1000);
+		ImGui::SliderFloat("Inner", &light.inner, 1, light.outer);
+		ImGui::SliderFloat("Outer", &light.outer, light.inner, 180.0f);
+
+		ImGui::SliderFloat("Length", &light.length, 0, 500.0f);
+
+		ImGui::TreePop();
+	}
+}
+
 void Environment::SetEnvironment()
 {
 	_lightBuffer->SetPSBuffer(0);//header.hlsl 문제 해결하면 0으로 변경
@@ -67,7 +95,22 @@ void Environment::PostSet()
 
 void Environment::PostRneder()
 {
-	ImGui::SliderFloat3("LightDirection", (float*)&_lightBuffer->data.direction, -1.0f, +1.0f);
-	ImGui::ColorEdit4("AmbientLight", (float*)&_lightBuffer->data.ambientLight);
+	if (ImGui::TreeNode("LightOption"))
+	{
+		if (ImGui::Button("Add"))
+			_lightBuffer->data.lightCount++;
+
+		for (UINT i = 0; i < _lightBuffer->data.lightCount; i++)
+		{
+			DebugLight(i);
+		}
+		ImGui::ColorEdit3("AmbientLight", (float*)&_lightBuffer->data.ambientLight);
+		ImGui::ColorEdit3("AmbientCeil", (float*)&_lightBuffer->data.ambientCeil);
+
+		ImGui::TreePop();
+	}
+
+
+
 }
 

@@ -59,7 +59,7 @@ void LightScene::Render()
 void LightScene::PostRender()
 {
 	 _floor->Debug();
-	 _bunny->Debug();
+	 _bunny->GetReader()->Debug();
 	 _groot->Debug();
 	_sphere->Debug();
 }

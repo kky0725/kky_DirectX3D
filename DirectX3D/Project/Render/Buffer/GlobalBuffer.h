@@ -24,21 +24,42 @@ private:
 class LightBuffer : public ConstBuffer
 {
 public:
+	struct LightData
+	{
+		Vector4 color = Vector4(1, 1, 1, 1);
+
+		Vector3 direction = Vector3(0, -1, 1);
+		int		type = 0;
+
+		//Point light
+		Vector3 position = Vector3();
+		float	range = 100.0f;
+
+		//Spot Light
+		float inner = 55.0f;
+		float outer = 70.0f;
+
+		//Capsule Light
+		float length = 50.0f;
+		int	  active = 1;
+
+	};
+
+public:
 	LightBuffer()
 		:ConstBuffer(&data, sizeof(Data))
 	{
-		data.direction = V_DOWN;
-		data.padding = 0.0f;
-		data.ambientLight = Vector4(0.1f, 0.1f, 0.1f, 1.0f);
+
 	}
 
 	struct Data
 	{
-		Vector3 direction;
+		LightData lights[MAX_LIGHT];
 
-		float padding;
-
-		Vector4 ambientLight;
+		int		lightCount = 1;
+		Vector3 ambientLight = Vector3(0.1f, 0.1f, 0.1f);
+		Vector3 ambientCeil = Vector3(0.1f, 0.1f, 0.1f);
+		float	padding;
 	} data;
 private:
 };

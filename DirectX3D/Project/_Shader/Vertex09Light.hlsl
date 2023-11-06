@@ -1,18 +1,8 @@
 #include "Header.hlsli"
 
-struct VertexOutPut
+LightVertexOutPut main(VertexTextureNormalTangentBlend input)
 {
-	float4 pos : SV_POSITION;
-	float2 uv : UV;
-	float3 normal : NORMAL;
-	float3 tangent : TANGENT;
-	float3 binormal : BINORMAL;
-	float3 viewDir : VIEWDIR;
-};
-
-VertexOutPut main(VertexTextureNormalTangentBlend input)
-{
-	VertexOutPut output;
+	LightVertexOutPut output;
 
 	matrix transform;
 	
@@ -24,9 +14,10 @@ VertexOutPut main(VertexTextureNormalTangentBlend input)
 	
 	output.pos = mul(input.pos, transform);
 	
-	float3 cameraPos = invView._41_42_43;
+	///////////////////////////
 	
-	output.viewDir = normalize(output.pos.xyz - cameraPos);
+	output.viewPos = invView._41_42_43;
+	output.worldPos = output.pos;
 	
 	output.pos = mul(output.pos, view);
 	output.pos = mul(output.pos, projection);

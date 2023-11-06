@@ -12,7 +12,7 @@ struct VertexOutPut
 
 float4 main(VertexOutPut input) : SV_TARGET
 {
-	float3 L = normalize(lightDirection);
+	float3 L = normalize(lights[0].direction);
 	
 	float4 albedo = float4(1.0f, 1.0f, 1.0f, 1.0f);
 	
@@ -54,7 +54,7 @@ float4 main(VertexOutPut input) : SV_TARGET
 	
 	float4 diffuse = albedo * diffuseIntensity * mDiffuse;
 	
-	float4 ambient = albedo * ambientLight * mAmbinet;
+	float4 ambient = albedo * float4(ambientLight, 1.0f) * mAmbinet;
 	
 	return diffuse + specular + ambient;
 }

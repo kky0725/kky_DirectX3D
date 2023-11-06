@@ -25,14 +25,14 @@ Quad::Quad(Vector2 size)
 	_mesh = new Mesh(_vertices, _indices);
 
 	_material = new Material();
-	_material->SetShader(L"NormalMapping");
+	_material->SetShader(L"09Light");
 	//_material->SetDiffuseMap(L"Landscape/Box.png");
 }
 
 Quad::Quad(wstring file)
 {
 	_material = new Material();
-	_material->SetShader(L"NormalMapping");
+	_material->SetShader(L"09Light");
 	_material->SetDiffuseMap(file);
 
 	Vector2 size = _material->GetDiffuseMap()->GetSize();

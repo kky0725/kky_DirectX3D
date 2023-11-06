@@ -9,7 +9,7 @@ Sphere::Sphere(float radius, UINT sliceCount, UINT stackCount)
 	_mesh = new Mesh(_vertices, _indices);
 
 	//_material = new Material(L"Specular");
-	_material = new Material(L"NormalMapping");
+	_material = new Material(L"09Light");
 }
 
 Sphere::~Sphere()

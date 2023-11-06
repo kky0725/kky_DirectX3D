@@ -541,14 +541,8 @@
     <FxCompile Include="_Shader\VertexTutorial.hlsl" />
     <FxCompile Include="_Shader\VertexTexture.hlsl" />
     <FxCompile Include="_Shader\PixelTexture.hlsl" />
-    <FxCompile Include="_Shader\VertexDiffuse.hlsl" />
-    <FxCompile Include="_Shader\PixelDiffuse.hlsl" />
     <FxCompile Include="_Shader\VertexColor.hlsl" />
     <FxCompile Include="_Shader\PixelColor.hlsl" />
-    <FxCompile Include="_Shader\VertexSpecular.hlsl" />
-    <FxCompile Include="_Shader\PixelSpecular.hlsl" />
-    <FxCompile Include="_Shader\VertexNormalMapping.hlsl" />
-    <FxCompile Include="_Shader\PixelNormalMapping.hlsl" />
     <FxCompile Include="_Shader\ComputePicking.hlsl" />
     <FxCompile Include="_Shader\VertexTerrainBrush.hlsl" />
     <FxCompile Include="_Shader\PixelTerrainBrush.hlsl" />

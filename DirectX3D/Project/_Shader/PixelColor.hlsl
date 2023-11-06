@@ -9,7 +9,7 @@ struct VertexOutPut
 
 float4 main(VertexOutPut input) : SV_TARGET
 {
-	float3 L = normalize(-lightDirection);
+	float3 L = normalize(-lights[0].direction);
 	float diffuse = dot(input.normal, L);
 	
 	return input.color * diffuse;

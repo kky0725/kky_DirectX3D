@@ -6,7 +6,7 @@ Terrain::Terrain(wstring diffuseFile, wstring heightFile)
 	_material = new Material();
 	//_material->SetShader(L"Diffuse");
 	//_material->SetShader(L"Specular");
-	_material->SetShader(L"NormalMapping");
+	_material->SetShader(L"09Light");
 	_material->SetDiffuseMap(diffuseFile);
 
 	//_material->SetDiffuseMap(L"Landscape/Wall.png");

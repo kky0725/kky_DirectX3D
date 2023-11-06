@@ -15,13 +15,6 @@ cbuffer Projection : register(b2)
 	matrix projection;
 };
 
-cbuffer LightDirection : register(b0)
-{
-	float3 lightDirection;
-	float  padding;
-	float4 ambientLight;
-};
-
 cbuffer MaterialBuffer : register(b1)
 {
 	float4 mDiffuse;
@@ -141,45 +134,128 @@ Texture2D normalMap : register(t2);
 
 SamplerState	samp : register(s0);
 
-struct Ligth
+struct LightData
 {
 	float4 color;
-	
+
 	float3 direction;
-	int type;
-	
+	int	   type;
+
 	float3 position;
-	float range;
-	
+	float  range;
+
 	float inner;
 	float outer;
 	float length;
-	int active;
+	int	  active;
 };
 
-struct LightPixelInput
-{
-	float4 pos		: SV_POSITION;
-	float2 uv		: UV;
-	float3 normal	: NORMAL;
-	float3 tangent	: TANGENT;
-	float3 binormal : BINORMAL;
-	float3	viewPos : POSITION0;
-	float3 worldPos : POSITION1;
-};
-
-struct LightData
+struct LightMaterial
 {
 	float3 normal;
 	float4 diffuseColor;
 	float4 emissive;
 	float4 specularIntensity;
 
-	float shininess;
+	float  shininess;
 
 	float3 viewPos;
 	float3 worldPos;
 };
+
+struct LightVertexOutPut
+{
+	float4 pos : SV_POSITION;
+	float2 uv : UV;
+	float3 normal : NORMAL;
+	float3 tangent : TANGENT;
+	float3 binormal : BINORMAL;
+	float3 viewPos : POSITION0;
+	float3 worldPos : POSITION1;
+};
+
+#define MAX_LIGHT 10
+
+cbuffer LightBuffer : register(b0)
+{
+	LightData lights[MAX_LIGHT];
+
+	int lightCount;
+	float3 ambientLight;
+	float3 ambientCeil;
+};
+
+float3 GetNormal(float3 T, float3 B, float3 N, float2 uv)
+{
+	T = normalize(T);
+	B = normalize(B);
+	N = normalize(N);
+	
+	float3 normal = N;
+	
+	if (hasNormalMap)
+	{
+		float4 normalSample = normalMap.Sample(samp, uv);
+		
+		normal = normalSample * 2.0f - 1.0f;
+		
+		float3x3 TBN = float3x3(T, B, N);
+		
+		normal = normalize(mul(normal, TBN));
+	}
+	
+	return normal;
+}
+
+LightMaterial GetLightMaterial(LightVertexOutPut input)
+{
+	LightMaterial material;
+	
+	material.normal				= GetNormal(input.tangent, input.binormal, input.normal, input.uv);
+	material.emissive			= float4(0.1f, 0.1f, 0.1f, 1.0f);
+	
+	if(hasDiffuseMap)
+		material.diffuseColor	= diffuseMap.Sample(samp, input.uv);
+	else
+		material.diffuseColor	= float4(1, 1, 1, 1);
+	
+	material.specularIntensity	= specularMap.Sample(samp, input.uv);
+
+	
+	material.viewPos = input.viewPos;
+	material.worldPos = input.worldPos;
+	
+	
+	return material;
+}
+
+float4 CalculateAmbient(LightMaterial material)
+{
+	float up = material.normal.y * 0.5 + 0.5f;
+	
+	float4 result = (float4(ambientLight + up * ambientCeil, 1.0f));
+	
+	return result * material.diffuseColor * mAmbinet;
+}
+
+float4 CalculateDirectional(LightMaterial material, LightData data)
+{
+	float3 toLight = normalize(data.direction);
+	float diffuseIntensity = saturate(dot(material.normal, -toLight));
+	
+	float4 finalColor = data.color * diffuseIntensity * mDiffuse;
+	
+	//Blinn-phong shading
+	
+	float3 viewDir = normalize(material.worldPos - material.viewPos);
+	float3 halfWay = normalize(viewDir + toLight);
+	float specular = saturate(dot(material.normal, -halfWay));
+	
+	finalColor += data.color * pow(specular, shininess) * material.specularIntensity * mSpecular;
+	
+	
+	return finalColor * material.diffuseColor;
+}
 
 matrix SkinWorld(float4 indices, float4 weights)
 {
