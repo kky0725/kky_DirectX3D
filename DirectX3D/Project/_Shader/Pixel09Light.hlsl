@@ -8,5 +8,5 @@ float4 main(LightVertexOutPut input) : SV_TARGET
 	float4 color = CalculateLight(material);
 	
 	
-	return ambient + color;
+	return ambient + color + mEmissive;
 }

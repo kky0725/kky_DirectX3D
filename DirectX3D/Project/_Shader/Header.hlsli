@@ -215,12 +215,17 @@ LightMaterial GetLightMaterial(LightVertexOutPut input)
 	material.normal				= GetNormal(input.tangent, input.binormal, input.normal, input.uv);
 	material.emissive			= float4(0.1f, 0.1f, 0.1f, 1.0f);
 	
+	[branch]
 	if(hasDiffuseMap)
 		material.diffuseColor	= diffuseMap.Sample(samp, input.uv);
 	else
 		material.diffuseColor	= float4(1, 1, 1, 1);
 	
-	material.specularIntensity	= specularMap.Sample(samp, input.uv);
+	[branch]
+	if (hasSpecularMap)
+		material.specularIntensity	= specularMap.Sample(samp, input.uv);
+	else
+		material.specularIntensity = float4(1, 1, 1, 1);
 
 	
 	material.viewPos = input.viewPos;
@@ -238,6 +243,11 @@ float4 CalculateAmbient(LightMaterial material)
 	
 	return result * material.diffuseColor * mAmbinet;
 }
+
+//float4 CalculateEmissive(LightMaterial material)
+//{
+	
+//}
 
 float4 CalculateDirectional(LightMaterial material, LightData data)
 {

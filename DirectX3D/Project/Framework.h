@@ -122,7 +122,11 @@ using namespace MyMath;
 #include "Render/State/RasterizerState.h"
 #include "Render/State/BlendState.h"
 #include "Render/State/DepthStencilState.h"
+
 #include "Render/State/StateManager.h"
+
+#include "Render/View/DepthStencil.h"
+#include "Render/View/RenderTarget.h"
 
 #include "Collider/Collider.h"
 #include "Collider/ColliderBox.h"

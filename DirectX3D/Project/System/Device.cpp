@@ -92,11 +92,12 @@ void Device::CreateBackBuffer()
 
 	depthBuffer->Release();
 
-	_deviceContext->OMSetRenderTargets(1, &_renderTargetView, _depthStencilView);
 }
 
 void Device::Clear()
 {
+	_deviceContext->OMSetRenderTargets(1, &_renderTargetView, _depthStencilView);
+
 	float clearColor[4] = { 0.33f, 0.33f, 0.4f, 1.0f };
 
 	_deviceContext->ClearRenderTargetView(_renderTargetView, clearColor);

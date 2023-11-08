@@ -115,6 +115,7 @@ void Material::Debug()
 		ImGui::ColorEdit4((_label + "Diffuse").c_str(), (float*)&_buffer->data.diffuse);
 		ImGui::ColorEdit4((_label + "Specular").c_str(), (float*)&_buffer->data.specular);
 		ImGui::ColorEdit4((_label + "Ambient").c_str(), (float*)&_buffer->data.ambinet);
+		ImGui::ColorEdit4((_label + "Emissive").c_str(), (float*)&_buffer->data.emissive);
 
 		ImGui::Checkbox((_label + "HasDiffuseMap").c_str(), (bool*)&_buffer->data.hasDiffuseMap);
 		ImGui::Checkbox((_label + "HasSpecularMap").c_str(), (bool*)&_buffer->data.hasSpecularMap);
