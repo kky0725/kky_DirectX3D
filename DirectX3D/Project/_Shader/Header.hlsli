@@ -193,6 +193,7 @@ float3 GetNormal(float3 T, float3 B, float3 N, float2 uv)
 	
 	float3 normal = N;
 	
+	[flatten]
 	if (hasNormalMap)
 	{
 		float4 normalSample = normalMap.Sample(samp, uv);
@@ -255,6 +256,118 @@ float4 CalculateDirectional(LightMaterial material, LightData data)
 	
 	
 	return finalColor * material.diffuseColor;
+}
+
+float4 CalculatePoint(LightMaterial material, LightData data)
+{
+	float3 toLight = material.worldPos - data.position;
+	float distanceToLight = length(toLight);
+	toLight /= distanceToLight;
+	
+	float diffuseIntensity = saturate(dot(material.normal, -toLight));
+	
+	float4 finalColor = data.color * diffuseIntensity * mDiffuse;
+	
+	float3 viewDir = normalize(material.worldPos - material.viewPos);
+	float3 halfWay = normalize(viewDir + toLight);
+	float specular = saturate(dot(material.normal, -halfWay));
+	
+	finalColor += data.color * pow(specular, shininess) * material.specularIntensity * mSpecular;
+	
+	float distanceToLightNormal = 1.0f - saturate(distanceToLight / data.range);
+	
+	float attention = pow(distanceToLightNormal, 2);
+	
+	return finalColor * material.diffuseColor * attention;
+}
+
+float4 CalculateSpot(LightMaterial material, LightData data)
+{
+	float3 toLight = material.worldPos - data.position;
+	float distanceToLight = length(toLight);
+	toLight /= distanceToLight;
+	
+	float diffuseIntensity = saturate(dot(material.normal, -toLight));
+	
+	float4 finalColor = data.color * diffuseIntensity * mDiffuse;
+	
+	float3 viewDir = normalize(material.worldPos - material.viewPos);
+	float3 halfWay = normalize(viewDir + toLight);
+	float specular = saturate(dot(material.normal, -halfWay));
+	
+	finalColor += data.color * pow(specular, shininess) * material.specularIntensity * mSpecular;
+	
+	float3 dir = normalize(data.direction);
+	float cosAngle = dot(dir, toLight);
+	
+	float outer = cos(radians(data.outer));
+	float inner = 1.0f / cos(radians(data.inner));
+	
+	float conAttention = saturate((cosAngle - outer) * inner);
+	
+	conAttention = pow(conAttention, 2);
+	
+	
+	float distanceToLightNormal = 1.0f - saturate(distanceToLight / data.range);
+	
+	float attention = pow(distanceToLightNormal, 2);
+	
+	return finalColor * material.diffuseColor * attention * conAttention;
+}
+
+float4 CalculateCapsule(LightMaterial material, LightData data)
+{
+	float3 direction = normalize(data.direction);
+	float3 start = material.worldPos - data.position;
+	float distanceOnLine = dot(start, direction)/ data.length;
+	distanceOnLine = saturate(distanceOnLine) * data.length;
+	
+	float3 pointOnLine = data.position + direction * distanceOnLine;
+	
+	float3 toLight = material.worldPos - pointOnLine;
+	float distanceToLight = length(toLight);
+	toLight /= distanceToLight;
+	
+	float diffuseIntensity = saturate(dot(material.normal, -toLight));
+	
+	float4 finalColor = data.color * diffuseIntensity * mDiffuse;
+	
+	float3 viewDir = normalize(material.worldPos - material.viewPos);
+	float3 halfWay = normalize(viewDir + toLight);
+	float specular = saturate(dot(material.normal, -halfWay));
+	
+	finalColor += data.color * pow(specular, shininess) * material.specularIntensity * mSpecular;
+	
+	float distanceToLightNormal = 1.0f - saturate(distanceToLight / data.range);
+	
+	float attention = pow(distanceToLightNormal, 2);
+	
+	return finalColor * material.diffuseColor * attention;
+}
+
+float4 CalculateLight(LightMaterial material)
+{
+	float4 color = 0;
+	
+	[unroll(MAX_LIGHT)]
+	for (int i = 0; i < lightCount; i++)
+	{
+		[flatten]
+		if (!lights[i].active)
+			continue;
+		
+		[branch]
+		if(lights[i].type == 0)
+			color += CalculateDirectional(material, lights[i]);
+		else if(lights[i].type == 1)
+			color += CalculatePoint(material, lights[i]);
+		else if(lights[i].type == 2)
+			color += CalculateSpot(material, lights[i]);
+		else if(lights[i].type == 3)
+			color += CalculateCapsule(material, lights[i]);
+	}
+	
+	return color;
 }
 
 matrix SkinWorld(float4 indices, float4 weights)

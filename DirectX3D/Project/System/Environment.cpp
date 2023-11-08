@@ -59,7 +59,7 @@ void Environment::DebugLight(int lightIndex)
 	{
 		ImGui::Checkbox("Active", (bool*)&light.active);
 
-		const char* list[] = { "Directional", "Point", "Capsule" };
+		const char* list[] = { "Directional", "Point", "Spot", "Capsule"};
 		ImGui::Combo("Type", &light.type, list, 4);
 
 		ImGui::ColorEdit3("Color", (float*)&light.color);
