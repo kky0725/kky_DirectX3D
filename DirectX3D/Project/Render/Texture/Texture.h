@@ -6,7 +6,9 @@ class Texture
 
 public:
 	static Texture* Get(wstring file);
+	static Texture* Get(wstring key, ID3D11ShaderResourceView* srv);
 	static Texture* Load(wstring file);
+
 	static void Delete();
 
 	void PSSetShaderResources(UINT slot);
@@ -24,4 +26,6 @@ private:
 	static map<wstring, Texture*> _textures;
 
 	wstring _path;
+
+	bool _isReferred = false;
 };

@@ -11,7 +11,8 @@ Texture::Texture(ID3D11ShaderResourceView* srv, ScratchImage& image)
 
 Texture::~Texture()
 {
-	_srv->Release();
+	if(!_isReferred)
+		_srv->Release();
 }
 
 Texture* Texture::Get(wstring file)
@@ -48,6 +49,19 @@ Texture* Texture::Get(wstring file)
 	_textures[file]->_path = path;
 
 	return _textures[file];
+}
+
+Texture* Texture::Get(wstring key, ID3D11ShaderResourceView* srv)
+{
+	if (_textures.count(key) > 0)
+		return _textures[key];
+
+	ScratchImage image;
+
+	_textures.emplace(key, new Texture(srv, image));
+	_textures[key]->_isReferred = true;
+
+	return _textures[key];
 }
 
 Texture* Texture::Load(wstring file)

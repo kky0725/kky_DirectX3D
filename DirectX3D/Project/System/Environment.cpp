@@ -3,7 +3,7 @@
 
 Environment::Environment()
 {
-	CreateViewport();
+	SetViewport();
 	CreatePerspective();
 	CreateOrthographic();
 
@@ -16,13 +16,13 @@ Environment::~Environment()
 	delete _persBuffer;
 }
 
-void Environment::CreateViewport()
+void Environment::SetViewport(UINT width, UINT height)
 {
 	D3D11_VIEWPORT viewPort;
 	viewPort.TopLeftX = 0.0f;
 	viewPort.TopLeftY = 0.0f;
-	viewPort.Width = WIN_WIDTH;
-	viewPort.Height = WIN_HEIGHT;
+	viewPort.Width    = width;
+	viewPort.Height	  = height;
 	viewPort.MinDepth = 0.0f;
 	viewPort.MaxDepth = 1.0f;
 

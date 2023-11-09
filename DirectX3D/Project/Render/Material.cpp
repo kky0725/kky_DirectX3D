@@ -90,6 +90,13 @@ void Material::SetDiffuseMap(wstring file)
 	_buffer->data.hasDiffuseMap = true;
 }
 
+void Material::SetDiffuseMap(Texture* texture)
+{
+	_diffuseMap = texture;
+
+	_buffer->data.hasDiffuseMap = true;
+}
+
 void Material::SetSpecularMap(wstring file)
 {
 	_specularMap = Texture::Get(file);

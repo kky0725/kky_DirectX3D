@@ -11,8 +11,8 @@ public:
 	ID3D11ShaderResourceView*	GetSRV() { return _srv; }
 
 private:
-	void CreateDSVTexture();
-	void CreateDSV();
+	void CreateRTVTexture();
+	void CreateRTV();
 	void CreateSRV();
 
 private:
