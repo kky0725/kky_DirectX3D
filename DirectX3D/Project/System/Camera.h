@@ -24,6 +24,8 @@ public:
 
 	void SetTarget(Transform* target) { this->_target = target; }
 
+	ViewBuffer* GetViewBuffer() { return _viewBuffer; }
+
 private:
 	void FreeMode();
 	void TargetMode(Mode mode = MODE1);

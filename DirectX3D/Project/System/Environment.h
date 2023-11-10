@@ -18,6 +18,7 @@ public:
 	void PostRneder();
 
 	Matrix GetProjMatirx() { return _PersMatrix; }
+	MatrixBuffer* GetPersBuffer() { return _persBuffer; }
 
 private:
 	MatrixBuffer* _persBuffer;

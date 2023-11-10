@@ -22,7 +22,8 @@ MainGame::MainGame()
 	//SCENE->Create("ModelAnimation", new ModelAnimationScene);
 	//SCENE->Create("Instancing", new InstancingScene);
 	//SCENE->Create("Start", new ModelInstancingScene);
-	SCENE->Create("Start", new LightScene);
+	//SCENE->Create("Start", new LightScene);
+	SCENE->Create("Start", new DeferredRenderScene);
 	//SCENE->Create("Export", new ModelExportScene);
 
 	SCENE->Add("Grid");

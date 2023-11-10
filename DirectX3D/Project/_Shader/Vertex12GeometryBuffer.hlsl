@@ -7,7 +7,7 @@ LightVertexOutPut main(VertexTextureNormalTangentBlend input)
 	matrix transform;
 	
 	[branch]
-	if(hasAnimation)
+	if (hasAnimation)
 		transform = mul(SkinWorld(input.indices, input.weights), world);
 	else
 		transform = world;
