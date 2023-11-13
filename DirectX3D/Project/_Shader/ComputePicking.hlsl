@@ -6,6 +6,12 @@ cbuffer Ray : register(b0)
 	float3 direction;
 };
 
+cbuffer World : register(b1)
+{
+	matrix world;
+	int hasAnimation;
+};
+
 struct InputDesc
 {
 	uint index;
@@ -30,9 +36,17 @@ RWStructuredBuffer<OutputDesc> output : register(u0);
 
 void Intersects(uint index)
 {
-	float3 v0 = input[index].v0;
-	float3 v1 = input[index].v1;
-	float3 v2 = input[index].v2;
+	float4 temp0 = float4(input[index].v0, 1.0f);
+	float4 temp1 = float4(input[index].v1, 1.0f);
+	float4 temp2 = float4(input[index].v2, 1.0f);
+	
+	float3 v0 = mul(temp0, world);
+	float3 v1 = mul(temp1, world);
+	float3 v2 = mul(temp2, world);
+	
+	v0 = temp0.xyz;
+	v1 = temp1.xyz;
+	v2 = temp2.xyz;
 	
 	float3 v01 = v1 - v0;
 	float3 v02 = v2 - v0;

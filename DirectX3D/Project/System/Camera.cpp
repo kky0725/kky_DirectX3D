@@ -5,11 +5,9 @@ Camera::Camera()
 {
 	_viewBuffer = new ViewBuffer();
 
-	_transform = new Transform();
-
-	_transform->_translation = { 60.0f, 100.0f, -80.0f };
-	//_transform->_translation = { 0.0f, 0.0f, -20.0f };
-	_transform->_rotation.x = 0.65f;
+	_translation = { 60.0f, 100.0f, -80.0f };
+	//_translation = { 0.0f, 0.0f, -20.0f };
+	_rotation.x = 0.65f;
 
 	Load();
 }
@@ -18,13 +16,13 @@ Camera::~Camera()
 {
 	Save();
 
-	delete _transform;
-
 	delete _viewBuffer;
 }
 
 void Camera::Update()
 {
+	CalculateFrustum();
+
 	if(!_target)
 		FreeMode();
 	else
@@ -38,11 +36,13 @@ void Camera::Debug()
 
 	if (ImGui::TreeNode("Camera Option"))
 	{
-		ImGui::Text("Camera Pos x : %.2f, y : %.2f, z : %.2f", _transform->_translation.x, _transform->_translation.y, _transform->_translation.z);
-		ImGui::Text("Camera Rot x : %.2f, y : %.2f, z : %.2f", _transform->_rotation.x, _transform->_rotation.y, _transform->_rotation.z);
+		ImGui::Text("Camera Pos x : %.2f, y : %.2f, z : %.2f", _translation.x, _translation.y, _translation.z);
+		ImGui::Text("Camera Rot x : %.2f, y : %.2f, z : %.2f", _rotation.x, _rotation.y, _rotation.z);
 		
 		ImGui::SliderFloat("Height", &_height, -10.0f, 100.0f);
 		ImGui::SliderFloat("Distance", &_distance, -10.0f, 100.0f);
+
+		Transform::Debug();
 
 		ImGui::SliderFloat("Camera MoveDamping", &_moveDamping, 0.0f, 30.0f);
 		ImGui::SliderFloat("Camera RotDamping", &_rotDamping, 0.0f, 30.0f);
@@ -55,7 +55,7 @@ void Camera::Debug()
 Ray Camera::ScreenPointToRay(Vector3 screenPos)
 {
 	Ray ray;
-	ray.origion = _transform->_translation;
+	ray.origin = Transform::_translation;
 
 	//////InvViewport/////// LeftTop이 0,0이라는 가정
 
@@ -67,7 +67,7 @@ Ray Camera::ScreenPointToRay(Vector3 screenPos)
 
 	///////Invprojection///////
 
-	Matrix projection = Environment::GetInstance()->GetProjMatirx();
+	Matrix projection = Environment::GetInstance()->GetPersMatrix();
 
 	XMFLOAT4X4 proj;
 	XMStoreFloat4x4(&proj, projection);
@@ -77,7 +77,7 @@ Ray Camera::ScreenPointToRay(Vector3 screenPos)
 
 	////InvView/////
 
-	Matrix invView = _transform->GetWorld();
+	Matrix invView = Transform::GetWorld();
 	//if (_target)
 		//invView = XMMatrixInverse();
 
@@ -92,7 +92,7 @@ Vector3 Camera::WolrdToScreenPoint(Vector3 worldPos)
 	Vector3 screenPos;
 
 	screenPos = XMVector3TransformCoord(worldPos, _viewMatrix);
-	screenPos = XMVector3TransformCoord(screenPos, Environment::GetInstance()->GetProjMatirx());
+	screenPos = XMVector3TransformCoord(screenPos, Environment::GetInstance()->GetPersMatrix());
 
 	screenPos = (screenPos + Vector3(1, 1, 1)) * 0.5f;
 
@@ -101,6 +101,95 @@ Vector3 Camera::WolrdToScreenPoint(Vector3 worldPos)
 
 
 	return screenPos;
+}
+
+bool Camera::ContainPoint(Vector3 point)
+{
+	for (UINT i = 0; i < 6; i++)
+	{
+		Vector3 dot = XMPlaneDotCoord(_planes[i], point);
+
+		if (dot.x < 0.0f)
+			return false;
+	}
+	return true;
+}
+
+bool Camera::ContainSphere(Vector3 center, float radius)
+{
+	Vector3 edge;
+	Vector3 dot;
+
+	for (UINT i = 0; i < 6; i++)
+	{
+		edge.x = center.x - radius;
+		edge.y = center.y - radius;
+		edge.z = center.z - radius;
+
+		dot = XMPlaneDotCoord(_planes[i], edge);
+		if (dot.x > 0.0f)
+			continue;
+
+		edge.x = center.x + radius;
+		edge.y = center.y - radius;
+		edge.z = center.z - radius;
+
+		dot = XMPlaneDotCoord(_planes[i], edge);
+		if (dot.x > 0.0f)
+			continue;
+
+		edge.x = center.x - radius;
+		edge.y = center.y + radius;
+		edge.z = center.z - radius;
+
+		dot = XMPlaneDotCoord(_planes[i], edge);
+		if (dot.x > 0.0f)
+			continue;
+
+		edge.x = center.x - radius;
+		edge.y = center.y - radius;
+		edge.z = center.z + radius;
+
+		dot = XMPlaneDotCoord(_planes[i], edge);
+		if (dot.x > 0.0f)
+			continue;
+
+		edge.x = center.x + radius;
+		edge.y = center.y + radius;
+		edge.z = center.z - radius;
+
+		dot = XMPlaneDotCoord(_planes[i], edge);
+		if (dot.x > 0.0f)
+			continue;
+
+		edge.x = center.x + radius;
+		edge.y = center.y - radius;
+		edge.z = center.z + radius;
+
+		dot = XMPlaneDotCoord(_planes[i], edge);
+		if (dot.x > 0.0f)
+			continue;
+
+		edge.x = center.x - radius;
+		edge.y = center.y + radius;
+		edge.z = center.z + radius;
+
+		dot = XMPlaneDotCoord(_planes[i], edge);
+		if (dot.x > 0.0f)
+			continue;
+
+		edge.x = center.x + radius;
+		edge.y = center.y + radius;
+		edge.z = center.z + radius;
+
+		dot = XMPlaneDotCoord(_planes[i], edge);
+		if (dot.x > 0.0f)
+			continue;
+
+		return false;
+	}
+
+	return true;
 }
 
 void Camera::FreeMode()
@@ -113,35 +202,35 @@ void Camera::FreeMode()
 			_moveSpeed = 20.0f;
 
 		if (KEY_PRESS('A'))
-			_transform->_translation += _transform->Left() * _moveSpeed * Time::Delta();
+			Transform::_translation += Transform::Left() * _moveSpeed * Time::Delta();
 
 		if (KEY_PRESS('D'))
-			_transform->_translation += _transform->Right() * _moveSpeed * Time::Delta();
+			Transform::_translation += Transform::Right() * _moveSpeed * Time::Delta();
 
 		if (KEY_PRESS('S'))
-			_transform->_translation += _transform->Backward() * _moveSpeed * Time::Delta();
+			Transform::_translation += Transform::Backward() * _moveSpeed * Time::Delta();
 
 		if (KEY_PRESS('W'))
-			_transform->_translation += _transform->Forward() * _moveSpeed * Time::Delta();
+			Transform::_translation += Transform::Forward() * _moveSpeed * Time::Delta();
 
 		if (KEY_PRESS('Q'))
-			_transform->_translation += _transform->Up() * _moveSpeed * Time::Delta();
+			Transform::_translation += Transform::Up() * _moveSpeed * Time::Delta();
 
 		if (KEY_PRESS('E'))
-			_transform->_translation += _transform->Down() * _moveSpeed * Time::Delta();
+			Transform::_translation += Transform::Down() * _moveSpeed * Time::Delta();
 	
 		Vector3 dir = mousePos - _oldPos;
 
 		if (abs(dir.x) > 15.0f || abs(dir.y) > 15.0f)
 			dir = Vector3(0.0f, 0.0f, 0.0f);
 
-		_transform->_rotation.y += dir.x * _rotSpeed * Time::Delta();
-		_transform->_rotation.x += dir.y * _rotSpeed * Time::Delta();
+		Transform::_rotation.y += dir.x * _rotSpeed * Time::Delta();
+		Transform::_rotation.x += dir.y * _rotSpeed * Time::Delta();
 	}
 
 	_oldPos = mousePos;
 
-	_viewMatrix = XMMatrixInverse(nullptr, _transform->GetWorld());
+	_viewMatrix = XMMatrixInverse(nullptr, Transform::GetWorld());
 
 	SetView();
 }
@@ -166,9 +255,9 @@ void Camera::TargetMode(Mode mode)
 
 		_destination = _target->GetGlobalPosition() + forward * _distance + V_UP * _height;
 
-		_transform->_translation = LERP(_transform->_translation, _destination, _moveDamping * Time::Delta());
+		Transform::_translation = LERP(Transform::_translation, _destination, _moveDamping * Time::Delta());
 
-		_viewMatrix = XMMatrixLookAtLH(_transform->_translation, _target->_translation, V_UP);
+		_viewMatrix = XMMatrixLookAtLH(Transform::_translation, _target->_translation, V_UP);
 	}
 		break;
 	case Camera::MODE2:
@@ -177,13 +266,13 @@ void Camera::TargetMode(Mode mode)
 		{
 			Vector3 dir = mousePos - _oldPos;
 
-			_transform->_rotation.y += dir.x * _rotSpeed * Time::Delta();
-			_transform->_rotation.x += dir.y * _rotSpeed * Time::Delta();
+			Transform::_rotation.y += dir.x * _rotSpeed * Time::Delta();
+			Transform::_rotation.x += dir.y * _rotSpeed * Time::Delta();
 		}
 		_oldPos = mousePos;
 
-		_destRotY = LERP(_destRotY, _transform->_rotation.y, _rotDamping * Time::Delta());
-		_destRotX = LERP(_destRotY, _transform->_rotation.x, _rotDamping * Time::Delta());
+		_destRotY = LERP(_destRotY, Transform::_rotation.y, _rotDamping * Time::Delta());
+		_destRotX = LERP(_destRotY, Transform::_rotation.x, _rotDamping * Time::Delta());
 
 		XMMATRIX rotMatrix = XMMatrixRotationRollPitchYaw(_destRotX, _destRotY + _rotY, 0.0f);
 
@@ -191,9 +280,9 @@ void Camera::TargetMode(Mode mode)
 
 		_destination = _target->GetGlobalPosition() + forward * _distance;
 
-		_transform->_translation = LERP(_transform->_translation, _destination, _moveDamping * Time::Delta());
+		Transform::_translation = LERP(Transform::_translation, _destination, _moveDamping * Time::Delta());
 
-		_viewMatrix = XMMatrixLookAtLH(_transform->_translation, _target->_translation, V_UP);
+		_viewMatrix = XMMatrixLookAtLH(Transform::_translation, _target->_translation, V_UP);
 
 		_viewMatrix *= XMMatrixTranslation(0, -_height, 0);
 	}
@@ -209,15 +298,15 @@ void Camera::TargetMode(Mode mode)
 
 void Camera::SetView()
 {
-	_transform->Update();
+	Transform::Update();
 
-	//XMVECTOR eyePos   = _transform->_translation;
-	//XMVECTOR focusPos = _transform->_translation + _transform->Forward();
-	//XMVECTOR upVector = _transform->Up();
+	//XMVECTOR eyePos   = Transform::_translation;
+	//XMVECTOR focusPos = Transform::_translation + Transform::Forward();
+	//XMVECTOR upVector = Transform::Up();
 
 	//_viewMatrix = XMMatrixLookAtLH(eyePos, focusPos, upVector);
 
-	_viewBuffer->SetData(_viewMatrix, _transform->GetWorld());
+	_viewBuffer->SetData(_viewMatrix, Transform::GetWorld());
 	_viewBuffer->SetVSBuffer(1);
 }
 
@@ -225,9 +314,9 @@ void Camera::Save()
 {
 	BinaryWriter data(L"CameraData");
 
-	data.WriteData(_transform->_scale);
-	data.WriteData(_transform->_rotation);
-	data.WriteData(_transform->_translation);
+	data.WriteData(Transform::_scale);
+	data.WriteData(Transform::_rotation);
+	data.WriteData(Transform::_translation);
 }
 
 void Camera::Load()
@@ -237,7 +326,66 @@ void Camera::Load()
 	if (!data.Succeeded())
 		return;
 
-	_transform->_scale		 = data.ReadVector3();
-	_transform->_rotation	 = data.ReadVector3();
-	_transform->_translation = data.ReadVector3();
+	Transform::_scale		= data.ReadVector3();
+	Transform::_rotation	= data.ReadVector3();
+	Transform::_translation = data.ReadVector3();
+}
+
+void Camera::CalculateFrustum()
+{
+	XMFLOAT4X4 VP;
+	XMStoreFloat4x4(&VP, _viewMatrix * Environment::GetInstance()->GetPersMatrix());
+
+	//LEFT
+	_a = VP._14 + VP._11;
+	_b = VP._24 + VP._21;
+	_c = VP._34 + VP._31;
+	_d = VP._44 + VP._41;
+
+	_planes[0] = XMVectorSet(_a, _b, _c, _d);
+
+	//RIGHT
+	_a = VP._14 - VP._11;
+	_b = VP._24 - VP._21;
+	_c = VP._34 - VP._31;
+	_d = VP._44 - VP._41;
+
+	_planes[1] = XMVectorSet(_a, _b, _c, _d);
+
+	//BOTTOM
+	_a = VP._14 + VP._12;
+	_b = VP._24 + VP._22;
+	_c = VP._34 + VP._32;
+	_d = VP._44 + VP._42;
+
+	_planes[2] = XMVectorSet(_a, _b, _c, _d);
+
+	//TOP
+	_a = VP._14 - VP._12;
+	_b = VP._24 - VP._22;
+	_c = VP._34 - VP._32;
+	_d = VP._44 - VP._42;
+
+	_planes[3] = XMVectorSet(_a, _b, _c, _d);
+
+	//Near
+	_a = VP._14 + VP._13;
+	_b = VP._24 + VP._23;
+	_c = VP._34 + VP._33;
+	_d = VP._44 + VP._43;
+
+	_planes[4] = XMVectorSet(_a, _b, _c, _d);
+
+	//Far
+	_a = VP._14 - VP._13;
+	_b = VP._24 - VP._23;
+	_c = VP._34 - VP._33;
+	_d = VP._44 - VP._43;
+
+	_planes[5] = XMVectorSet(_a, _b, _c, _d);
+
+	for (UINT i = 0; i < 6; i++)
+	{
+		_planes[i] = XMPlaneNormalize(_planes[i]);
+	}
 }

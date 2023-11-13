@@ -23,7 +23,8 @@ MainGame::MainGame()
 	//SCENE->Create("Instancing", new InstancingScene);
 	//SCENE->Create("Start", new ModelInstancingScene);
 	//SCENE->Create("Start", new LightScene);
-	SCENE->Create("Start", new DeferredRenderScene);
+	//SCENE->Create("Start", new DeferredRenderScene);
+	SCENE->Create("Start", new FrustumCullingScene);
 	//SCENE->Create("Export", new ModelExportScene);
 
 	SCENE->Add("Grid");
@@ -46,7 +47,6 @@ void MainGame::Update()
 
 	Time::GetInstance()->Update();
 	Keyboard::GetInstance()->Update();
-	Camera::GetInstance()->Update();
 }
 
 void MainGame::Render()
@@ -74,7 +74,6 @@ void MainGame::Render()
 	Environment::GetInstance()->PostSet();
 
 	SCENE->PostRender();
-	Camera::GetInstance()->Debug();
 	Environment::GetInstance()->PostRneder();
 
 	ImGui::Checkbox("WireFrame", &_isWireFrame);
@@ -118,7 +117,6 @@ void MainGame::Release()
 	Shader::Delete();
 	Environment::Delete();
 	Device::Delete();
-	Camera::Delete();
 	Texture::Delete();
 	//SceneManager::Delete();
 

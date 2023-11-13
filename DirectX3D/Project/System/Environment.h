@@ -1,4 +1,6 @@
 #pragma once
+class Camera;
+
 class Environment : public Singleton<Environment>
 {
 	friend class Singleton;
@@ -17,8 +19,10 @@ public:
 
 	void PostRneder();
 
-	Matrix GetProjMatirx() { return _PersMatrix; }
+	Matrix GetPersMatrix() { return _PersMatrix; }
 	MatrixBuffer* GetPersBuffer() { return _persBuffer; }
+
+	Camera* GetMainCamera() { return _mainCamera; }
 
 private:
 	MatrixBuffer* _persBuffer;
@@ -30,4 +34,6 @@ private:
 	ViewBuffer* _UIViewBuffer;
 
 	LightBuffer* _lightBuffer;
+
+	Camera* _mainCamera;
 };

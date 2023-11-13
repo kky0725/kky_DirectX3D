@@ -16,7 +16,7 @@ bool ColliderSphere::Collision(IN Ray& ray, OUT Contact* contact)
 {
 	Transform::UpdateWorld();
 
-	Vector3 O = ray.origion;
+	Vector3 O = ray.origin;
 	Vector3 D = ray.direction;
 	Vector3 P = this->_globalPosition;
 	Vector3 X = O - P;

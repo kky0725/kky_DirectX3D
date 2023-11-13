@@ -53,7 +53,7 @@ void Groot::Update()
 		PlayClip(2, speed, takeTime);
 
 	_hpBar->Update();
-	_hpBar->_translation = Camera::GetInstance()->WolrdToScreenPoint(this->_globalPosition + V_UP * 10);
+	_hpBar->_translation = CAMERA->WolrdToScreenPoint(this->_globalPosition + V_UP * 10);
 
 	UpdateLeftHand();
 	//Move();

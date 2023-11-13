@@ -1,6 +1,7 @@
 #pragma once
 class ColliderSphere : public Collider
 {
+	friend class ColliderCapsule;
 public:
 	ColliderSphere(float radius = 1.0f, UINT stackCount = 15, UINT sliceCount = 30);
 	virtual ~ColliderSphere();

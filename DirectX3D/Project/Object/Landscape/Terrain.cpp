@@ -46,7 +46,7 @@ void Terrain::Render()
 
 bool Terrain::Picking(OUT Vector3* position)
 {
-	Ray ray = Camera::GetInstance()->ScreenPointToRay(mousePos);
+	Ray ray = CAMERA->ScreenPointToRay(mousePos);
 
 	for (UINT z = 0; z < _height - 1; z++)
 	{
@@ -66,15 +66,15 @@ bool Terrain::Picking(OUT Vector3* position)
 
 			float distance = 0.0f;
 
-			if (TriangleTests::Intersects(ray.origion, ray.direction, pos[0], pos[1], pos[2], distance))
+			if (TriangleTests::Intersects(ray.origin, ray.direction, pos[0], pos[1], pos[2], distance))
 			{
-				*position = ray.origion + ray.direction * distance;
+				*position = ray.origin + ray.direction * distance;
 				return true;
 			}
 
-			if (TriangleTests::Intersects(ray.origion, ray.direction, pos[3], pos[1], pos[2], distance))
+			if (TriangleTests::Intersects(ray.origin, ray.direction, pos[3], pos[1], pos[2], distance))
 			{
-				*position = ray.origion + ray.direction * distance;
+				*position = ray.origin + ray.direction * distance;
 				return true;
 			}
 		}

@@ -1,6 +1,7 @@
 #pragma once
 class ColliderBox : public Collider
 {
+	friend class ColliderCapsule;
 public:
 	struct Obb
 	{

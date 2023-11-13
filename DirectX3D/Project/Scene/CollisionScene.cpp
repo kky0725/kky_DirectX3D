@@ -30,7 +30,7 @@ void CollisionScene::Update()
 	for (Collider* collider : _colliders)
 		collider->Update();
 
-	Ray ray = Camera::GetInstance()->ScreenPointToRay(mousePos);
+	Ray ray = CAMERA->ScreenPointToRay(mousePos);
 
 	static Contact contact;
 

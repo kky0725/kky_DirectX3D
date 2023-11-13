@@ -8,12 +8,16 @@ Environment::Environment()
 	CreateOrthographic();
 
 	_lightBuffer = new LightBuffer();
+
+	_mainCamera = new Camera();
 }
 
 Environment::~Environment()
 {
 	delete _lightBuffer;
 	delete _persBuffer;
+
+	delete _mainCamera;
 }
 
 void Environment::SetViewport(UINT width, UINT height)
@@ -79,6 +83,8 @@ void Environment::DebugLight(int lightIndex)
 
 void Environment::SetEnvironment()
 {
+	_mainCamera->Update();
+
 	_lightBuffer->SetPSBuffer(0);//header.hlsl 문제 해결하면 0으로 변경
 	_persBuffer->SetVSBuffer(2);
 
@@ -110,7 +116,6 @@ void Environment::PostRneder()
 		ImGui::TreePop();
 	}
 
-
-
+	_mainCamera->Debug();
 }
 

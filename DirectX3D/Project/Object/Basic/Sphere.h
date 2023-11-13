@@ -11,6 +11,8 @@ public:
 
 	Material* GetMaterial() { return _material; }
 
+	float Radius() { return _radius * Max(_globalScale.x, _globalScale.y, _globalScale.z); }
+
 private:
 	void CreateMesh();
 	void CreateTangent();

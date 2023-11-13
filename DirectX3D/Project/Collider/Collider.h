@@ -2,7 +2,7 @@
 
 struct Ray
 {
-	Vector3 origion;
+	Vector3 origin;
 	Vector3 direction;
 };
 

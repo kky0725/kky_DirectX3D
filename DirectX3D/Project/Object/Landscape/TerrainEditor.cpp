@@ -150,13 +150,14 @@ void TerrainEditor::Debug()
 
 bool TerrainEditor::Picking(OUT Vector3* position)
 {
-	Ray ray = Camera::GetInstance()->ScreenPointToRay(mousePos);
+	Ray ray = CAMERA->ScreenPointToRay(mousePos);
 	
-	_rayBuffer->data.origin		= ray.origion;
+	_rayBuffer->data.origin		= ray.origin;
 	_rayBuffer->data.direction	= ray.direction;
 	_rayBuffer->data.outputSize = _polygonCount;
 
 	_rayBuffer->SetCSBuffer(0);
+	_worldBuffer->SetCSBuffer(1);
 
 	/////////
 
@@ -186,7 +187,7 @@ bool TerrainEditor::Picking(OUT Vector3* position)
 
 	if (minDistance < FLT_MAX)
 	{
-		*position = ray.origion + ray.direction * minDistance;
+		*position = ray.origin + ray.direction * minDistance;
 
 		return true;
 	}
