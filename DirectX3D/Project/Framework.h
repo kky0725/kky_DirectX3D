@@ -179,6 +179,7 @@ using namespace MyMath;
 #include "Scene/LightScene.h"
 #include "Scene/DeferredRenderScene.h"
 #include "Scene/FrustumCullingScene.h"
+#include "Scene/BillboardScene.h"
 #include "Scene/SceneManager.h"
 
 #include "MainGame.h"

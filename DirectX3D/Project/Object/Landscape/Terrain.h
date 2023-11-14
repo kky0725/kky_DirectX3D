@@ -12,6 +12,8 @@ public:
 
 	float GetHeight(Vector3 position);
 
+	Vector2 GetSize() { return Vector2(_width, _height); }
+
 private:
 	void CreateMesh();
 	void CreateNormal();

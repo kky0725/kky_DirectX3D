@@ -9,6 +9,8 @@ public:
 	void ChangeState();
 	void DepthEnable(bool value);
 
+	void DepthWriteMask(D3D11_DEPTH_WRITE_MASK value);
+
 private:
 	ID3D11DepthStencilState* _state;
 

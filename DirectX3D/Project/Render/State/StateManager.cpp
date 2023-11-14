@@ -37,9 +37,11 @@ void StateManager::CreateBlendState()
 	_blendStates.emplace_back(new BlendState());
 	_blendStates.emplace_back(new BlendState());
 	_blendStates.emplace_back(new BlendState());
+	_blendStates.emplace_back(new BlendState());
 
 	_blendStates[1]->Alpha(true);
 	_blendStates[2]->Additive();
+	_blendStates[3]->AlphaToCoverage(true);
 }
 
 void StateManager::CreateDepthStencilState()
@@ -49,6 +51,7 @@ void StateManager::CreateDepthStencilState()
 	_depthStencilStates.emplace_back(new DepthStencilState());
 
 	_depthStencilStates[1]->DepthEnable(false);
+	_depthStencilStates[2]->DepthWriteMask(D3D11_DEPTH_WRITE_MASK_ZERO);
 }
 
 void StateManager::AlphaBegin()
@@ -61,6 +64,11 @@ void StateManager::AlphaEnd()
 	_blendStates[0]->SetState();
 }
 
+void StateManager::AlphaToCoverageEnable()
+{
+	_blendStates[3]->SetState();
+}
+
 void StateManager::DepthEnable()
 {
 	_depthStencilStates[0]->SetState();
@@ -69,6 +77,12 @@ void StateManager::DepthEnable()
 void StateManager::DepthDisable()
 {
 	_depthStencilStates[1]->SetState();
+}
+
+void StateManager::DepthWriteMaskZero()
+{
+	_depthStencilStates[2]->SetState();
+	//깊이 비교 없이 랜더링 순서대로 랜더링
 }
 
 void StateManager::Set()

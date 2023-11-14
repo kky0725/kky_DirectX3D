@@ -22,7 +22,7 @@ Groot::Groot()
 	_lefthand = new Transform();
 	_weapon->SetParent(_lefthand);
 	
-	_clips[ATTACK]->SetEndEvent(std::bind(&Groot::SetClip, this, IDLE), 0.7f);
+	_clips[ATTACK]->SetEndEvent(0.7f, std::bind(&Groot::SetClip, this, IDLE));
 
 	_hpBar = new ProgressBar(L"UI/hp_bar.png", L"UI/hp_bar_BG.png");
 	_hpBar->SetLabel("Hp Bar");

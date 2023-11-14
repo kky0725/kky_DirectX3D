@@ -165,9 +165,9 @@ void ColliderCapsule::CreateMesh()
 		for (UINT j = 0; j < sliceCount; j++)
 		{
 			_indices.push_back((sliceCount + 1) * (i + 0) + j + 0);//0
-			_indices.push_back((sliceCount + 1) * (i + 0) + j + 1);//1            
+			_indices.push_back((sliceCount + 1) * (i + 0) + j + 1);//1
 			_indices.push_back((sliceCount + 1) * (i + 0) + j + 0);//0
-			_indices.push_back((sliceCount + 1) * (i + 1) + j + 0);//2            
+			_indices.push_back((sliceCount + 1) * (i + 1) + j + 0);//2
 		}
 	}
 

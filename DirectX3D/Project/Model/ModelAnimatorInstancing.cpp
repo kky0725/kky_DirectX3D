@@ -64,6 +64,8 @@ void ModelAnimatorInstancing::PlayClip(UINT instanceIndex, int clip, float speed
 	_frameInstancingBuffer->data.motion[instanceIndex].next.speed = speed;
 	_frameInstancingBuffer->data.motion[instanceIndex].takeTime = takeTime;
 	_frameInstancingBuffer->data.motion[instanceIndex].runningTime = 0.0f;
+
+	//_clips[clip]->Init();
 }
 
 Matrix ModelAnimatorInstancing::GetTransformByNode(UINT instanceIndex, int nodeIndex)
@@ -102,10 +104,15 @@ void ModelAnimatorInstancing::UpdateFrame(UINT instanceIndex)
 		++frameData.cur.curFrame %= (clip->frameCount - 1);
 		frameData.cur.time = 0.0f;
 
+		if (frameData.cur.curFrame == 0)
+			clip->Init();
+
 		float animRatio = (float)frameData.cur.curFrame / _clips[frameData.cur.clip]->frameCount;
 
-		if (clip->_EndEvent != nullptr && animRatio > clip->_ratio)
-			clip->_EndEvent();
+		clip->Execute(animRatio);
+
+		/*if (clip->_EndEvent != nullptr && animRatio > clip->_ratio)
+			clip->_EndEvent();*/
 	}
 
 

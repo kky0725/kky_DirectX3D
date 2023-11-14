@@ -15,10 +15,12 @@ public:
 
 	void AlphaBegin();
 	void AlphaEnd();
+	void AlphaToCoverageEnable();
 
 	void DepthEnable();
 	void DepthDisable();
-	
+	void DepthWriteMaskZero();
+
 	void Set();
 	void PostSet();
 

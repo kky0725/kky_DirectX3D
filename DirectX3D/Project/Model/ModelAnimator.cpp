@@ -91,6 +91,8 @@ void ModelAnimator::PlayClip(UINT clipIndex, float speed, float takeTime)
 	_frameBuffer->data.next.speed  = speed;
 	_frameBuffer->data.takeTime    = takeTime;
 	_frameBuffer->data.runningTime = 0.0f;
+
+	//_clips[clipIndex]->Init();
 }
 
 void ModelAnimator::CreateTexture()
@@ -171,10 +173,16 @@ void ModelAnimator::UpdateFrame()
 		++frameData.cur.curFrame %= (clip->frameCount - 1);
 		frameData.cur.time = 0.0f;
 
+		if (frameData.cur.curFrame == 0)
+			clip->Init();
+
 		float animRatio = (float)frameData.cur.curFrame / _clips[frameData.cur.clip]->frameCount;
 
-		if (clip->_EndEvent != nullptr && animRatio > clip->_ratio)
-			clip->_EndEvent();
+		clip->Execute(animRatio);
+
+		/*if (clip->_EndEvent != nullptr && animRatio > clip->_ratio)
+			clip->_EndEvent();*/
+
 	}
 
 

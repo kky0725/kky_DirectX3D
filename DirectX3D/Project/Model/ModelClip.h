@@ -9,11 +9,10 @@ public:
 
 	KeyFrame* GetKeyFrames(string name);
 
-	void SetEndEvent(function<void(void)> EndEvent, float ratio)
-	{
-		this->_EndEvent = EndEvent;
-		this->_ratio = ratio;
-	}
+	void SetEndEvent(float ratio, function<void(void)> EndEvent);
+
+	void Init();
+	void Execute(float ratio);
 
 private:
 	string name ="";
@@ -23,7 +22,10 @@ private:
 
 	unordered_map<string, KeyFrame*> _keyFrames = {};
 
-	function<void()> _EndEvent;
+	multimap<float, function<void()>> _EndEvents;
+	multimap<float, function<void()>>::iterator _eventIter;
 
 	float _ratio;
+
+
 };
