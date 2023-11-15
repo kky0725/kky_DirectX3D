@@ -59,6 +59,23 @@ ComputeShader* Shader::GetCS(wstring file)
 	return (ComputeShader*)_shaders[file];
 }
 
+GeometryShader* Shader::GetGS(wstring file)
+{
+	wstring key = file;
+
+	file = L"_Shader/Geometry" + file + L".hlsl";
+
+	assert(PathFileExists(file.c_str()));
+
+	if (_shaders.count(file) > 0)
+		return (GeometryShader*)_shaders[file];
+
+	_shaders[file] = new GeometryShader(file);
+	_shaders[file]->_path = key;
+
+	return (GeometryShader*)_shaders[file];
+}
+
 void Shader::Delete()
 {
 	for (pair<wstring, Shader*> shader : _shaders)

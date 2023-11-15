@@ -91,7 +91,7 @@ float Terrain::GetHeight(Vector3 position)
 	int x = (int)position.x;
 	int z = (int)position.z;
 
-	if (x < 0 || x >= _width || z < 0 || z >= _height)
+	if (x < 0 || x >= _width - 1 || z < 0 || z >= _height - 1)
 		return 0;
 
 	UINT index[4];
