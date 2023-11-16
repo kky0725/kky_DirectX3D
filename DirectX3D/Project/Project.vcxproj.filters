@@ -261,6 +261,18 @@
     <ClInclude Include="Render\Shader\GeometryShader.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Object\Effect\Particle.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\ParticleScene.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Effect\Sprite.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Effect\Spark.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -491,6 +503,18 @@
     <ClCompile Include="Render\Shader\GeometryShader.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Object\Effect\Particle.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\ParticleScene.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Effect\Sprite.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Effect\Spark.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="__Others\Project.rc">
@@ -617,6 +641,9 @@
     <FxCompile Include="_Shader\Geometry13Billboard.hlsl" />
     <FxCompile Include="_Shader\Vertex13Billboard.hlsl" />
     <FxCompile Include="_Shader\Pixel13BillBoard.hlsl" />
+    <FxCompile Include="_Shader\Vertex14Sprite.hlsl" />
+    <FxCompile Include="_Shader\Pixel14Sprite.hlsl" />
+    <FxCompile Include="_Shader\Geometry14Sprite.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="_Library\ImGui.idb" />
