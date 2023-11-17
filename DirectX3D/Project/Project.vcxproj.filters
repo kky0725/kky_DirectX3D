@@ -273,6 +273,12 @@
     <ClInclude Include="Object\Effect\Spark.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Object\Effect\Rain.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Effect\Snow.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -515,6 +521,12 @@
     <ClCompile Include="Object\Effect\Spark.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Object\Effect\Rain.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Effect\Snow.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="__Others\Project.rc">
@@ -644,6 +656,15 @@
     <FxCompile Include="_Shader\Vertex14Sprite.hlsl" />
     <FxCompile Include="_Shader\Pixel14Sprite.hlsl" />
     <FxCompile Include="_Shader\Geometry14Sprite.hlsl" />
+    <FxCompile Include="_Shader\Vertex15Spark.hlsl" />
+    <FxCompile Include="_Shader\Pixel15Spark.hlsl" />
+    <FxCompile Include="_Shader\Geometry15Spark.hlsl" />
+    <FxCompile Include="_Shader\Geometry16Rain.hlsl" />
+    <FxCompile Include="_Shader\Vertex16Rain.hlsl" />
+    <FxCompile Include="_Shader\Pixel16Rain.hlsl" />
+    <FxCompile Include="_Shader\Pixel17Snow.hlsl" />
+    <FxCompile Include="_Shader\Vertex17Snow.hlsl" />
+    <FxCompile Include="_Shader\Geometry17Snow.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="_Library\ImGui.idb" />

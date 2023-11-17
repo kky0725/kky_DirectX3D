@@ -1,8 +1,8 @@
 struct VertexOutput // Geometry Input
 {
-	float4 pos		: POSITIONT0;
+	float4 pos		: POSITION0;
 	float2 size		: SIZE;
-	float3 viewPos	: POSITIONT1;
+	float3 viewPos	: POSITION1;
 	matrix view		: VIEW;
 	matrix proj		: PROJECTION;
 };

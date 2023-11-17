@@ -157,6 +157,8 @@ using namespace MyMath;
 #include "Object/Effect/Particle.h"
 #include "Object/Effect/Sprite.h"
 #include "Object/Effect/Spark.h"
+#include "Object/Effect/Rain.h"
+#include "Object/Effect/Snow.h"
 
 #include "ModelExporter/ModelType.h"
 #include "ModelExporter/ModelExporter.h"
