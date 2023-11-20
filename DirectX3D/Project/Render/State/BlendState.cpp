@@ -47,12 +47,14 @@ void BlendState::Alpha(bool value)
 void BlendState::AlphaToCoverage(bool value)
 {
 	_desc.AlphaToCoverageEnable = value;
+
+	ChangeState();
 }
 
 void BlendState::Additive()
 {
 	_desc.RenderTarget[0].BlendEnable = true;
-	_desc.RenderTarget[0].SrcBlend	  = D3D11_BLEND_ONE;//배경색을 비율로 섞지 않고 그대로 더해서 적용->원래보다 밝아짐
+	_desc.RenderTarget[0].DestBlend	  = D3D11_BLEND_ONE;//배경색을 비율로 섞지 않고 그대로 더해서 적용->원래보다 밝아짐
 
 	ChangeState();
 }

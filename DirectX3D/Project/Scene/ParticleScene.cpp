@@ -5,9 +5,9 @@ ParticleScene::ParticleScene()
 {
 	_collider = new ColliderSphere(50);
 	//_particle = new Sprite(L"Effect/greenCore_4x4.png", Vector2(30, 30), 4, 4, true);
-	//_particle = new Spark(L"Effect/Star.png", true);
-	_particle = new Rain();
-	_particle->Play(Vector3{0,0,0});
+	_particle = new Spark(L"Effect/Star.png", true);
+	//_particle = new Rain();
+	//_particle->Play(Vector3{0,0,0});
 
 }
 
@@ -27,7 +27,7 @@ void ParticleScene::Update()
 
 		if (_collider->Collision(ray, &contact))
 		{
-			//_particle->Play(contact.hitPoint);
+			_particle->Play(contact.hitPoint);
 		}
 	}
 
