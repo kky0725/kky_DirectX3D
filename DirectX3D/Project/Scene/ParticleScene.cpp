@@ -6,7 +6,8 @@ ParticleScene::ParticleScene()
 	_collider = new ColliderSphere(50);
 	//_particle = new Sprite(L"Effect/greenCore_4x4.png", Vector2(30, 30), 4, 4, true);
 	//_particle = new Spark(L"Effect/Star.png", true);
-	_particle = new Rain();
+	//_particle = new Rain();
+	_particle = new Snow();
 	_particle->Play(Vector3{0,0,0});
 
 }

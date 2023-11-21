@@ -14,6 +14,7 @@ namespace MyMath
 
 	float Random(const float& min, const float& max);
 	int Random(const int& min, const int& max);
+	Vector3 Random(Vector3 min, Vector3 max);
 
 	Vector3 ClosestPointOnLine(Vector3 start, Vector3 end, Vector3 point);
 }

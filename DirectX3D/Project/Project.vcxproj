@@ -136,6 +136,7 @@
   <ItemGroup>
     <ClInclude Include="Object\Effect\Particle.h" />
     <ClInclude Include="Object\Effect\Rain.h" />
+    <ClInclude Include="Scene\ParticleEditorScene.h" />
     <ClInclude Include="Scene\ParticleScene.h" />
     <ClInclude Include="Render\Shader\GeometryShader.h" />
     <ClInclude Include="Scene\BillboardScene.h" />
@@ -226,6 +227,7 @@
   <ItemGroup>
     <ClCompile Include="Object\Effect\Particle.cpp" />
     <ClCompile Include="Object\Effect\Rain.cpp" />
+    <ClCompile Include="Scene\ParticleEditorScene.cpp" />
     <ClCompile Include="Scene\ParticleScene.cpp" />
     <ClCompile Include="Render\Shader\GeometryShader.cpp" />
     <ClCompile Include="Scene\BillboardScene.cpp" />

@@ -32,6 +32,13 @@ void Snow::Render()
 
 void Snow::Debug()
 {
+	ImGui::Text("Snow Option");
+	ImGui::DragFloat3("Velocity", (float*)&_buffer->data.velocity, 0.1f);
+	ImGui::DragFloat("Distance", (float*)&_buffer->data.distance);//가시 거리
+	ImGui::DragFloat("Turbulence", (float*)&_buffer->data.turblulance, 0.1f, 0.0f, 10.0f);
+	ImGui::DragFloat3("Origin", (float*)&_buffer->data.origin, 0.1f);
+	ImGui::DragFloat3("Size", (float*)&_buffer->data.size, 0.1f);
+	ImGui::ColorEdit3("Color", (float*)&_buffer->data.color, 0.1f);
 }
 
 void Snow::SetVertex()

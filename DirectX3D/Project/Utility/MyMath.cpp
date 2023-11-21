@@ -47,6 +47,11 @@ int MyMath::Random(const int& min, const int& max)
 	return rand()%(max - min) + min ;
 }
 
+Vector3 MyMath::Random(Vector3 min, Vector3 max)
+{
+	return Vector3(Random(min.x, max.x), Random(min.y, max.y), Random(min.z, max.z));
+}
+
 Vector3 MyMath::ClosestPointOnLine(Vector3 start, Vector3 end, Vector3 point)
 {
 	Vector3 line = end - start;
