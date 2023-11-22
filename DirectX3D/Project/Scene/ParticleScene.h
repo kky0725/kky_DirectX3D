@@ -11,6 +11,6 @@ public:
 	virtual void PostRender() override;
 
 private:
-	Particle* _particle;
+	ParticleSystem* _particle;
 	Collider* _collider;
 };

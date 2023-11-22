@@ -136,6 +136,7 @@
   <ItemGroup>
     <ClInclude Include="Object\Effect\Particle.h" />
     <ClInclude Include="Object\Effect\Rain.h" />
+    <ClInclude Include="Object\Effect\ParticleSystem.h" />
     <ClInclude Include="Scene\ParticleEditorScene.h" />
     <ClInclude Include="Scene\ParticleScene.h" />
     <ClInclude Include="Render\Shader\GeometryShader.h" />
@@ -227,6 +228,7 @@
   <ItemGroup>
     <ClCompile Include="Object\Effect\Particle.cpp" />
     <ClCompile Include="Object\Effect\Rain.cpp" />
+    <ClCompile Include="Object\Effect\ParticleSystem.cpp" />
     <ClCompile Include="Scene\ParticleEditorScene.cpp" />
     <ClCompile Include="Scene\ParticleScene.cpp" />
     <ClCompile Include="Render\Shader\GeometryShader.cpp" />
@@ -512,6 +514,12 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
     </FxCompile>
+    <FxCompile Include="_Shader\Pixel18Particle.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
     <FxCompile Include="_Shader\PixelColor.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
@@ -639,6 +647,12 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
     <FxCompile Include="_Shader\Vertex17Snow.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="_Shader\Vertex18Particle.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>

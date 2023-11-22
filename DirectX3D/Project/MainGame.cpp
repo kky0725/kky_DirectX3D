@@ -26,8 +26,8 @@ MainGame::MainGame()
 	//SCENE->Create("Start", new DeferredRenderScene);
 	//SCENE->Create("Start", new FrustumCullingScene);
 	//SCENE->Create("Start", new BillboardScene);
-	//SCENE->Create("Start", new ParticleScene);
-	SCENE->Create("Start", new ParticleEditorScene);
+	SCENE->Create("Start", new ParticleScene);
+	//SCENE->Create("Start", new ParticleEditorScene);
 	//SCENE->Create("Export", new ModelExportScene);
 
 	SCENE->Add("Grid");

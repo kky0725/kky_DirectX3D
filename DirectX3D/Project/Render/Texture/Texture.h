@@ -18,6 +18,8 @@ public:
 	Vector2 GetSize() { return Vector2(_image.GetMetadata().width, _image.GetMetadata().height); }
 	wstring GetPath() { return _path; }
 
+	ID3D11ShaderResourceView* GetSRV() { return _srv; }
+
 private:
 	ID3D11ShaderResourceView* _srv = nullptr;
 

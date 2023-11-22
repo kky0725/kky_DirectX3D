@@ -282,6 +282,9 @@
     <ClInclude Include="Scene\ParticleEditorScene.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Object\Effect\ParticleSystem.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -533,6 +536,9 @@
     <ClCompile Include="Scene\ParticleEditorScene.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Object\Effect\ParticleSystem.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="__Others\Project.rc">
@@ -671,6 +677,8 @@
     <FxCompile Include="_Shader\Pixel17Snow.hlsl" />
     <FxCompile Include="_Shader\Vertex17Snow.hlsl" />
     <FxCompile Include="_Shader\Geometry17Snow.hlsl" />
+    <FxCompile Include="_Shader\Vertex18Particle.hlsl" />
+    <FxCompile Include="_Shader\Pixel18Particle.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="_Library\ImGui.idb" />
