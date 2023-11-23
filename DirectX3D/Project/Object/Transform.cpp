@@ -1,11 +1,15 @@
 #include "Framework.h"
 #include "Transform.h"
 
+UINT Transform::_index = 0;
+
 Transform::Transform()
 {
 	_world = XMMatrixIdentity();
 	
 	_worldBuffer = new WorldBuffer();
+
+	_ID = "Object_" + to_string(++_index);
 }
 
 Transform::~Transform()

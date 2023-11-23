@@ -147,6 +147,8 @@ using namespace MyMath;
 #include "Object/Basic/TextureCube.h"
 #include "Object/Basic/Sphere.h"
 
+#include "System/Reflection.h"
+
 #include "Object/Landscape/Terrain.h"
 #include "Object/Landscape/TerrainEditor.h"
 #include "Object/Landscape/Sky.h"
@@ -192,6 +194,7 @@ using namespace MyMath;
 #include "Scene/BillboardScene.h"
 #include "Scene/ParticleScene.h"
 #include "Scene/ParticleEditorScene.h"
+#include "Scene/WaterScene.h"
 #include "Scene/SceneManager.h"
 
 #include "MainGame.h"

@@ -51,4 +51,6 @@ protected:
 	class WorldBuffer* _worldBuffer;
 
 	bool _isActive = true;
+
+	static UINT _index;
 };
