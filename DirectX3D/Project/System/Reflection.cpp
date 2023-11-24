@@ -14,8 +14,7 @@ Reflection::Reflection(Transform* target)
 	// Debug()
 
 	_quad = new Quad(Vector2(200, 200));
-	//_quad->_translation = {150, 600, 0 };
-	_quad->_translation = { 100, 100, 100 };
+	_quad->_translation = { 100, 100, 0 };
 
 	Texture* texture = Texture::Get(L"Reflection" + to_wstring(_index++), _renderTarget->GetSRV());
 

@@ -20,6 +20,8 @@ private:
 	Sphere* _sphere;
 
 	Reflection* _reflection;
+	Refraction* _refraction;
+	Water* _water;
 
 	SkyBox* _sky;
 };

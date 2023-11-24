@@ -318,3 +318,27 @@ public:
 	} data;
 private:
 };
+
+class WaterBuffer : public ConstBuffer
+{
+public:
+	WaterBuffer()
+		:ConstBuffer(&data, sizeof(Data))
+	{
+	}
+
+	struct Data
+	{
+		Vector4 color = { 1, 1, 1, 1 };
+
+		float waveTime = 0.0f;
+		float waveSpeed = 0.1f;
+		float waveScale = 0.1f;
+		float waveShinines = 24.0f;
+
+		float fresnel = 0.5f;
+		float padding[3];
+
+	} data;
+private:
+};

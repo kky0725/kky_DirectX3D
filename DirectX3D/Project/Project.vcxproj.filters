@@ -291,6 +291,12 @@
     <ClInclude Include="Scene\WaterScene.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="System\Refraction.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Landscape\Water.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -551,6 +557,12 @@
     <ClCompile Include="Scene\WaterScene.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="System\Refraction.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Landscape\Water.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="__Others\Project.rc">
@@ -693,6 +705,10 @@
     <FxCompile Include="_Shader\Pixel18Particle.hlsl" />
     <FxCompile Include="_Shader\Vertex19Reflection.hlsl" />
     <FxCompile Include="_Shader\Pixel19Reflection.hlsl" />
+    <FxCompile Include="_Shader\Vertex20Refraction.hlsl" />
+    <FxCompile Include="_Shader\Pixel20Refraction.hlsl" />
+    <FxCompile Include="_Shader\Pixel21Water.hlsl" />
+    <FxCompile Include="_Shader\Vertex21Water.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="_Library\ImGui.idb" />
