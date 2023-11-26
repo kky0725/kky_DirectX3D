@@ -19,7 +19,7 @@ cbuffer MaterialBuffer : register(b1)
 {
 	float4 mDiffuse;
 	float4 mSpecular;
-	float4 mAmbinet;
+	float4 mAmbinet;//mAmbient 로 수정해야함
 	float4 mEmissive;
 	
 	int hasDiffuseMap;
@@ -60,7 +60,7 @@ cbuffer FrameInstancingBuffer : register(b4)
 	Motion motions[MAX_INSTANCE];
 };
 
-Texture2DArray transforMap : register(t0);
+Texture2DArray transformMap : register(t0);
 
 struct VertexTexture
 {
@@ -112,7 +112,7 @@ struct VertexTextureNormalTangentBlend
 	float3 normal	: NORMAL;
 	float3 tangent	: TANGENT;
 	float4 indices	: BLENDINDICES;
-	float4 weights	: BLENDWEIGHT;
+	float4 weights	: BLENDWEIGHTS;
 };
 
 struct VertexInstancing
@@ -122,7 +122,7 @@ struct VertexInstancing
 	float3 normal : NORMAL;
 	float3 tangent : TANGENT;
 	float4 indices : BLENDINDICES;
-	float4 weights : BLENDWEIGHT;
+	float4 weights : BLENDWEIGHTS;
 	
 	matrix transform : INSTANCE_TRANSFORM;
 	uint index		 : INSTANCE_INDEX;
@@ -237,7 +237,7 @@ LightMaterial GetLightMaterial(LightVertexOutPut input)
 
 float4 CalculateAmbient(LightMaterial material)
 {
-	float up = material.normal.y * 0.5 + 0.5f;
+	float up = material.normal.y * 0.5f + 0.5f;
 	
 	float4 result = (float4(ambientLight + up * ambientCeil, 1.0f));
 	
@@ -404,17 +404,17 @@ matrix SkinWorld(float4 indices, float4 weights)
 	[unroll]
 	for (int i = 0; i < 4; i++)
 	{
-		c0 = transforMap.Load(int4(indices[i] * 4 + 0, curFrame[0], clipIndex[0], 0));
-		c1 = transforMap.Load(int4(indices[i] * 4 + 1, curFrame[0], clipIndex[0], 0));
-		c2 = transforMap.Load(int4(indices[i] * 4 + 2, curFrame[0], clipIndex[0], 0));
-		c3 = transforMap.Load(int4(indices[i] * 4 + 3, curFrame[0], clipIndex[0], 0));
+		c0 = transformMap.Load(int4(indices[i] * 4 + 0, curFrame[0], clipIndex[0], 0));
+		c1 = transformMap.Load(int4(indices[i] * 4 + 1, curFrame[0], clipIndex[0], 0));
+		c2 = transformMap.Load(int4(indices[i] * 4 + 2, curFrame[0], clipIndex[0], 0));
+		c3 = transformMap.Load(int4(indices[i] * 4 + 3, curFrame[0], clipIndex[0], 0));
 		
 		cur = matrix(c0, c1, c2, c3);
 		
-		n0 = transforMap.Load(int4(indices[i] * 4 + 0, curFrame[0] + 1, clipIndex[0], 0));
-		n1 = transforMap.Load(int4(indices[i] * 4 + 1, curFrame[0] + 1, clipIndex[0], 0));
-		n2 = transforMap.Load(int4(indices[i] * 4 + 2, curFrame[0] + 1, clipIndex[0], 0));
-		n3 = transforMap.Load(int4(indices[i] * 4 + 3, curFrame[0] + 1, clipIndex[0], 0));
+		n0 = transformMap.Load(int4(indices[i] * 4 + 0, curFrame[0] + 1, clipIndex[0], 0));
+		n1 = transformMap.Load(int4(indices[i] * 4 + 1, curFrame[0] + 1, clipIndex[0], 0));
+		n2 = transformMap.Load(int4(indices[i] * 4 + 2, curFrame[0] + 1, clipIndex[0], 0));
+		n3 = transformMap.Load(int4(indices[i] * 4 + 3, curFrame[0] + 1, clipIndex[0], 0));
 		
 		next = matrix(n0, n1, n2, n3);
 		
@@ -424,17 +424,17 @@ matrix SkinWorld(float4 indices, float4 weights)
 		[flatten]
 		if (clipIndex[1] > -1)
 		{
-			c0 = transforMap.Load(int4(indices[i] * 4 + 0, curFrame[1], clipIndex[1], 0));
-			c1 = transforMap.Load(int4(indices[i] * 4 + 1, curFrame[1], clipIndex[1], 0));
-			c2 = transforMap.Load(int4(indices[i] * 4 + 2, curFrame[1], clipIndex[1], 0));
-			c3 = transforMap.Load(int4(indices[i] * 4 + 3, curFrame[1], clipIndex[1], 0));
+			c0 = transformMap.Load(int4(indices[i] * 4 + 0, curFrame[1], clipIndex[1], 0));
+			c1 = transformMap.Load(int4(indices[i] * 4 + 1, curFrame[1], clipIndex[1], 0));
+			c2 = transformMap.Load(int4(indices[i] * 4 + 2, curFrame[1], clipIndex[1], 0));
+			c3 = transformMap.Load(int4(indices[i] * 4 + 3, curFrame[1], clipIndex[1], 0));
 		
 			cur = matrix(c0, c1, c2, c3);
 		
-			n0 = transforMap.Load(int4(indices[i] * 4 + 0, curFrame[1] + 1, clipIndex[1], 0));
-			n1 = transforMap.Load(int4(indices[i] * 4 + 1, curFrame[1] + 1, clipIndex[1], 0));
-			n2 = transforMap.Load(int4(indices[i] * 4 + 2, curFrame[1] + 1, clipIndex[1], 0));
-			n3 = transforMap.Load(int4(indices[i] * 4 + 3, curFrame[1] + 1, clipIndex[1], 0));
+			n0 = transformMap.Load(int4(indices[i] * 4 + 0, curFrame[1] + 1, clipIndex[1], 0));
+			n1 = transformMap.Load(int4(indices[i] * 4 + 1, curFrame[1] + 1, clipIndex[1], 0));
+			n2 = transformMap.Load(int4(indices[i] * 4 + 2, curFrame[1] + 1, clipIndex[1], 0));
+			n3 = transformMap.Load(int4(indices[i] * 4 + 3, curFrame[1] + 1, clipIndex[1], 0));
 
 			next = matrix(n0, n1, n2, n3);
 
@@ -473,17 +473,17 @@ matrix SkinWorld(uint instanceIndex, float4 indices, float4 weights)
 	[unroll]
 	for (int i = 0; i < 4; i++)
 	{
-		c0 = transforMap.Load(int4(indices[i] * 4 + 0, curFrame[0], clipIndex[0], 0));
-		c1 = transforMap.Load(int4(indices[i] * 4 + 1, curFrame[0], clipIndex[0], 0));
-		c2 = transforMap.Load(int4(indices[i] * 4 + 2, curFrame[0], clipIndex[0], 0));
-		c3 = transforMap.Load(int4(indices[i] * 4 + 3, curFrame[0], clipIndex[0], 0));
+		c0 = transformMap.Load(int4(indices[i] * 4 + 0, curFrame[0], clipIndex[0], 0));
+		c1 = transformMap.Load(int4(indices[i] * 4 + 1, curFrame[0], clipIndex[0], 0));
+		c2 = transformMap.Load(int4(indices[i] * 4 + 2, curFrame[0], clipIndex[0], 0));
+		c3 = transformMap.Load(int4(indices[i] * 4 + 3, curFrame[0], clipIndex[0], 0));
 		
 		cur = matrix(c0, c1, c2, c3);
 		
-		n0 = transforMap.Load(int4(indices[i] * 4 + 0, curFrame[0] + 1, clipIndex[0], 0));
-		n1 = transforMap.Load(int4(indices[i] * 4 + 1, curFrame[0] + 1, clipIndex[0], 0));
-		n2 = transforMap.Load(int4(indices[i] * 4 + 2, curFrame[0] + 1, clipIndex[0], 0));
-		n3 = transforMap.Load(int4(indices[i] * 4 + 3, curFrame[0] + 1, clipIndex[0], 0));
+		n0 = transformMap.Load(int4(indices[i] * 4 + 0, curFrame[0] + 1, clipIndex[0], 0));
+		n1 = transformMap.Load(int4(indices[i] * 4 + 1, curFrame[0] + 1, clipIndex[0], 0));
+		n2 = transformMap.Load(int4(indices[i] * 4 + 2, curFrame[0] + 1, clipIndex[0], 0));
+		n3 = transformMap.Load(int4(indices[i] * 4 + 3, curFrame[0] + 1, clipIndex[0], 0));
 		
 		next = matrix(n0, n1, n2, n3);
 		
@@ -493,17 +493,17 @@ matrix SkinWorld(uint instanceIndex, float4 indices, float4 weights)
 		[flatten]
 		if (clipIndex[1] > -1)
 		{
-			c0 = transforMap.Load(int4(indices[i] * 4 + 0, curFrame[1], clipIndex[1], 0));
-			c1 = transforMap.Load(int4(indices[i] * 4 + 1, curFrame[1], clipIndex[1], 0));
-			c2 = transforMap.Load(int4(indices[i] * 4 + 2, curFrame[1], clipIndex[1], 0));
-			c3 = transforMap.Load(int4(indices[i] * 4 + 3, curFrame[1], clipIndex[1], 0));
+			c0 = transformMap.Load(int4(indices[i] * 4 + 0, curFrame[1], clipIndex[1], 0));
+			c1 = transformMap.Load(int4(indices[i] * 4 + 1, curFrame[1], clipIndex[1], 0));
+			c2 = transformMap.Load(int4(indices[i] * 4 + 2, curFrame[1], clipIndex[1], 0));
+			c3 = transformMap.Load(int4(indices[i] * 4 + 3, curFrame[1], clipIndex[1], 0));
 		
 			cur = matrix(c0, c1, c2, c3);
 		
-			n0 = transforMap.Load(int4(indices[i] * 4 + 0, curFrame[1] + 1, clipIndex[1], 0));
-			n1 = transforMap.Load(int4(indices[i] * 4 + 1, curFrame[1] + 1, clipIndex[1], 0));
-			n2 = transforMap.Load(int4(indices[i] * 4 + 2, curFrame[1] + 1, clipIndex[1], 0));
-			n3 = transforMap.Load(int4(indices[i] * 4 + 3, curFrame[1] + 1, clipIndex[1], 0));
+			n0 = transformMap.Load(int4(indices[i] * 4 + 0, curFrame[1] + 1, clipIndex[1], 0));
+			n1 = transformMap.Load(int4(indices[i] * 4 + 1, curFrame[1] + 1, clipIndex[1], 0));
+			n2 = transformMap.Load(int4(indices[i] * 4 + 2, curFrame[1] + 1, clipIndex[1], 0));
+			n3 = transformMap.Load(int4(indices[i] * 4 + 3, curFrame[1] + 1, clipIndex[1], 0));
 
 			next = matrix(n0, n1, n2, n3);
 

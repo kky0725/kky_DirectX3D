@@ -27,6 +27,8 @@ void Camera::Update()
 		FreeMode();
 	else
 		TargetMode(MODE2);
+
+	SetView();
 }
 
 void Camera::Debug()
@@ -36,17 +38,21 @@ void Camera::Debug()
 
 	if (ImGui::TreeNode("Camera Option"))
 	{
-		ImGui::Text("Camera Pos x : %.2f, y : %.2f, z : %.2f", _translation.x, _translation.y, _translation.z);
-		ImGui::Text("Camera Rot x : %.2f, y : %.2f, z : %.2f", _rotation.x, _rotation.y, _rotation.z);
+		Vector3 pos = _translation;
+		Vector3 rot = _rotation;
+
+		ImGui::Text("Camera Pos x : %.3f, y : %.3f, z : %.3f", pos.x, pos.y, pos.z);
+		ImGui::Text("Camera Rot x : %.3f, y : %.3f, z : %.3f", rot.x, rot.y, rot.z);
 		
+		Transform::Debug();
+
 		ImGui::SliderFloat("Height", &_height, -10.0f, 100.0f);
 		ImGui::SliderFloat("Distance", &_distance, -10.0f, 100.0f);
 
-		Transform::Debug();
+		ImGui::SliderFloat("Camera RotY", &_rotY, 0.0f, XM_2PI);
 
 		ImGui::SliderFloat("Camera MoveDamping", &_moveDamping, 0.0f, 30.0f);
 		ImGui::SliderFloat("Camera RotDamping", &_rotDamping, 0.0f, 30.0f);
-		ImGui::SliderFloat("Camera RotY", &_rotY, 0.0f, XM_2PI);
 
 		ImGui::TreePop();
 	}
@@ -87,7 +93,7 @@ Ray Camera::ScreenPointToRay(Vector3 screenPos)
 	return ray;
 }
 
-Vector3 Camera::WolrdToScreenPoint(Vector3 worldPos)
+Vector3 Camera::WorldToScreenPoint(Vector3 worldPos)
 {
 	Vector3 screenPos;
 
@@ -247,11 +253,11 @@ void Camera::TargetMode(Mode mode)
 	{
 	case Camera::MODE1:
 	{
-		_destRotY = LERP(_destRotY, _target->_rotation.y, _rotDamping * Time::Delta());
+		_destRotY = LERP(_destRotY, _target->_rotation.y + XM_PI, _rotDamping * Time::Delta());
 
 		XMMATRIX rotMatrix = XMMatrixRotationY(_destRotY + _rotY);
 
-		Vector3 forward = V_FORWARD * rotMatrix;
+		Vector3 forward = V_BACKWARD * rotMatrix;
 
 		_destination = _target->GetGlobalPosition() + forward * _distance + V_UP * _height;
 
@@ -308,6 +314,12 @@ void Camera::SetView()
 
 	_viewBuffer->SetData(_viewMatrix, Transform::GetWorld());
 	_viewBuffer->SetVSBuffer(1);
+}
+
+void Camera::Set()
+{
+	_viewMatrix = XMMatrixInverse(nullptr, _world);
+	_viewBuffer->SetData(_viewMatrix, Transform::GetWorld());
 }
 
 void Camera::Save()

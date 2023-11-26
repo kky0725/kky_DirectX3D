@@ -1,6 +1,6 @@
 #include "header.hlsli"
 
-struct VertextOutput
+struct VertexOutput
 {
 	float4 pos			: SV_POSITION;
 	float2 uv			: UV;
@@ -25,13 +25,14 @@ cbuffer WaterBuffer : register(b10)
 	float fresnel;//낮을 수록 투과는 안되고 반사 영향을 받음
 }
 
-float4 main(VertextOutput input) : SV_TARGET
+float4 main(VertexOutput input) : SV_TARGET
 {
 	//Refraction
+	
 	float2 uv;
 	
-	uv.x = +input.reflectPos.x / input.reflectPos.w * 0.5f + 0.5f;
-	uv.y = -input.reflectPos.y / input.reflectPos.w * 0.5f + 0.5f; //화면 좌표계를 엔디시 좌표로 변경하는 과정
+	uv.x = +input.refractPos.x / input.refractPos.w * 0.5f + 0.5f;
+	uv.y = -input.refractPos.y / input.refractPos.w * 0.5f + 0.5f; //화면 좌표계를 엔디시 좌표로 변경하는 과정
 
 	input.uv += waveTime * waveSpeed;
 	
@@ -41,7 +42,6 @@ float4 main(VertextOutput input) : SV_TARGET
 	float4 refractionColor =  refractionMap.Sample(samp, uv) * color;
 	
 	//Reflection
-		
 	uv.x = +input.reflectPos.x / input.reflectPos.w * 0.5f + 0.5f;
 	uv.y = -input.reflectPos.y / input.reflectPos.w * 0.5f + 0.5f; //화면 좌표계를 엔디시 좌표로 변경하는 과정
 	uv += normal.xy * waveScale;

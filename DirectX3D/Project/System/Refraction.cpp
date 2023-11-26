@@ -5,12 +5,12 @@ UINT Refraction::_index = 0;
 
 Refraction::Refraction(wstring file)
 {
-	_renderTarget = new RenderTarget(1280, 720);
-	_depthStencil = new DepthStencil(1280, 720);
-
 	_buffer = new WaterBuffer();
 
 	_normalMap = Texture::Get(file);
+
+	_renderTarget = new RenderTarget(1280, 720);
+	_depthStencil = new DepthStencil(1280, 720);
 
 	// Debug()
 
@@ -20,7 +20,7 @@ Refraction::Refraction(wstring file)
 	Texture* texture = Texture::Get(L"Refraction" + to_wstring(_index++), _renderTarget->GetSRV());
 
 	_quad->GetMaterial()->SetDiffuseMap(texture);
-	_quad->Update();
+	_quad->UpdateWorld();
 }
 
 Refraction::~Refraction()

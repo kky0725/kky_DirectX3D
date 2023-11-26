@@ -3,7 +3,7 @@ class WaterScene : public Scene
 {
 public:
 	WaterScene();
-	~WaterScene();
+	virtual ~WaterScene();
 
 	virtual void Update() override;
 	virtual void PreRender() override;

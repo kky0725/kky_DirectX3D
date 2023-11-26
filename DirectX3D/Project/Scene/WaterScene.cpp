@@ -11,9 +11,10 @@ WaterScene::WaterScene()
 	_sky = new SkyBox(L"LandScape/Snow_ENV.dds");
 
 	//_floor->GetMaterial()->SetShader(L"19Reflection");
-	_floor->GetMaterial()->SetShader(L"20Refraction");
+	//_floor->GetMaterial()->SetShader(L"20Refraction");
 
-	_water = new Water(L"Landscape/Wave.dds");
+	//_water = new Water(L"Landscape/Wave.dds");
+	_water = new Water(L"Landscape/WaveNormal.png");
 }
 
 WaterScene::~WaterScene()
@@ -23,6 +24,7 @@ WaterScene::~WaterScene()
 	delete _groot;
 	delete _sphere;
 
+	delete _sky;
 	//delete _reflection;
 	//delete _refraction;
 
@@ -45,18 +47,17 @@ void WaterScene::PreRender()
 {
 	//_reflection->SetPreRender();
 	//_refraction->SetPreRender();
-	_water->SetReflection();
-
-	_sky->Render();
-
-	_bunny->Render();
-	_groot->Render();
-	_sphere->Render();
 
 	_water->SetRefraction();
 
 	_sky->Render();
+	_bunny->Render();
+	_groot->Render();
+	_sphere->Render();
 
+	_water->SetReflection();
+
+	_sky->Render();
 	_bunny->Render();
 	_groot->Render();
 	_sphere->Render();
@@ -90,7 +91,7 @@ void WaterScene::CreateObject()
 	_floor = new Quad();
 	_floor->SetLabel("Floor");
 	_floor->_rotation.x = XM_PIDIV2;
-	_floor->_translation.y = 1.0f;
+	_floor->_translation.y = -1.0f;
 	_floor->_scale *= 100.0f;
 
 	_floor->GetMaterial()->SetShader(L"09Light");

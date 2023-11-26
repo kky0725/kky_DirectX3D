@@ -15,7 +15,7 @@ public:
 	void Debug();
 
 	Ray ScreenPointToRay(Vector3 screenPos);
-	Vector3 WolrdToScreenPoint(Vector3 worldPos);
+	Vector3 WorldToScreenPoint(Vector3 worldPos);
 
 	void SetTarget(Transform* target) { this->_target = target; }
 
@@ -25,6 +25,8 @@ public:
 	bool ContainSphere(Vector3 center, float radius);
 
 	void SetView();
+
+	void Set();
 private:
 	void FreeMode();
 	void TargetMode(Mode mode = MODE1);

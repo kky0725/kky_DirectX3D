@@ -1,6 +1,6 @@
 #include "header.hlsli"
 
-struct VertextOutput
+struct VertexOutput
 {
 	float4 pos			: SV_POSITION;
 	float4 reflectPos	: POSITION;
@@ -11,9 +11,9 @@ cbuffer ReflectionBuffer : register(b10)
 	matrix reflectionView;
 }
 
-VertextOutput main(VertexTexture input)
+VertexOutput main(VertexTexture input)
 {
-	VertextOutput output;
+	VertexOutput output;
 	
 	output.pos = mul( input.pos, world);
 	

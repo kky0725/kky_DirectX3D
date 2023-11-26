@@ -1,17 +1,17 @@
 #include "header.hlsli"
 
-struct VertextOutput
+struct VertexOutput
 {
 	float4 pos			: SV_POSITION;
 	float2 uv			: UV;
-	float4 reflectPos	: POSITION;
+	float4 refractPos	: POSITION;
 };
 
 
 
-VertextOutput main(VertexTexture input)
+VertexOutput main(VertexTexture input)
 {
-	VertextOutput output;
+	VertexOutput output;
 	
 	output.pos = mul( input.pos, world);
 	output.pos = mul(output.pos, view);
@@ -19,7 +19,7 @@ VertextOutput main(VertexTexture input)
 	
 	output.uv = input.uv;
 	
-	output.reflectPos = output.pos;
+	output.refractPos = output.pos;
 	
 	return output;
 }

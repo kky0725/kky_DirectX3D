@@ -50,8 +50,8 @@ void Water::Render()
 
 void Water::Debug()
 {
-	_refraction->DeBug();
 	Transform::Debug();
+	_refraction->DeBug();
 }
 
 void Water::SetReflection()

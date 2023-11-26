@@ -17,7 +17,7 @@ MainGame::MainGame()
 	//scene = new ModelAnimationScene();
 	//scene = new CollisionScene();
 
-	SCENE->Create("Grid", new GridScene());
+	//SCENE->Create("Grid", new GridScene());
 	//SCENE->Create("Collision", new CollisionScene);
 	//SCENE->Create("ModelAnimation", new ModelAnimationScene);
 	//SCENE->Create("Instancing", new InstancingScene);
@@ -31,7 +31,7 @@ MainGame::MainGame()
 	SCENE->Create("Start", new WaterScene);
 	//SCENE->Create("Export", new ModelExportScene);
 
-	SCENE->Add("Grid");
+	//SCENE->Add("Grid");
 	//SCENE->Add("Collision");
 	//SCENE->Add("ModelAnimation");
 	SCENE->Add("Start");

@@ -6,10 +6,11 @@ UINT Reflection::_index = 0;
 Reflection::Reflection(Transform* target)
 	:_target(target)
 {
+	_camera = new Camera();
+
 	_renderTarget = new RenderTarget(1280, 720);//크기는 여유있게, 비율은 맞추기
 	_depthStencil = new DepthStencil(1280, 720);
 
-	_camera = new Camera();
 
 	// Debug()
 
@@ -19,7 +20,7 @@ Reflection::Reflection(Transform* target)
 	Texture* texture = Texture::Get(L"Reflection" + to_wstring(_index++), _renderTarget->GetSRV());
 
 	_quad->GetMaterial()->SetDiffuseMap(texture);
-	_quad->Update();
+	_quad->UpdateWorld();
 }
 
 Reflection::~Reflection()
@@ -40,7 +41,7 @@ void Reflection::Update()
 	_camera->_translation = pos;
 	_camera->_rotation = rot;
 
-	_camera->Update();
+	_camera->UpdateWorld();
 }
 
 void Reflection::SetPreRender()
@@ -59,4 +60,6 @@ void Reflection::SetRender()
 void Reflection::PostRender()
 {
 	_quad->Render();
+
+	_quad->Debug();
 }

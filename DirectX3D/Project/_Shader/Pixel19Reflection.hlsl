@@ -1,6 +1,6 @@
 #include "header.hlsli"
 
-struct VertextOutput
+struct VertexOutput
 {
 	float4 pos : SV_POSITION;
 	float4 reflectPos : POSITION;
@@ -8,7 +8,7 @@ struct VertextOutput
 
 Texture2D reflectionMap : register(t10);
 
-float4 main(VertextOutput input) : SV_TARGET
+float4 main(VertexOutput input) : SV_TARGET
 {
 	float2 uv;
 	
