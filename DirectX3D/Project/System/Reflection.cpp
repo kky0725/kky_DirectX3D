@@ -8,8 +8,8 @@ Reflection::Reflection(Transform* target)
 {
 	_camera = new Camera();
 
-	_renderTarget = new RenderTarget(1280, 720);//크기는 여유있게, 비율은 맞추기
-	_depthStencil = new DepthStencil(1280, 720);
+	_renderTarget = new RenderTarget(2048, 2048);//크기는 여유있게, 비율은 맞추기
+	_depthStencil = new DepthStencil(2048, 2048);
 
 
 	// Debug()
@@ -42,6 +42,7 @@ void Reflection::Update()
 	_camera->_rotation = rot;
 
 	_camera->UpdateWorld();
+	//_camera->Update();
 }
 
 void Reflection::SetPreRender()

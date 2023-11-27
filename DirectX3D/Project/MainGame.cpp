@@ -70,6 +70,8 @@ void MainGame::Render()
 
 	Device::GetInstance()->Clear();
 
+	Environment::GetInstance()->SetViewport();
+
 	Environment::GetInstance()->SetEnvironment();
 
 	SCENE->Render();

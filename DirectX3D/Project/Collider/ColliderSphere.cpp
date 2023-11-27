@@ -42,8 +42,6 @@ bool ColliderSphere::Collision(IN Ray& ray, OUT Contact* contact)
 		return true;
 	}
 
-
-
 	return false;
 }
 
@@ -61,7 +59,7 @@ bool ColliderSphere::Collision(ColliderSphere* other)
 
 bool ColliderSphere::Collision(ColliderCapsule* other)
 {
-	return false;
+	return other->Collision(this);
 }
 
 void ColliderSphere::CreateMesh()

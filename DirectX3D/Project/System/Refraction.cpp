@@ -9,8 +9,8 @@ Refraction::Refraction(wstring file)
 
 	_normalMap = Texture::Get(file);
 
-	_renderTarget = new RenderTarget(1280, 720);
-	_depthStencil = new DepthStencil(1280, 720);
+	_renderTarget = new RenderTarget(2048, 2048);
+	_depthStencil = new DepthStencil(2048, 2048);
 
 	// Debug()
 
