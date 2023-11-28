@@ -4,7 +4,7 @@
 Shadow::Shadow(UINT width, UINT height)
 	:_width(width), _height(height)
 {
-	_renderTarget = new RenderTarget(10000, 10000);
+	_renderTarget = new RenderTarget(width, height);
 	_depthStencil = new DepthStencil(width, height);
 
 	_viewBuffer = new ViewBuffer();
@@ -38,7 +38,7 @@ void Shadow::SetRender()
 	_viewBuffer->SetVSBuffer(11);
 	_projBuffer->SetVSBuffer(12);
 
-	DC->PSGetShaderResources(10, 1, &_renderTarget->GetSRV());
+	DC->PSSetShaderResources(10, 1, &_renderTarget->GetSRV());
 }
 
 void Shadow::PostRender()
@@ -52,7 +52,7 @@ void Shadow::SetViewProjection()
 	
 	Matrix view = XMMatrixLookAtLH(lightData.position, Vector3(0, 0, 0), Vector3(0, 1, 0));
 
-	Matrix proj = XMMatrixPerspectiveFovLH(XM_PIDIV2, 1.0f, 0.1f, 5000.0f);
+	Matrix proj = XMMatrixPerspectiveFovLH(XM_PIDIV2, 1.0f, 0.1f, 1000.0f);
 
 	_viewBuffer->SetData(view, XMMatrixInverse(nullptr, view));
 	_projBuffer->SetData(proj);

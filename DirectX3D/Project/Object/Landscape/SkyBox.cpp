@@ -5,6 +5,7 @@ SkyBox::SkyBox(wstring file)
 {
 	_sphere = new Sphere();
 	_sphere->GetMaterial()->SetShader(L"05SkyBox");
+	_sphere->SetLabel("Sky");
 
 	_rs = new RasterizerState();
 	_rs->FrontCounterClockWise(true);
