@@ -24,4 +24,6 @@ private:
 	Water* _water;
 
 	SkyBox* _sky;
+
+	Shadow* _shadow;
 };

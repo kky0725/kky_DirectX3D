@@ -32,7 +32,7 @@ public:
 		int		type = 0;
 
 		//Point light
-		Vector3 position = Vector3();
+		Vector3 position = Vector3(0, 100, 0);
 		float	range = 100.0f;
 
 		//Spot Light

@@ -24,6 +24,8 @@ public:
 
 	Camera* GetMainCamera() { return _mainCamera; }
 
+	LightBuffer* GetLightBuffer() { return _lightBuffer; }
+
 private:
 	MatrixBuffer* _persBuffer;
 	Matrix		  _PersMatrix;

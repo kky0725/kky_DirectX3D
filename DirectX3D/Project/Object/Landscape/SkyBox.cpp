@@ -22,6 +22,8 @@ void SkyBox::Render()
 {
 	_cubeMap->PSSetShaderResources(10);
 
+	_sphere->Update();
+
 	_rs->SetState();
 	StateManager::GetInstance()->DepthDisable();
 

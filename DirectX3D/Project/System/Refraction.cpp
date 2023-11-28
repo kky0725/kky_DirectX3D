@@ -60,7 +60,7 @@ void Refraction::DeBug()
 	ImGui::ColorEdit4("WaveColor", (float*)&_buffer->data.color);
 
 	ImGui::SliderFloat("WaveSpeed"		, (float*)&_buffer->data.waveSpeed	 , 0.0f,  1.0f);
-	ImGui::SliderFloat("WaveScale"		, (float*)&_buffer->data.waveScale	 , 0.0f,  1.0f);
+	ImGui::SliderFloat("WaveScale"		, (float*)&_buffer->data.waveScale	 , 0.0f,  1.0f);//0.1~0.2
 	ImGui::SliderFloat("WaveShininess"	, (float*)&_buffer->data.waveShinines, 1.0f, 50.0f);
 	ImGui::SliderFloat("WaveFresnel"	, (float*)&_buffer->data.fresnel	 , 0.0f,  1.0f);
 }
