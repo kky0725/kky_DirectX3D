@@ -28,7 +28,8 @@ MainGame::MainGame()
 	//SCENE->Create("Start", new BillboardScene);
 	//SCENE->Create("Start", new ParticleScene);
 	//SCENE->Create("Start", new ParticleEditorScene);
-	SCENE->Create("Start", new WaterScene);
+	//SCENE->Create("Start", new WaterScene);
+	SCENE->Create("Start", new TessellationScene);
 	//SCENE->Create("Export", new ModelExportScene);
 
 	//SCENE->Add("Grid");

@@ -42,6 +42,20 @@ void ConstBuffer::SetCSBuffer(UINT slot)
 	DC->CSSetConstantBuffers(slot, 1, &_constBuffer);
 }
 
+void ConstBuffer::SetHSBuffer(UINT slot)
+{
+	UpdataeSubresource();
+
+	DC->HSSetConstantBuffers(slot, 1, &_constBuffer);
+}
+
+void ConstBuffer::SetDSBuffer(UINT slot)
+{
+	UpdataeSubresource();
+
+	DC->DSSetConstantBuffers(slot, 1, &_constBuffer);
+}
+
 void ConstBuffer::UpdataeSubresource()
 {
 	DC->Map(_constBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &_subResource);

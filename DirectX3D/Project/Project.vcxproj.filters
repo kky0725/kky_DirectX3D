@@ -300,6 +300,15 @@
     <ClInclude Include="System\Shadow.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Scene\TessellationScene.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\Shader\DomainShader.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\Shader\HullShader.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -569,6 +578,15 @@
     <ClCompile Include="System\Shadow.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Scene\TessellationScene.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Render\Shader\DomainShader.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Render\Shader\HullShader.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="__Others\Project.rc">
@@ -717,6 +735,10 @@
     <FxCompile Include="_Shader\Vertex21Water.hlsl" />
     <FxCompile Include="_Shader\Vertex22Shadow.hlsl" />
     <FxCompile Include="_Shader\Pixel22Shadow.hlsl" />
+    <FxCompile Include="_Shader\Vertex23Triangle.hlsl" />
+    <FxCompile Include="_Shader\Hull23Triangle.hlsl" />
+    <FxCompile Include="_Shader\Domain23Triangle.hlsl" />
+    <FxCompile Include="_Shader\Pixel23Triangle.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="_Library\ImGui.idb" />

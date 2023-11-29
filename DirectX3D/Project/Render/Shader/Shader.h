@@ -10,6 +10,8 @@ public:
 	static class    PixelShader* GetPS(wstring file);
 	static class  ComputeShader* GetCS(wstring file);
 	static class GeometryShader* GetGS(wstring file);
+	static class     HullShader* GetHS(wstring file);
+	static class   DomainShader* GetDS(wstring file);
 
 	static void Delete();
 
