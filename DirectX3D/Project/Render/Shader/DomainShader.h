@@ -2,11 +2,13 @@
 class DomainShader : public Shader
 {
 	friend class Shader;
-public:
+private:
 	DomainShader(wstring file);
 	~DomainShader();
 
+public:
 	virtual void SetShader() override;
+
 private:
 	ID3D11DomainShader* _shader;
 

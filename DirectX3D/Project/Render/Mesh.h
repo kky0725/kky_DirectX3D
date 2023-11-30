@@ -3,6 +3,8 @@ class Mesh
 {
 public:
 	template <typename T>
+	Mesh(vector<T>& vertices);
+	template <typename T>
 	Mesh(vector<T>& vertices, vector<UINT>& indices);
 	~Mesh();
 
@@ -16,8 +18,16 @@ private:
 };
 
 template<typename T>
+inline Mesh::Mesh(vector<T>& vertices)
+{
+	_vertexBuffer = new VertexBuffer(vertices);
+}
+
+template<typename T>
 inline Mesh::Mesh(vector<T>& vertices, vector<UINT>& indices)
 {
 	_vertexBuffer = new VertexBuffer(vertices);
-	 _indexBuffer = new IndexBuffer(indices);
+
+	if(indices.size() > 0)
+		_indexBuffer = new IndexBuffer(indices);
 }

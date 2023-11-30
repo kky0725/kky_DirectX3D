@@ -159,6 +159,7 @@ using namespace MyMath;
 #include "Object/Landscape/Sky.h"
 #include "Object/Landscape/SkyBox.h"
 #include "Object/Landscape/Water.h"
+#include "Object/Landscape/TerrainLOD.h"
 
 #include "Object/UI/ProgressBar.h"
 
@@ -202,6 +203,7 @@ using namespace MyMath;
 #include "Scene/ParticleEditorScene.h"
 #include "Scene/WaterScene.h"
 #include "Scene/TessellationScene.h"
+#include "Scene/TerrainLODScene.h"
 #include "Scene/SceneManager.h"
 
 #include "MainGame.h"

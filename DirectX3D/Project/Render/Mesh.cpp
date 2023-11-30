@@ -9,5 +9,7 @@ Mesh::~Mesh()
 void Mesh::SetMesh(D3D11_PRIMITIVE_TOPOLOGY type)
 {
 	_vertexBuffer->IASetBuffer(type);
-	_indexBuffer->IASetBuffer();
+	
+	if (_indexBuffer)
+		_indexBuffer->IASetBuffer();
 }
