@@ -20,7 +20,7 @@ struct CHullOutput
 
 #define NUM_CONTROL_POINTS 4
 
-texture2D heightMap : register(t10);
+Texture2D heightMap : register(t10);
 
 cbuffer HeightBuffer : register(b10)
 {

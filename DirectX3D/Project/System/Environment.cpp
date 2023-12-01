@@ -87,6 +87,7 @@ void Environment::SetEnvironment()
 
 	_lightBuffer->SetPSBuffer(0);//header.hlsl 문제 해결하면 0으로 변경
 	_persBuffer->SetVSBuffer(2);
+	_persBuffer->SetDSBuffer(2);
 
 	StateManager::GetInstance()->Set();
 }

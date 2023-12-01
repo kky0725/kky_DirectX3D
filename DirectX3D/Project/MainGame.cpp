@@ -18,19 +18,19 @@ MainGame::MainGame()
 	//scene = new CollisionScene();
 
 	//SCENE->Create("Grid", new GridScene());
-	//SCENE->Create("Collision", new CollisionScene);
-	//SCENE->Create("ModelAnimation", new ModelAnimationScene);
+	//SCENE->Create("Start", new CollisionScene);
+	//SCENE->Create("Start", new ModelAnimationScene);
 	//SCENE->Create("Instancing", new InstancingScene);
 	//SCENE->Create("Start", new ModelInstancingScene);
 	//SCENE->Create("Start", new LightScene);
 	//SCENE->Create("Start", new DeferredRenderScene);
-	//SCENE->Create("Start", new FrustumCullingScene);
+	SCENE->Create("Start", new FrustumCullingScene);
 	//SCENE->Create("Start", new BillboardScene);
 	//SCENE->Create("Start", new ParticleScene);
 	//SCENE->Create("Start", new ParticleEditorScene);
 	//SCENE->Create("Start", new WaterScene);
 	//SCENE->Create("Start", new TessellationScene);
-	SCENE->Create("Start", new TerrainLODScene);
+	//SCENE->Create("Start", new TerrainLODScene);
 	//SCENE->Create("Export", new ModelExportScene);
 
 	//SCENE->Add("Grid");
